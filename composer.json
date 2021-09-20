@@ -117,7 +117,9 @@
             "@sass-cleanup"
         ],
         "post-install-cmd": [
-            "@git-hooks",
+            "@git-hooks"
+        ],
+        "post-create-project-cmd": [
             "@sub-theme"
         ],
         "post-update-cmd": [
