@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Lint php and css code.
+
+# We only lint files from custom modules.
+# We ignore generated css files (styles*.css), sass and javascript files which
+# are linted separately, images and XSL files.
+include='^html/(modules|themes)/custom'
+exclude='(\.(js|ico|png|jpg|gif|svg|scss|xsl)$)'
+
+# The linter path is relative to the root of the repository.
+relative=1
+linter="vendor/bin/phpcs"
+options='-p --report=full --standard=phpcs.xml'
+message='Linting staged PHP/CSS files...'
+
+# Docksal compatibility.
+if [ -x "$(command -v fin)" ]; then
+  linter="phpcs"
+fi
+
+# Load and execute the linting code.
+. "$(dirname "$0")/lint-common"

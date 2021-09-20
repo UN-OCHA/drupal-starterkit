@@ -1,0 +1,52 @@
+# This file contains the common logic for the linting pre-commit scripts.
+
+result=0
+relative=${relative:-0}
+
+# Get the full path to the root of the repository.
+root="$(git rev-parse --show-toplevel)"
+
+# Docksal compatibility.
+if [ -x "$(command -v fin)" ]; then
+  options="exec $linter $options"
+  linter="fin"
+  relative=0
+  root='.'
+fi
+
+# Add the repository's path if the linter command is relative to it.
+if [ "$relative" -eq 1 ]; then
+  linter="$root/$linter"
+fi
+
+# Proceed if the linter is executable.
+if [ -x "$(command -v $linter)" ]; then
+
+  # Get staged files.
+  staged=$(git diff --name-only --staged --diff-filter=d "$root" | grep -E "$include" | grep -v -E "$exclude" | xargs)
+
+  if [ -n "$staged" ]; then
+    printf "\n\033[36m%s\033[0m\n\n" "$message"
+
+    # Lint the files.
+    for file in $staged; do
+      file="$root/$file"
+
+      if [ -f "$file" ]; then
+        echo "* $linter $options $file"
+        $linter $options "$file"
+
+        if [ "$?" -ne 0 ]; then
+          result=1
+        fi
+      fi
+    done
+
+    if [ "$result" -eq 0 ]; then
+      printf "\n\033[32m%s\033[0m\n\n" "No problem detected."
+    fi
+  fi
+fi
+
+# Exit with the result of the linting.
+exit $result
