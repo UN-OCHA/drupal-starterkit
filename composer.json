@@ -31,6 +31,7 @@
         "drupal/core-recommended": "^9.2.4",
         "drupal/google_tag": "^1.4",
         "drupal/maintenance200": "^1.1",
+        "drupal/pathauto": "^1.8",
         "drupal/redis": "^1.5",
         "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^2.7",
@@ -109,13 +110,15 @@
         "sass-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
         "sass-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/sass sass:build",
         "sass-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
+        "sub-theme": "cp -r html/themes/contrib/common_design/common_design_subtheme html/themes/custom/ && mv html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml.example html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml",
         "sass": [
             "@sass-prepare",
             "@sass-build",
             "@sass-cleanup"
         ],
         "post-install-cmd": [
-            "@git-hooks"
+            "@git-hooks",
+            "sub-theme"
         ],
         "post-update-cmd": [
             "@git-hooks"
