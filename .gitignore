@@ -1,0 +1,60 @@
+# Drupal. Ignore core and contrib.
+/html/*
+
+!/html/modules/
+/html/modules/*
+!/html/modules/custom/
+
+!/html/themes/
+/html/themes/*
+!/html/themes/custom/
+
+# Misc
+/vendor
+/behat/vendor
+*.DS_Store
+*.sass-cache*
+/.csslintrc
+/.eslintignore
+/.eslintrc.json
+/.ht.router.php
+/.htaccess
+/INSTALL.txt
+/README.txt
+/autoload.php
+/example.gitignore
+/index.php
+/robots.txt
+/update.php
+/web.config
+/bin
+/translations
+/buildlog.txt
+/.editorconfig
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+###> symfony rubbish ###
+.env
+.env.test
+config/bootstrap.php
+config/packages
+config/routes.yaml
+config/routes
+###< symfony rubbish ###
+
+phpcs.xml.dist
+phpunit.xml.dist

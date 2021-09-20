@@ -1,0 +1,15 @@
+# Ignore everything except for the files necessary to build the codebase.
+*
+!config
+!docker
+!html/modules/custom
+!html/themes/custom
+!patches
+!scripts
+!composer.json
+!composer.lock
+!composer.patches.json
+!load.environment.php
+
+# Ignore the node modules in the common design subtheme.
+html/themes/custom/common_design_subtheme/node_modules

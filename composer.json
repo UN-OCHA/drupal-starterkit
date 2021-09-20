@@ -1,0 +1,124 @@
+{
+    "name": "unocha/starterkit",
+    "description": "Starterkit",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "UNOCHA",
+            "role": ""
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "composer/installers": "^1.10",
+        "cweagans/composer-patches": "^1.7",
+        "drupal-composer/preserve-paths": "^0.1.6",
+        "drupal/admin_denied": "^1.1",
+        "drupal/components": "^2.4",
+        "drupal/core-composer-scaffold": "^9.2.4",
+        "drupal/core-dev": "^9.2.4",
+        "drupal/core-recommended": "^9.2.4",
+        "drupal/google_tag": "^1.4",
+        "drupal/maintenance200": "^1.1",
+        "drupal/redis": "^1.5",
+        "drupal/seckit": "^2.0",
+        "drupal/social_auth_hid": "^2.7",
+        "drush/drush": "^10.4",
+        "npm-asset/select2": "^4.0",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "unocha/common_design": "^4.0.0",
+        "webflo/drupal-finder": "^1.2.2"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3.12",
+        "drupal/console": "^1.9.7",
+        "drupal/devel": "^4.1.1",
+        "drupal/devel_php": "^1.3",
+        "phpcompatibility/php-compatibility": "^9.3.5",
+        "phpmd/phpmd": "^2.9.1",
+        "phpunit/phpunit": "^9.5.4"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "bin-dir": "vendor/bin/",
+        "sort-packages": true
+    },
+    "extra": {
+        "enable-patching": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "installer-types": ["bower-asset", "npm-asset"],
+        "installer-paths": {
+            "html/core": ["type:drupal-core"],
+            "html/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ],
+            "html/modules/contrib/{$name}": ["type:drupal-module"],
+            "html/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "html/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/Commands/{$name}": ["type:drupal-drush"]
+        },
+        "drupal-scaffold": {
+            "initial": {
+                "sites/default/default.services.yml": "sites/default/services.yml",
+                "sites/default/default.settings.php": "sites/default/settings.php",
+                ".editorconfig": "../.editorconfig",
+                ".gitattributes": "../.gitattributes"
+            },
+            "locations": {
+              "web-root": "html/"
+            },
+            "omit-defaults": false
+        },
+        "merge-plugin": {
+            "include": [
+                "html/core/composer.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "merge-extra": false
+        },
+        "preserve-paths": [
+            "html/modules/custom",
+            "html/themes/custom",
+            "html/sites/default"
+        ],
+        "patches-file": "composer.patches.json",
+        "composer-exit-on-patch-failure": true
+    },
+    "scripts": {
+        "git-hooks": "git config core.hooksPath git-hooks || exit 0",
+        "sass-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
+        "sass-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/sass sass:build",
+        "sass-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
+        "sass": [
+            "@sass-prepare",
+            "@sass-build",
+            "@sass-cleanup"
+        ],
+        "post-install-cmd": [
+            "@git-hooks"
+        ],
+        "post-update-cmd": [
+            "@git-hooks"
+        ]
+    }
+}

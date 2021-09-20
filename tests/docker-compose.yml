@@ -1,0 +1,48 @@
+version: "2.2"
+
+networks:
+  default:
+
+volumes:
+  starterkit-site-public:
+  starterkit-site-private:
+
+services:
+  mysql:
+    image: unocha/alpine-mysql:10.5.12-r0-202109-01
+    hostname: starterkit-travis-mysql
+    container_name: starterkit-travis-mysql
+    environment:
+      - MYSQL_DB=starterkit
+      - MYSQL_USER=starterkit
+      - MYSQL_PASS=starterkit
+    networks:
+      - default
+
+  drupal:
+    image: unocha/starterkit-site:local
+    hostname: starterkit-travis-site
+    container_name: starterkit-travis-site
+    volumes:
+      - "./settings:/srv/www/shared/settings:ro"
+      # Mount volumes for the private and public files.
+      - "starterkit-site-public:/srv/www/html/sites/default/files:rw"
+      - "starterkit-site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folders needed for the tests.
+      - "../tests:/srv/www/tests"
+      - "../phpcs.xml:/srv/www/phpcs.xml:ro"
+    environment:
+      - TERM=xterm
+      - ENVIRONMENT=dev
+      - NGINX_SERVERNAME=starterkit-travis-site,localhost,127.0.0.1
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,starterkit-travis-site,localhost,127.0.0.1
+      - DRUSH_OPTIONS_URI=http://starterkit-travis-site
+      - DRUPAL_DB_DATABASE=starterkit
+      - DRUPAL_DB_USERNAME=starterkit
+      - DRUPAL_DB_PASSWORD=starterkit
+      - DRUPAL_DB_HOST=mysql
+      - DRUPAL_DB_DRIVER=mysql
+    networks:
+      - default
+    depends_on:
+      - mysql
