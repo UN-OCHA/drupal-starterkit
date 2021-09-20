@@ -43,11 +43,8 @@ script:
   - docker exec -it -u appuser -w /srv/www starterkit-travis-site phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom
   - docker exec -it -u appuser -w /srv/www starterkit-travis-site phpcs -p --report=full --standard=phpcs.xml ./html/themes/custom
 
-  # Install the site. Once you have config, switch to the command below.
-  - docker exec -it starterkit-travis-site drush -y si
-
   # Install the site with the existing config.
-  # - docker exec -it starterkit-travis-site drush -y si --existing-config
+  - docker exec -it starterkit-travis-site drush -y si --existing-config
 
 after_success:
   - echo "The tests completed without errors."
