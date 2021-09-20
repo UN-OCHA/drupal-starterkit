@@ -118,7 +118,7 @@
         ],
         "post-install-cmd": [
             "@git-hooks",
-            "sub-theme"
+            "@sub-theme"
         ],
         "post-update-cmd": [
             "@git-hooks"
