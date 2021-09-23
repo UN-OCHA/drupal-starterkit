@@ -1,0 +1,12 @@
+auth:
+  social_auth_hid:
+    route: social_auth_hid.redirect_to_hid
+    img_path: modules/contrib/social_auth_hid/img/hid_logo.png
+post_login: /user
+redirect_user_form: false
+disable_admin_login: false
+disabled_roles:
+  administrator: '0'
+user_allowed: register
+_core:
+  default_config_hash: 0E8z47ONguVcapiw1PGWDRs6g0NRDCzrym4mP_jcELU
