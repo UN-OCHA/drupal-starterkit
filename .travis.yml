@@ -39,7 +39,6 @@ script:
 
   # Check coding standards (after installing phpcs)
   - docker exec -it -w /srv/www starterkit-travis-site composer install
-  - docker exec -it -w /srv/www starterkit-travis-site phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
   - docker exec -it -u appuser -w /srv/www starterkit-travis-site phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom
   - docker exec -it -u appuser -w /srv/www starterkit-travis-site phpcs -p --report=full --standard=phpcs.xml ./html/themes/custom
 
