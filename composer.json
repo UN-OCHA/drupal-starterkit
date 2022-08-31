@@ -65,6 +65,7 @@
             "drupal-composer/preserve-paths": true,
             "drupal/core-composer-scaffold": true,
             "drupal/console-extend-plugin": true,
+            "oomphinc/composer-installers-extender": true,
             "symfony/flex": true
         }
     },
