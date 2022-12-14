@@ -73,7 +73,7 @@ services:
       # Rate limiting.
       - NGINX_LIMIT_HUMANS=1024r/s
       - NGINX_BURST_HUMANS=1024
-      # Local porxy.
+      # Local proxy.
       - VIRTUAL_HOST=starterkit-local.test
       - VIRTUAL_PORT=80
       - VIRTUAL_NETWORK=nginx-proxy

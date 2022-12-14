@@ -17,6 +17,10 @@ You can run the `scripts/setup.sh` script to do that for you.
 ```sh
 ./scripts/setup.sh "site.prod.url" "Site Name" "project-name"
 ```
+For example, for Common Design site:
+```sh
+./scripts/setup.sh "web.brand.unocha.org" "Common Design" "common-design-site"
+```
 
 ### README
 
@@ -26,7 +30,7 @@ Well, obviously, this [README](README.md) file needs to be updated with informat
 
 Edit the following files, replacing `starterkit` with your project name (ex: `my-website`):
 
-- [.github/workflows/docker-build-image.hml](.github/workflows/docker-build-image.hml)
+- [.github/workflows/docker-build-image.yml](.github/workflows/docker-build-image.yml)
 
 ### Docker
 
@@ -127,4 +131,4 @@ Run `./local/install.sh -h` to see the script options.
 5. Create a Pull Request with the changes
 6. Stop and remove the containers with `./local/install.sh -x -v`
 
-**Note:** do not forget to set up your local proxy to manage the `startetkit-local.test` domain.
+**Note:** do not forget to set up your local proxy to manage the `starterkit-local.test` domain.
