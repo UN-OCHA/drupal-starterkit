@@ -183,7 +183,7 @@
         "sass-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
         "sass-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/sass sass:build",
         "sass-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
-        "sub-theme": "test -L html/themes/custom/common_design_subtheme && cp -r html/themes/contrib/common_design/common_design_subtheme html/themes/custom/ && mv html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml.example html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml",
+        "sub-theme": "test -d html/themes/custom/common_design_subtheme || (cp -r html/themes/contrib/common_design/common_design_subtheme html/themes/custom/ && mv html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml.example html/themes/custom/common_design_subtheme/common_design_subtheme.info.yml)",
         "sass": [
             "@sass-prepare",
             "@sass-build",
