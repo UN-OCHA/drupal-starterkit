@@ -16,7 +16,7 @@ before_script:
 
   # Install the AWS CLI and login to the ECR. Credentials are secrets set via the UI.
   - if ! [ -x "$(command -v aws)" ]; then curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ; sudo ./aws/install ; fi
-  - aws ecr-public get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin public.ecr.aws/unocha
+  - if [ "$AWS_DEFAULT_REGION" != "" ]; then aws ecr-public get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin public.ecr.aws/unocha ; fi
 
 script:
   # Get docker information.
