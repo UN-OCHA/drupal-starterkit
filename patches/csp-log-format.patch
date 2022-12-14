@@ -1,0 +1,18 @@
+diff --git a/src/Controller/ReportUri.php b/src/Controller/ReportUri.php
+index d7229fa..744a40a 100644
+--- a/src/Controller/ReportUri.php
++++ b/src/Controller/ReportUri.php
+@@ -87,9 +87,11 @@ public function log($type) {
+     }
+ 
+     $this->logger
+-      ->info("@type <br/>\n<pre>@data</pre>", [
++      ->info("(@type) - Unmatched @directive: @blocked on page @page", [
+         '@type' => $type,
+-        '@data' => json_encode($report, JSON_PRETTY_PRINT),
++        '@directive' => $report->{'csp-report'}->{'violated-directive'},
++        '@blocked' => $report->{'csp-report'}->{'blocked-uri'},
++        '@page' => $report->{'csp-report'}->{'document-uri'},
+       ]);
+ 
+     // 202: Accepted.
