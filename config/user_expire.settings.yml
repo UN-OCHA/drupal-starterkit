@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: c8kZmY4yzcj6gFy3bqaJywsuE0bvGz_1Yg3BCA_jfSk
+frequency: 172800
+offset: 604800
+user_expire_roles: {  }
+send_mail: true
+mail:
+  subject: '[site:name]: Account expiration warning'
+  body: "Hello [user:display-name]\r\n\r\nBecause you have not logged in recently, your account at [site:name] will be blocked in the near future. If you still use this site, please log in [site:login-url] to prevent your account being blocked.\r\n\r\n-- [site:name] team"

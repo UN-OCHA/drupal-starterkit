@@ -1,4 +1,4 @@
-uuid: abc49b2f-cc4a-4f5e-b5ff-d341870d6d4b
+uuid: b0dadb23-aeaf-4cf5-ac41-42e91fd6d958
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ dependencies:
   theme:
     - common_design
 _core:
-  default_config_hash: rH6PpAn7-RScha1rGkohGAYSSh_1OVeZzioJPzPw6O4
+  default_config_hash: UL5ZZvI0Lnp3fmVmhIDxvNI9RlMD0sfBIOi9ozr-k5o
 id: common_design_tools
 theme: common_design
 region: sidebar_first
@@ -19,8 +19,8 @@ plugin: 'system_menu_block:tools'
 settings:
   id: 'system_menu_block:tools'
   label: Tools
-  provider: system
   label_display: visible
+  provider: system
   level: 1
   depth: 0
   expand_all_items: false

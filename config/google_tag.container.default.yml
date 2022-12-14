@@ -1,11 +1,13 @@
-uuid: 72c037a7-bd48-464d-9b01-a70c19b45054
+uuid: 2ae997ae-dd2c-4ca2-a3f6-96fa36f91243
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - node
 id: default
 label: Default
 weight: 0
-container_id: GTM-xxxx
+container_id: GTM-xxxxxx
 data_layer: dataLayer
 include_classes: false
 whitelist_classes: |-
@@ -29,9 +31,14 @@ path_list: |-
   /user/*/edit*
   /user/*/cancel*
 role_toggle: 'exclude listed'
-role_list: {  }
+role_list:
+  administrator: administrator
 status_toggle: 'exclude listed'
-status_list: |-
-  403
-  404
-conditions: {  }
+status_list: ''
+conditions:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles: {  }

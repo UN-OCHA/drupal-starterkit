@@ -1,0 +1,27 @@
+uuid: cfe260ac-cca2-4f9e-9f40-92260b4ff9e2
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.admin
+  module:
+    - system
+  theme:
+    - seven
+_core:
+  default_config_hash: 5MfnyzXbzrDa_OJuFfZfpiBYkMiuRp4mk4GM7HYc8eM
+id: seven_admin
+theme: seven
+region: header
+weight: 1
+provider: null
+plugin: 'system_menu_block:admin'
+settings:
+  id: 'system_menu_block:admin'
+  label: Administration
+  label_display: visible
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

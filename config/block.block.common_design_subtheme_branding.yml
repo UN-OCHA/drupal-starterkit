@@ -1,4 +1,4 @@
-uuid: 776bcdf6-b22f-4313-aa30-f72b6b27f196
+uuid: 2e93cf14-7e48-4ff7-a2ee-5ce6f71e75de
 langcode: en
 status: true
 dependencies:
@@ -7,18 +7,18 @@ dependencies:
   theme:
     - common_design_subtheme
 _core:
-  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+  default_config_hash: sG8t_FghbUscJ-GrnQ8zs_vx5YM4bJCfntrK-J5HcAY
 id: common_design_subtheme_branding
 theme: common_design_subtheme
 region: header_logo
-weight: -6
+weight: -4
 provider: null
 plugin: system_branding_block
 settings:
   id: system_branding_block
   label: 'Site branding'
-  provider: system
   label_display: '0'
+  provider: system
   use_site_logo: true
   use_site_name: true
   use_site_slogan: true

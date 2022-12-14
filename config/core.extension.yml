@@ -1,59 +1,65 @@
+_core:
+  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   admin_denied: 0
-  automated_cron: 0
-  big_pipe: 0
   block: 0
-  block_content: 0
   breakpoint: 0
-  ckeditor: 0
   components: 0
   config: 0
-  contextual: 0
+  config_translation: 0
+  csp: 0
   ctools: 0
   datetime: 0
+  datetime_range: 0
   dblog: 0
   dynamic_page_cache: 0
-  editor: 0
   field: 0
   field_ui: 0
   file: 0
+  file_mdm: 0
   filter: 0
   google_tag: 0
-  help: 0
   image: 0
+  imageapi_optimize: 0
+  imageapi_optimize_binaries: 0
+  imagemagick: 0
+  language: 0
   link: 0
+  locale: 0
   maintenance200: 0
+  memcache: 0
+  memcache_admin: 0
   menu_link_content: 0
   menu_ui: 0
+  mysql: 0
   node: 0
   options: 0
   page_cache: 0
   path: 0
   path_alias: 0
-  rdf: 0
-  redis: 0
-  seckit: 0
-  shortcut: 0
+  redirect: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0
+  sophron: 0
   syslog: 0
   system: 0
-  taxonomy: 0
   text: 0
   token: 0
   toolbar: 0
   update: 0
   user: 0
+  user_display_name: 0
+  user_expire: 0
   views_ui: 0
   pathauto: 1
+  content_translation: 10
   views: 10
   minimal: 1000
 theme:
-  seven: 0
+  stark: 0
   stable: 0
   common_design: 0
   common_design_subtheme: 0
+  seven: 0
 profile: minimal
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

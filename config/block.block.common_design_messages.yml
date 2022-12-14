@@ -1,4 +1,4 @@
-uuid: 919f4fda-81df-4acc-a00e-c9e644941ee1
+uuid: f7d81fea-3b6a-434f-b4c9-dc412fc25b2e
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   theme:
     - common_design
 _core:
-  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+  default_config_hash: aeqlWs7HwctZeZC7ADcbxfqehJzBRfZKmuZz3DsH3_4
 id: common_design_messages
 theme: common_design
 region: highlighted
@@ -17,6 +17,6 @@ plugin: system_messages_block
 settings:
   id: system_messages_block
   label: 'Status messages'
-  provider: system
   label_display: '0'
+  provider: system
 visibility: {  }
