@@ -12,7 +12,7 @@ build:  clean
 				--build-arg GITHUB_ACTOR=`whoami` \
 				--build-arg GITHUB_REPOSITORY=`git config --get remote.origin.url` \
 				--build-arg GITHUB_SHA=`git rev-parse --short HEAD` \
-		. --file docker/Dockerfile --tag unocha/starterkit-site:local \
+		. --file docker/Dockerfile --tag public.ecr.aws/unocha/starterkit-site:local \
 		2>&1 | tee buildlog.txt
 
 clean:
