@@ -1,17 +1,15 @@
 #!/bin/sh
 
-# Lint php and css code.
+# Lint php code.
 
-# We only lint files from custom modules.
-# We ignore generated css files (styles*.css), sass and javascript files which
-# are linted separately, images and XSL files.
-include='^html/(modules|themes)/custom'
-exclude='(\.(js|ico|png|jpg|gif|svg|scss|xsl)$)'
+# We only lint files from the custom themes and modules.
+include='^html/(modules|themes)/custom/.*\.(php|module|inc|install|test|profile|theme)$'
+exclude='(node_modules|vendor)'
 
 # Assume that the php command is global.
 linter="php"
 options='-l'
-message='Linting staged PHP files...'
+message='Linting staged PHP files (syntax)...'
 
 # Load and execute the linting code.
 . "$(dirname "$0")/lint-common"

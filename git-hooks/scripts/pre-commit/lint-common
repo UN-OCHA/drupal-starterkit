@@ -2,6 +2,7 @@
 
 result=0
 relative=${relative:-0}
+changedir=${changedir:-0}
 
 # Get the full path to the root of the repository.
 root="$(git rev-parse --show-toplevel)"
@@ -23,18 +24,28 @@ fi
 if [ -x "$(command -v $linter)" ]; then
 
   # Get staged files.
-  staged=$(git diff --name-only --staged --diff-filter=d "$root" | grep -E "$include" | grep -v -E "$exclude" | xargs)
+  if [ "$CHECK_DIRECTORY" = "" ]; then
+    files=$(git diff --name-only --staged --diff-filter=d "$root" | grep -E "$include" | grep -v -E "$exclude" | xargs)
+  # Get files in directory.
+  else
+    files=$(find "$CHECK_DIRECTORY" -type f | sed "s|^\./||" | grep -E "$include" | grep -v -E "$exclude" | xargs)
+  fi
 
-  if [ -n "$staged" ]; then
+  if [ -n "$files" ]; then
     printf "\n\033[36m%s\033[0m\n\n" "$message"
 
     # Lint the files.
-    for file in $staged; do
+    for file in $files; do
       file="$root/$file"
 
       if [ -f "$file" ]; then
         echo "* $linter $options $file"
-        $linter $options "$file"
+        # Execute in a subshell so that we can handle directory switching.
+        if [ "$changedir" -eq 1 ]; then
+          (cd $(dirname "$linter"); ./$(basename "$linter") $options "$file")
+        else
+          $linter $options "$file"
+        fi
 
         if [ "$?" -ne 0 ]; then
           result=1

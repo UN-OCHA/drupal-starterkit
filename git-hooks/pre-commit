@@ -2,6 +2,19 @@
 
 base=$(dirname "$0")
 result=0
+CHECK_DIRECTORY=""
+
+# Parse options.
+while getopts "d:" opt; do
+  case $opt in
+    d)
+      CHECK_DIRECTORY="$OPTARG"
+      ;;
+  esac
+done
+
+# Disable node deprecation warnings.
+export NODE_OPTIONS="${NODE_OPTIONS:-} --no-deprecation"
 
 # Get the list of pre-commit scripts.
 scripts=$(find "$base/scripts/pre-commit" -maxdepth 1 ! -name '*-common' -type f -perm -111 -print0 | xargs -0);
@@ -9,7 +22,7 @@ scripts=$(find "$base/scripts/pre-commit" -maxdepth 1 ! -name '*-common' -type f
 if [ -n "$scripts" ]; then
   # Execute all the pre-commit scripts.
   for script in $scripts; do
-    "$script"
+    CHECK_DIRECTORY="$CHECK_DIRECTORY" "$script"
     if [ "$?" -eq 1 ]; then
       result=1
     fi
