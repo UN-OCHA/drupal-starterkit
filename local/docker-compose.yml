@@ -76,7 +76,7 @@ services:
       # Local proxy.
       - VIRTUAL_HOST=starterkit-local.test
       - VIRTUAL_PORT=80
-      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_NETWORK=${PROXY:-proxy}
       - HTTPS_METHOD=noredirect
     labels:
       caddy: starterkit-local.test
