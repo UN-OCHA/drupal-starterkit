@@ -27,7 +27,5 @@ jobs:
         docker_password: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
         ecr_github_token: ${{ secrets.ECR_GITHUB_TOKEN }}
         ecr_jenkins_token: ${{ secrets.JENKINS_ECR_TOKEN }}
-        flowdock_token: ${{ secrets.FLOWDOCK_TOKEN }}
-        flowdock_icon_failure: 'warning'
         slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         slack_channel_name: ${{ secrets.SLACK_CHANNEL }}
