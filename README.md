@@ -1,6 +1,6 @@
 # Drupal Starter Kit
 
-This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 9 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).
+This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 10 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).
 
 See https://humanitarian.atlassian.net/browse/OPS-7611
 
@@ -36,7 +36,7 @@ Edit the following files, replacing `starterkit` with your project name (ex: `my
 
 Edit the following files:
 
-- [docker/Dockerfile](docker/Dockerfile) --> change `starterkit.test` to your **production** site URL.
+- [docker/Dockerfile](docker/Dockerfile) --> change `starterkit.prod` to your **production** site URL.
 - [Makefile](Makefile) --> change `starterkit` to your project name (ex: `my-website`).
 
 ### Composer
@@ -113,6 +113,10 @@ The `theme_switcher` module helps control which theme to use on which pages.
 The `field_group` module helps organizing fields in a form.
 
 - https://www.drupal.org/project/field_group
+
+## Patches
+
+See the [patches/notes.md](patches/notes.md) about Drupal 10 compatibility patches etc.
 
 ## Running the site
 
