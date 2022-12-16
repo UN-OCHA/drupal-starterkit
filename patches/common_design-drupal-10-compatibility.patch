@@ -1,0 +1,69 @@
+diff --git a/common_design.info.yml b/common_design.info.yml
+index ca86d3c..af2e0f9 100644
+--- a/common_design.info.yml
++++ b/common_design.info.yml
+@@ -1,7 +1,7 @@
+ name: OCHA Common Design
+ type: theme
+ description: OCHA Common Design drupal theme. Use as a base theme, and extend.
+-core_version_requirement: ^8.8 || ^9
++core_version_requirement: ^9 || ^10
+ base theme: stable
+ logo: 'img/logos/ocha-lockup-blue.svg'
+ 
+diff --git a/common_design_subtheme/common_design_subtheme.info.yml.example b/common_design_subtheme/common_design_subtheme.info.yml.example
+index 2dbde6a..8794cb6 100644
+--- a/common_design_subtheme/common_design_subtheme.info.yml.example
++++ b/common_design_subtheme/common_design_subtheme.info.yml.example
+@@ -1,6 +1,6 @@
+ name: OCHA Common Design sub-theme
+ description: OCHA Common Design sub-theme
+-core_version_requirement: ^8.8 || ^9
++core_version_requirement: ^9 || ^10
+ type: theme
+ base theme: common_design
+ logo: 'img/logos/ocha-lockup-blue.svg'
+diff --git a/templates/navigation/menu--account.html.twig b/templates/navigation/menu--account.html.twig
+index c00c4f9..227b9de 100755
+--- a/templates/navigation/menu--account.html.twig
++++ b/templates/navigation/menu--account.html.twig
+@@ -61,7 +61,7 @@
+           If the menu item has children and javascript is enabled then this will
+           be replaced with a button to show the child menu.
+         #}
+-        {% spaceless %}
++        {% apply spaceless %}
+         <a href="{{ item.url }}" id="{{ id }}">
+           {# Add the user icon for the first menu item of the root element. #}
+           {% if menu_level == 0 and loop.index == 1 %}
+@@ -71,7 +71,7 @@
+           {% endif %}
+           <span>{{ title }}</span>
+         </a>
+-        {% endspaceless %}
++        {% endapply %}
+ 
+         {#
+           If the menu item has children then we mark the sub-menu as toggable
+diff --git a/templates/navigation/menu--help.html.twig b/templates/navigation/menu--help.html.twig
+index ed14b75..2ece6fe 100755
+--- a/templates/navigation/menu--help.html.twig
++++ b/templates/navigation/menu--help.html.twig
+@@ -61,7 +61,7 @@
+           If the menu item has children and javascript is enabled then this will
+           be replaced with a button to show the child menu.
+         #}
+-        {% spaceless %}
++        {% apply spaceless %}
+         <a href="{{ item.url }}" id="{{ id }}">
+           {# Add the user icon for the first menu item of the root element. #}
+           {% if menu_level == 0 and loop.index == 1 %}
+@@ -71,7 +71,7 @@
+           {% endif %}
+           <span>{{ title }}</span>
+         </a>
+-        {% endspaceless %}
++        {% endapply %}
+ 
+         {# If the menu item has children then we mark it as toggable and we'll
+            let the dropdown javascript handle the rest. #}

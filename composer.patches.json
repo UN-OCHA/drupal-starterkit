@@ -1,15 +1,26 @@
 {
   "patches": {
-    "drupal/core" : {
-      "https://www.drupal.org/project/drupal/issues/2544110": "https://www.drupal.org/files/issues/2021-02-11/2544110-100.patch",
-      "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
+    "drupal/admin_denied": {
+      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-07-18/admin_denied.1.x-dev.rector.patch"
     },
     "drupal/csp": {
       "Simplify log format": "patches/csp-log-format.patch"
     },
+    "drupal/imageapi_optimize": {
+      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-06-15/imageapi_optimize.4.x-dev.rector.patch"
+    },
+    "drupal/imageapi_optimize_binaries": {
+      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-07-23/imageapi_optimize_binaries.1.x-dev.rector.patch"
+    },
+    "drupal/maintenance200": {
+      "Drupal 10 compatibility": "patches/maintenance200-drupal-10-compatibility.patch"
+    },
     "drupal/user_expire": {
       "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
       "Reset expiration when user is reactivated": "https://git.drupalcode.org/project/user_expire/-/merge_requests/6.diff"
+    },
+    "unocha/common_design": {
+      "Drupal 10 compatibility": "patches/common_design-drupal-10-compatibility.patch"
     }
   }
 }
