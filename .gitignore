@@ -41,6 +41,7 @@ buildlog.txt
 /private/
 /notes/
 /.idea/
+/.composer/
 
 # Coverage
 /phpcov.phar
