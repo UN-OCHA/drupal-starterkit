@@ -1,7 +1,6 @@
 {
   "patches": {
     "drupal/core" : {
-      "https://www.drupal.org/project/drupal/issues/2544110": "https://www.drupal.org/files/issues/2021-02-11/2544110-100.patch",
       "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
     },
     "drupal/csp": {
