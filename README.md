@@ -36,7 +36,7 @@ Edit the following files, replacing `starterkit` with your project name (ex: `my
 
 Edit the following files:
 
-- [docker/Dockerfile](docker/Dockerfile) --> change `starterkit.test` to your **production** site URL.
+- [docker/Dockerfile](docker/Dockerfile) --> change `starterkit.prod` to your **production** site URL.
 - [Makefile](Makefile) --> change `starterkit` to your project name (ex: `my-website`).
 
 ### Composer
