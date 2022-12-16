@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Lint js files.
+
+# We only lint files from the custom themes and modules.
+include='^(html/themes/custom/[^/]+/(js|components)|html/modules/custom)/.*\.js$'
+exclude='(node_modules|vendor)'
+
+# The linter path is relative to the root of the repository.
+relative=1
+linter="html/themes/custom/common_design_subtheme/node_modules/.bin/eslint"
+options="--config html/themes/custom/common_design_subtheme/.eslintrc --no-eslintrc"
+message='Linting JS files...'
+
+# Load and execute the linting code.
+. "$(dirname "$0")/lint-common"

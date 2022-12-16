@@ -1,4 +1,14 @@
 {
   "patches": {
+    "drupal/core" : {
+      "https://www.drupal.org/project/drupal/issues/3143617": "https://www.drupal.org/files/issues/2020-07-07/3143617-28_0.patch"
+    },
+    "drupal/csp": {
+      "Simplify log format": "patches/csp-log-format.patch"
+    },
+    "drupal/user_expire": {
+      "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
+      "Reset expiration when user is reactivated": "https://git.drupalcode.org/project/user_expire/-/merge_requests/6.diff"
+    }
   }
 }

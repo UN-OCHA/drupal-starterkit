@@ -1,20 +1,20 @@
-uuid: cdd282e5-b277-40c2-9e66-4ba2aa68b699
+uuid: aa210568-8816-4185-9c70-7eedd90256dd
 langcode: en
 status: true
 dependencies:
   theme:
     - common_design_subtheme
 _core:
-  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+  default_config_hash: ABoKnlk20KHqZRw_2Qr4EvaFvH4lnQ2nuhunHeE1JIU
 id: common_design_subtheme_local_actions
 theme: common_design_subtheme
 region: content
-weight: -3
+weight: -10
 provider: null
 plugin: local_actions_block
 settings:
   id: local_actions_block
   label: 'Primary admin actions'
-  provider: core
   label_display: '0'
+  provider: core
 visibility: {  }

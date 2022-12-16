@@ -38,3 +38,5 @@ if (file_exists('/srv/www/shared/settings')) {
     include_once $filename;
   }
 }
+
+$settings['config_sync_directory'] = dirname($app_root) . '/config';

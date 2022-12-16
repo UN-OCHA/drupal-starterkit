@@ -1,0 +1,86 @@
+version: "2.2"
+
+networks:
+  default:
+  proxy:
+    external:
+      name: ${PROXY:-proxy}
+
+volumes:
+  starterkit-local-site-database:
+  starterkit-local-site-public:
+  starterkit-local-site-private:
+
+services:
+  memcache:
+    restart: always
+    image: memcached:alpine
+    hostname: starterkit-local-memcache
+    container_name: starterkit-local-memcache
+    entrypoint: ["memcached", "-m", "64"]
+    ports:
+      - "11211"
+    networks:
+      - default
+
+  mysql:
+    image: mariadb:latest
+    hostname: starterkit-local-mysql
+    container_name: starterkit-local-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=starterkit
+      - MYSQL_USER=starterkit
+      - MYSQL_PASSWORD=starterkit
+    volumes:
+      - "starterkit-local-site-database:/var/lib/mysql:rw"
+    networks:
+      - default
+
+  drupal:
+    image: public.ecr.aws/unocha/starterkit-site:local
+    hostname: starterkit-local-site
+    container_name: starterkit-local-site
+    depends_on:
+      - memcache
+      - mysql
+    volumes:
+      - "./shared/settings:/srv/www/shared/settings:ro"
+      # Mount volumes for the private and public files.
+      - "starterkit-local-site-public:/srv/www/html/sites/default/files:rw"
+      - "starterkit-local-site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folders needed for the tests.
+      - "../phpcs.xml:/srv/www/phpcs.xml:ro"
+      - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      # Mount local custom code.
+      - "../html/modules/custom:/srv/www/html/modules/custom:rw"
+      - "../html/themes/custom:/srv/www/html/themes/custom:rw"
+      # Mount configuration and allow overriding it.
+      - "../config:/srv/www/config:rw"
+    environment:
+      - TERM=xterm
+      - ENVIRONMENT=dev
+      - NGINX_SERVERNAME=starterkit-local.test
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,starterkit-local.test
+      - DRUSH_OPTIONS_URI=https://starterkit-local.test
+      - DRUPAL_DB_DATABASE=starterkit
+      - DRUPAL_DB_USERNAME=starterkit
+      - DRUPAL_DB_PASSWORD=starterkit
+      - DRUPAL_DB_HOST=mysql
+      - DRUPAL_DB_DRIVER=mysql
+      - PHP_ENVIRONMENT=dev
+      - PHP_XDEBUG=true
+      # Rate limiting.
+      - NGINX_LIMIT_HUMANS=1024r/s
+      - NGINX_BURST_HUMANS=1024
+      # Local proxy.
+      - VIRTUAL_HOST=starterkit-local.test
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=${PROXY:-proxy}
+      - HTTPS_METHOD=noredirect
+    labels:
+      caddy: starterkit-local.test
+      caddy.reverse_proxy: "{{upstreams}}"
+    networks:
+      - default
+      - proxy

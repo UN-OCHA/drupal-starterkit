@@ -1,5 +1,6 @@
 # Ignore everything except for the files necessary to build the codebase.
 *
+!assets
 !config
 !docker
 !html/modules/custom
@@ -9,6 +10,7 @@
 !composer.json
 !composer.lock
 !composer.patches.json
+!symfony.lock
 !load.environment.php
 
 # Ignore the node modules in the common design subtheme.

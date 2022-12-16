@@ -1,11 +1,12 @@
+_core:
+  default_config_hash: aDAuKinNUSmlWFFUTQRGt_8VoL0d8RUKNeYKlClzscw
+client_id: CLIENT_ID
+client_secret: SECRET
 base_url: 'https://auth.humanitarian.id'
 auto_redirect: true
 disable_default: true
 disable_password_fields: true
-disable_email_field: true
+disable_email_field: false
 disable_user_field: true
-maintenance_access: true
-_core:
-  default_config_hash: C_2nIdfM0mqImwzMZsxo7ZHLZBgqzmsIP8-klZwsRjY
-client_id: CLIENT_ID
-client_secret: SECRET
+disable_user_create: true
+maintenance_access: false
