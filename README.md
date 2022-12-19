@@ -71,7 +71,7 @@ See the [Running the site](#running-the-site) section below.
 - [local/install.sh](local/install.sh)
 - [local/shared/settings/settings.local.php](local/shared/settings/settings.local.php)
 
-## Recommanded modules
+## Recommended modules
 
 Here's a list of commonly used modules among the UN-OCHA websites.
 
