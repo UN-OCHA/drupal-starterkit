@@ -48,6 +48,7 @@ LABEL info.humanitarianresponse.build.date=$BUILD_DATE \
 
 COPY --from=builder /srv/www/assets /srv/www/assets/
 COPY --from=builder /srv/www/config /srv/www/config/
+COPY --from=builder /srv/www/config_dev /srv/www/config_dev/
 COPY --from=builder /srv/www/html /srv/www/html/
 COPY --from=builder /srv/www/vendor /srv/www/vendor/
 COPY --from=builder /srv/www/composer.json /srv/www/composer.json
