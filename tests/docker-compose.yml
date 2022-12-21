@@ -44,8 +44,9 @@ services:
     volumes:
       - "./settings:/srv/www/shared/settings:ro"
       # Mount volumes for the private and public files.
-      - "starterkit-test-site-public:/srv/www/html/sites/default/files:rw"
-      - "starterkit-test-site-private:/srv/www/html/sites/default/private:rw"
+      # Temporarily disabled to try to get tests to run.
+      # - "starterkit-test-site-public:/srv/www/html/sites/default/files:rw"
+      # - "starterkit-test-site-private:/srv/www/html/sites/default/private:rw"
       # Mount the folders needed for the tests.
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
