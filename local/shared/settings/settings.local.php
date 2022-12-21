@@ -141,6 +141,9 @@ $settings['file_private_path'] = '/srv/www/html/sites/default/private';
 // Default sync directory.
 $settings['config_sync_directory'] = '/srv/www/config';
 
+// Enable config_split locally.
+$config['config_split.config_split.config_dev']['status'] = TRUE;
+
 // Hash salt.
 $settings['hash_salt'] = 'starterkit-local-site-salt';
 
