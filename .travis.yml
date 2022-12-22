@@ -42,8 +42,7 @@ script:
   - docker exec -it starterkit-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
 
   # Install the dev dependencies.
-  # Try without this as it's blocking the tests and there's nothing to install.
-  # - docker exec -it -w /srv/www starterkit-test-site composer install
+  - docker exec -it -w /srv/www starterkit-test-site composer install
 
   # Make sure the common design subtheme is installed.
   - docker exec -it -w /srv/www starterkit-test-site composer run sub-theme

@@ -11,11 +11,7 @@ COPY . /srv/www
 WORKDIR /srv/www
 
 # Clean up previous composer installation and run new one.
-RUN rm -rf ./vendor && \
-    # Update composer to avoid issues with missing drupal files.
-    # @see https://github.com/drupal-composer/drupal-project/issues/282
-    composer selfupdate && \
-    composer install --no-interaction
+RUN rm -rf ./vendor && composer install --no-interaction
 
 # Copy settings to default site location.
 RUN cp -a docker/settings.php docker/services.yml docker/memcache.services.yml html/sites/default
