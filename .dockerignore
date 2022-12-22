@@ -2,6 +2,7 @@
 *
 !assets
 !config
+!config_dev
 !docker
 !html/modules/custom
 !html/themes/custom
