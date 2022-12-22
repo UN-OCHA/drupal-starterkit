@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46236e0922cded0a710fc6efed34f0b2",
+    "content-hash": "ca611a9a8f88253299620df610379fc5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1500,16 +1500,16 @@
         },
         {
             "name": "cweagans/composer-patches",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweagans/composer-patches.git",
-                "reference": "e9969cfc0796e6dea9b4e52f77f18e1065212871"
+                "reference": "e190d4466fe2b103a55467dfa83fc2fecfcaf2db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/e9969cfc0796e6dea9b4e52f77f18e1065212871",
-                "reference": "e9969cfc0796e6dea9b4e52f77f18e1065212871",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/e190d4466fe2b103a55467dfa83fc2fecfcaf2db",
+                "reference": "e190d4466fe2b103a55467dfa83fc2fecfcaf2db",
                 "shasum": ""
             },
             "require": {
@@ -1542,9 +1542,9 @@
             "description": "Provides a way to patch Composer packages.",
             "support": {
                 "issues": "https://github.com/cweagans/composer-patches/issues",
-                "source": "https://github.com/cweagans/composer-patches/tree/1.7.2"
+                "source": "https://github.com/cweagans/composer-patches/tree/1.7.3"
             },
-            "time": "2022-01-25T19:21:20+00:00"
+            "time": "2022-12-20T22:53:13+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -6214,16 +6214,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.15.1",
+            "version": "1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "950bddf2c4203fa08ad27b8349bba1f32a8a7ebe"
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/950bddf2c4203fa08ad27b8349bba1f32a8a7ebe",
-                "reference": "950bddf2c4203fa08ad27b8349bba1f32a8a7ebe",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/61800f71a5526081d1b5633766aa88341f1ade76",
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76",
                 "shasum": ""
             },
             "require": {
@@ -6253,22 +6253,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.3"
             },
-            "time": "2022-12-15T16:40:13+00:00"
+            "time": "2022-12-20T20:56:55+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.21",
+            "version": "9.2.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
+                "reference": "e4bf60d2220b4baaa0572986b5d69870226b06df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
-                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/e4bf60d2220b4baaa0572986b5d69870226b06df",
+                "reference": "e4bf60d2220b4baaa0572986b5d69870226b06df",
                 "shasum": ""
             },
             "require": {
@@ -6324,7 +6324,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.22"
             },
             "funding": [
                 {
@@ -6332,7 +6332,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-14T13:26:54+00:00"
+            "time": "2022-12-18T16:40:55+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -11791,16 +11791,16 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "f4ef51b95fb8eaab0c4b034e573b4dbefedad6e3"
+                "reference": "c349f709576eda763ddce2f7578457dd8508b8cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/f4ef51b95fb8eaab0c4b034e573b4dbefedad6e3",
-                "reference": "f4ef51b95fb8eaab0c4b034e573b4dbefedad6e3",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/c349f709576eda763ddce2f7578457dd8508b8cb",
+                "reference": "c349f709576eda763ddce2f7578457dd8508b8cb",
                 "shasum": ""
             },
             "require": {
@@ -11814,9 +11814,9 @@
             "description": "OCHA Common Design base theme for Drupal 8",
             "support": {
                 "issues": "https://github.com/UN-OCHA/common_design/issues",
-                "source": "https://github.com/UN-OCHA/common_design/tree/v7.3.0"
+                "source": "https://github.com/UN-OCHA/common_design/tree/v7.4.0"
             },
-            "time": "2022-11-16T10:44:02+00:00"
+            "time": "2022-12-21T10:16:39+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -12614,6 +12614,75 @@
             "time": "2022-12-19T13:58:18+00:00"
         },
         {
+            "name": "drupal/config_filter",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/config_filter.git",
+                "reference": "8.x-2.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/config_filter-8.x-2.4.zip",
+                "reference": "8.x-2.4",
+                "shasum": "dcf442f228dafd6bbac8948db1d51e3f1ca1d0c7"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "conflict": {
+                "drush/drush": "<10"
+            },
+            "suggest": {
+                "drupal/config_split": "Split site configuration for different environments."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.4",
+                    "datestamp": "1656936801",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Bircher",
+                    "homepage": "https://www.drupal.org/u/bircher",
+                    "email": "opensource@fabianbircher.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Nuvole Web",
+                    "homepage": "http://nuvole.org",
+                    "email": "info@nuvole.org",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "pescetti",
+                    "homepage": "https://www.drupal.org/user/436244"
+                }
+            ],
+            "description": "Config Filter allows other modules to interact with a ConfigStorage through filter plugins.",
+            "homepage": "https://www.drupal.org/project/config_filter",
+            "keywords": [
+                "Drupal",
+                "configuration",
+                "configuration management"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/config_filter",
+                "issues": "https://www.drupal.org/project/issues/config_filter",
+                "slack": "https://drupal.slack.com/archives/C45342CDD"
+            }
+        },
+        {
             "name": "drupal/config_inspector",
             "version": "2.1.0",
             "source": {
@@ -13018,17 +13087,17 @@
         },
         {
             "name": "drupal/devel",
-            "version": "5.1.0",
+            "version": "5.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/devel.git",
-                "reference": "5.1.0"
+                "reference": "5.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/devel-5.1.0.zip",
-                "reference": "5.1.0",
-                "shasum": "92ad0e11e6403681d15591a7572000391efc5432"
+                "url": "https://ftp.drupal.org/files/projects/devel-5.1.1.zip",
+                "reference": "5.1.1",
+                "shasum": "d7423dfe9c2333508618975c37f3b63026adca50"
             },
             "require": {
                 "doctrine/common": "^2.7 || ^3.4",
@@ -13048,8 +13117,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "5.1.0",
-                    "datestamp": "1671039217",
+                    "version": "5.1.1",
+                    "datestamp": "1671644739",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -13895,16 +13964,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "709999b91448d4f2bb07daffffedc889b33e461c"
+                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/709999b91448d4f2bb07daffffedc889b33e461c",
-                "reference": "709999b91448d4f2bb07daffffedc889b33e461c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d03bccee595e2146b7c9d174486b84f4dc61b0f2",
+                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2",
                 "shasum": ""
             },
             "require": {
@@ -13934,7 +14003,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.3"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.4"
             },
             "funding": [
                 {
@@ -13950,7 +14019,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-13T10:28:10+00:00"
+            "time": "2022-12-17T13:33:52+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
