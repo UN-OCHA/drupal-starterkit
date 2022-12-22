@@ -41,6 +41,9 @@ script:
   # Ensure the file directories are writable.
   - docker exec -it starterkit-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
 
+  # Show composer version.
+  - docker exec -it -w /srv/www starterkit-test-site composer --version
+
   # Install the dev dependencies.
   - docker exec -it -w /srv/www starterkit-test-site composer install
 
