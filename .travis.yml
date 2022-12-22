@@ -26,61 +26,64 @@ script:
   # PHP linting
   - test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
 
-  # Build local image.
-  - make
+  # Show composer version in builder
+  - docker run --rm public.ecr.aws/unocha/unified-builder:8.0-stable composer --version
 
-  # Create the site and mysql containers.
-  - docker-compose -p starterkit-test -f tests/docker-compose.yml up -d
+#   # Build local image.
+#   - make
 
-  # Dump some information about the created containers.
-  - docker ps -a
+#   # Create the site and mysql containers.
+#   - docker-compose -p starterkit-test -f tests/docker-compose.yml up -d
 
-  # Wait a bit for mysql to be ready.
-  - sleep 10
+#   # Dump some information about the created containers.
+#   - docker ps -a
 
-  # Ensure the file directories are writable.
-  - docker exec -it starterkit-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
+#   # Wait a bit for mysql to be ready.
+#   - sleep 10
 
-  # Show composer version.
-  - docker exec -it -w /srv/www starterkit-test-site composer --version
+#   # Ensure the file directories are writable.
+#   - docker exec -it starterkit-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
 
-  # Install the dev dependencies.
-  - docker exec -it -w /srv/www starterkit-test-site composer install
+#   # Show composer version.
+#   - docker exec -it -w /srv/www starterkit-test-site composer --version
 
-  # Make sure the common design subtheme is installed.
-  - docker exec -it -w /srv/www starterkit-test-site composer run sub-theme
+#   # Install the dev dependencies.
+#   - docker exec -it -w /srv/www starterkit-test-site composer install
 
-  # Check coding standards.
-  - docker exec -it -u appuser -w /srv/www starterkit-test-site ./vendor/bin/phpcs -p --report=full ./html/modules/custom ./html/themes/custom
+#   # Make sure the common design subtheme is installed.
+#   - docker exec -it -w /srv/www starterkit-test-site composer run sub-theme
 
-  # Run unit tests.
-  - docker exec -it -u root -w /srv/www starterkit-test-site mkdir -p /srv/www/html/sites/default/files/browser_output
-  - docker exec -it -u root -w /srv/www -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output starterkit-test-site ./vendor/bin/phpunit --testsuite Unit --debug
+#   # Check coding standards.
+#   - docker exec -it -u appuser -w /srv/www starterkit-test-site ./vendor/bin/phpcs -p --report=full ./html/modules/custom ./html/themes/custom
 
-  # Install the site with the existing config.
-  - docker exec -it starterkit-test-site drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
-  - docker exec -it starterkit-test-site drush -y en dblog
+#   # Run unit tests.
+#   - docker exec -it -u root -w /srv/www starterkit-test-site mkdir -p /srv/www/html/sites/default/files/browser_output
+#   - docker exec -it -u root -w /srv/www -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output starterkit-test-site ./vendor/bin/phpunit --testsuite Unit --debug
 
-  # Create the build logs directory and make sure it's writable.
-  - docker exec -it -u root starterkit-test-site mkdir -p /srv/www/html/build/logs
-  - docker exec -it -u root starterkit-test-site chmod -R 777 /srv/www/html/build/logs
+#   # Install the site with the existing config.
+#   - docker exec -it starterkit-test-site drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
+#   - docker exec -it starterkit-test-site drush -y en dblog
 
-  # Run all tests and generate coverage report.
-  - docker exec -it -u root -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 starterkit-test-site ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
+#   # Create the build logs directory and make sure it's writable.
+#   - docker exec -it -u root starterkit-test-site mkdir -p /srv/www/html/build/logs
+#   - docker exec -it -u root starterkit-test-site chmod -R 777 /srv/www/html/build/logs
 
-after_success:
-  - echo "The tests completed without errors."
-  # Create directory for clover.
-  - mkdir -p ./build/logs
-  - chmod -R 777 ./build/logs
-  - docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
-  # Fix source files path.
-  - sed -i 's#/srv/www#.#g' build/logs/clover.xml
-  # Get coveralls and execute.
-  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
-  - chmod +x php-coveralls.phar
-  - ./php-coveralls.phar -vv
+#   # Run all tests and generate coverage report.
+#   - docker exec -it -u root -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 starterkit-test-site ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
 
-after_failure:
-  - echo "The tests failed. Please check the output above for problems."
-  - docker exec -it starterkit-test-site drush watchdog:show --extended
+# after_success:
+#   - echo "The tests completed without errors."
+#   # Create directory for clover.
+#   - mkdir -p ./build/logs
+#   - chmod -R 777 ./build/logs
+#   - docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
+#   # Fix source files path.
+#   - sed -i 's#/srv/www#.#g' build/logs/clover.xml
+#   # Get coveralls and execute.
+#   - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
+#   - chmod +x php-coveralls.phar
+#   - ./php-coveralls.phar -vv
+
+# after_failure:
+#   - echo "The tests failed. Please check the output above for problems."
+#   - docker exec -it starterkit-test-site drush watchdog:show --extended
