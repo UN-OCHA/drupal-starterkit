@@ -146,3 +146,10 @@ $config['config_split.config_split.config_dev']['status'] = TRUE;
 
 // Hash salt.
 $settings['hash_salt'] = 'starterkit-local-site-salt';
+
+// Ensure the dev_mod module configuration is not saved.
+if (isset($settings['config_exclude_modules']) && is_array($settings['config_exclude_modules'])) {
+  $settings['config_exclude_modules'][] = 'dev_mode';
+} else {
+  $settings['config_exclude_modules'] = ['dev_mode'];
+}

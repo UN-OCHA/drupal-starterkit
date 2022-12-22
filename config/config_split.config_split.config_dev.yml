@@ -6,15 +6,14 @@ id: config_dev
 label: config_dev
 description: 'Dev modules and settings not suitable for production.'
 weight: 0
+stackable: false
+storage: folder
 folder: ../config_dev
 module:
   config_filter: 0
   dblog: 0
   devel: 0
   views_ui: 0
-  dev_mode: 49
 theme: {  }
-blacklist: {  }
-graylist: {  }
-graylist_dependents: true
-graylist_skip_equal: true
+complete_list: {  }
+partial_list: {  }
