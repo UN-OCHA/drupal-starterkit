@@ -1,12 +1,16 @@
 # Drupal Starter Kit
 
-This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 9 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).
+**Drupal 10 version**
+
+This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 10 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).
 
 See https://humanitarian.atlassian.net/browse/OPS-7611
 
 Use `composer create-project` to install after cloning or `composer create-project unocha/starterkit`
 
 Then run `scripts/setup.sh` (see [What to change?](#what-to-change) below).
+
+*The Drupal 9 version is in the [D9](tree/D9) branch.*
 
 ## What to change?
 
@@ -71,7 +75,7 @@ See the [Running the site](#running-the-site) section below.
 - [local/install.sh](local/install.sh)
 - [local/shared/settings/settings.local.php](local/shared/settings/settings.local.php)
 
-## Recommanded modules
+## Recommended modules
 
 Here's a list of commonly used modules among the UN-OCHA websites.
 
@@ -113,6 +117,10 @@ The `theme_switcher` module helps control which theme to use on which pages.
 The `field_group` module helps organizing fields in a form.
 
 - https://www.drupal.org/project/field_group
+
+## Patches
+
+See the [patches/notes.md](patches/notes.md) about Drupal 10 compatibility patches etc.
 
 ## Running the site
 
