@@ -22,10 +22,6 @@ sleep 10
 echo "Ensure the file directories are writable."
 docker exec -it starterkit-test-site chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
 
-# Install the dev dependencies.
-echo "Install the dev dependencies"
-docker exec -it -w /srv/www starterkit-test-site composer install
-
 # Install the common design subtheme.
 echo "Make sure the common design subtheme is installed"
 docker exec -it -w /srv/www starterkit-test-site composer run sub-theme
