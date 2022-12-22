@@ -2,6 +2,7 @@
 /drush/contrib/
 /vendor/
 /bin/
+/.composer/
 
 # Ignore drupal code except for the custom modules and themes.
 /html/*
