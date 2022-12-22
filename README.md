@@ -1,5 +1,7 @@
 # Drupal Starter Kit
 
+**Drupal 10 version**
+
 This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 10 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).
 
 See https://humanitarian.atlassian.net/browse/OPS-7611
@@ -7,6 +9,8 @@ See https://humanitarian.atlassian.net/browse/OPS-7611
 Use `composer create-project` to install after cloning or `composer create-project unocha/starterkit`
 
 Then run `scripts/setup.sh` (see [What to change?](#what-to-change) below).
+
+*The Drupal 9 version is in the [D9](tree/D9) branch.*
 
 ## What to change?
 
