@@ -57,6 +57,7 @@ services:
       - "../html/themes/custom:/srv/www/html/themes/custom:rw"
       # Mount configuration and allow overriding it.
       - "../config:/srv/www/config:rw"
+      - "../config_dev:/srv/www/config_dev:rw"
     environment:
       - TERM=xterm
       - ENVIRONMENT=dev

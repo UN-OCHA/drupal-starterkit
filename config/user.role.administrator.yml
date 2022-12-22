@@ -21,7 +21,6 @@ dependencies:
     - toolbar
     - update
     - user_expire
-    - views_ui
 id: administrator
 label: Administrator
 weight: 2
