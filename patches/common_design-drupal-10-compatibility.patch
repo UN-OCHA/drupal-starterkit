@@ -24,10 +24,10 @@ index 2dbde6a..8794cb6 100644
  base theme: common_design
  logo: 'img/logos/ocha-lockup-blue.svg'
 diff --git a/templates/navigation/menu--account.html.twig b/templates/navigation/menu--account.html.twig
-index c00c4f9..227b9de 100755
+index d2acaec..a8ae929 100755
 --- a/templates/navigation/menu--account.html.twig
 +++ b/templates/navigation/menu--account.html.twig
-@@ -61,7 +61,7 @@
+@@ -60,7 +60,7 @@
            If the menu item has children and javascript is enabled then this will
            be replaced with a button to show the child menu.
          #}
@@ -36,9 +36,9 @@ index c00c4f9..227b9de 100755
          <a href="{{ item.url }}" id="{{ id }}">
            {# Add the user icon for the first menu item of the root element. #}
            {% if menu_level == 0 and loop.index == 1 %}
-@@ -71,7 +71,7 @@
+@@ -70,7 +70,7 @@
            {% endif %}
-           <span>{{ title }}</span>
+           <span>{{ item.title }}</span>
          </a>
 -        {% endspaceless %}
 +        {% endapply %}
