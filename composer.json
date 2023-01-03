@@ -44,7 +44,7 @@
         "drupal/user_expire": "^1.1",
         "drush/drush": "^11.3",
         "oomphinc/composer-installers-extender": "^2.0",
-        "unocha/common_design": "^7.3.0",
+        "unocha/common_design": "^7.4",
         "webflo/drupal-finder": "^1.2.2"
     },
     "require-dev": {
