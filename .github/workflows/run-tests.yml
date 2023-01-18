@@ -126,7 +126,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 -w /srv/www -T drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
         env:
           fail-fast: true
 
