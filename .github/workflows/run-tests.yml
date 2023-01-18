@@ -206,6 +206,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
+            })
 
       - name: Slack Success Notification
         id: slack_success
