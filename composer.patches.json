@@ -1,16 +1,7 @@
 {
   "patches": {
-    "drupal/admin_denied": {
-      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-07-18/admin_denied.1.x-dev.rector.patch"
-    },
     "drupal/csp": {
       "Simplify log format": "patches/csp-log-format.patch"
-    },
-    "drupal/imageapi_optimize": {
-      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-06-15/imageapi_optimize.4.x-dev.rector.patch"
-    },
-    "drupal/imageapi_optimize_binaries": {
-      "Drupal 10 compatibility": "https://www.drupal.org/files/issues/2022-07-23/imageapi_optimize_binaries.1.x-dev.rector.patch"
     },
     "drupal/maintenance200": {
       "Drupal 10 compatibility": "patches/maintenance200-drupal-10-compatibility.patch"
