@@ -98,8 +98,8 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y en dblog
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush -y en dblog
         env:
           fail-fast: true
 
@@ -120,7 +120,7 @@ jobs:
           run: |
             mkdir -p ./build/logs
             chmod -R 777 ./build/logs
-            docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
+            docker-compose -p starterkit-test -f tests/docker-compose.yml cp drupal:/srv/www/html/build/logs/clover.xml ./build/logs/
             sed -i 's#/srv/www#.#g' build/logs/clover.xml
             wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
             chmod +x php-coveralls.phar
