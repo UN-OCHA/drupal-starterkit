@@ -24,10 +24,9 @@ services:
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=starterkit
+      - MYSQL_DB=starterkit
       - MYSQL_USER=starterkit
-      - MYSQL_PASSWORD=starterkit
+      - MYSQL_PASS=starterkit
     volumes:
       - "starterkit-test-site-database:/var/lib/mysql:rw"
     networks:
