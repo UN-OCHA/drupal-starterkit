@@ -1,0 +1,252 @@
+name: Run tests
+
+on: 
+  - pull_request
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer
+        env:
+          fail-fast: true
+
+      - name: Software Versions
+        id: versions
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            php --version && composer --version
+
+      - name: Checkout Code
+        id: checkout
+        uses: actions/checkout@v3
+
+      - name: Composer Validate
+        id: validate
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            composer validate
+        env:
+          fail-fast: true
+
+      - name: PHP Lint
+        id: lint
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+        env:
+          fail-fast: true
+
+      - name: Build Image
+        id: build
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            make
+        env:
+          fail-fast: true
+
+      - name: Start Docker
+        id: docker
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml up -d
+            sleep 10
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
+            docker ps -a
+        env:
+          fail-fast: true
+
+      - name: Install Subtheme
+        id: subtheme
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal composer run sub-theme
+
+      - name: Code Sniffer
+        id: phpcs
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal ./vendor/bin/phpcs -p --report=full ./html/modules/custom ./html/themes/custom
+        env:
+          fail-fast: true
+
+      - name: Unit Tests
+        id: phpunit
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -u root -w /srv/www -T drupal ./vendor/bin/phpunit --testsuite Unit --debug
+        env:
+          fail-fast: true
+
+      - name: Install Site
+        id: install
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y en dblog
+        env:
+          fail-fast: true
+
+      - name: Run Tests
+        id: tests
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal -w /srv/www -T drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
+        env:
+          fail-fast: true
+
+      - name: Coveralls
+        id: coveralls
+        if: success()
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            mkdir -p ./build/logs
+            chmod -R 777 ./build/logs
+            docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
+            sed -i 's#/srv/www#.#g' build/logs/clover.xml
+            wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
+            chmod +x php-coveralls.phar
+            ./php-coveralls.phar -vv
+
+      - name: DB Logs
+        id: dblog
+        if: failure()
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec drupal drush watchdog:show
+
+      - name: Post Success Comment
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Composer Validate \`${{ steps.validate.outcome }}\`
+            #### PHP Lint \`${{ steps.lint.outcome }}\`
+            #### Docker Build \`${{ steps.build.outcome }}\`
+            #### Environment Setup \`${{ steps.docker.outcome }}\`
+            #### Install Subtheme \`${{ steps.subtheme.outcome }}\`
+            #### Code Sniffer \`${{ steps.phpcs.outcome }}\`
+            #### Unit Tests \`${{ steps.phpunit.outcome }}\`
+            #### Install Site \`${{ steps.install.outcome }}\`
+            #### All Tests \`${{ steps.tests.outcome }}\`
+
+            <details><summary>Software Versions</summary>
+
+            \`\`\`${{ steps.versions.outputs.stdout }}\`\`\`
+
+            </details>
+
+            <details><summary>Coverage Report</summary>
+
+            \`\`\`${{ steps.coveralls.outputs.stdout }}\`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      - name: Post Failure Comment
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Composer Validate \`${{ steps.validate.outcome }}\`
+            #### PHP Lint \`${{ steps.lint.outcome }}\`
+            #### Docker Build \`${{ steps.build.outcome }}\`
+            #### Environment Setup \`${{ steps.docker.outcome }}\`
+            #### Install Subtheme \`${{ steps.subtheme.outcome }}\`
+            #### Code Sniffer \`${{ steps.phpcs.outcome }}\`
+            #### Unit Tests \`${{ steps.phpunit.outcome }}\`
+            #### Install Site \`${{ steps.install.outcome }}\`
+            #### All Tests \`${{ steps.tests.outcome }}\`
+
+            <details><summary>Software Versions</summary>
+
+            \`\`\`${{ steps.versions.outputs.stdout }}\`\`\`
+
+            </details>
+
+            <details><summary>Drupal Logs</summary>
+
+            \`\`\`${{ steps.dblog.outputs.stdout }}\`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+
+      - name: Slack Success Notification
+        id: slack_success
+        if: success()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          payload: |
+            {
+              "text": "Tests pass for a pull request on ${{ github.repository }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Pull request by ${{ github.actor }} passed tests for ${{ github.repository }} (<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Review>)"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Slack Failure Notification
+        id: slack_failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          payload: |
+            {
+              "text": "Tests failed for a pull request on ${{ github.repository }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Pull request by ${{ github.actor }} failed tests for ${{ github.repository }} (<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Review>)"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
