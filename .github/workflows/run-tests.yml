@@ -138,7 +138,7 @@ jobs:
           run: |
             mkdir -p ./build/logs
             chmod -R 777 ./build/logs
-            docker-compose -p starterkit-test -f tests/docker-compose.yml cp drupal:/srv/www/html/build/logs/clover.xml ./build/logs/
+            docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
             sed -i 's#/srv/www#.#g' build/logs/clover.xml
             wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
             chmod +x php-coveralls.phar
