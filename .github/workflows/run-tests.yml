@@ -61,7 +61,7 @@ jobs:
           run: |
             docker-compose -p starterkit-test -f tests/docker-compose.yml up -d
             sleep 10
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer install
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
             docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
             docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
             docker ps -a
@@ -73,7 +73,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal composer run sub-theme
 
       - name: Code Sniffer
         id: phpcs
@@ -132,7 +132,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec drupal drush watchdog:show
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush watchdog:show
 
       - name: Post Success Comment
         if: success()
