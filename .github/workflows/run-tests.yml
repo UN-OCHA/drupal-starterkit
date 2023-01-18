@@ -81,7 +81,7 @@ jobs:
             sleep 10
             docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer install
             docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal touch /srv/www/html/build/logs/clover.xml
+            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /bin/sh -c echo '<line num="1" type="method" name="emptyFile" empty="1" count="1"/>' > /srv/www/html/build/logs/clover.xml
             docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
             docker ps -a
         env:
