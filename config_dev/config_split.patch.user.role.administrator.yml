@@ -1,0 +1,7 @@
+adding:
+  dependencies:
+    module:
+      - views_ui
+  permissions:
+    - 'administer views'
+removing: {  }

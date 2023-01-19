@@ -1,0 +1,37 @@
+uuid: 33056ac1-ae07-47f4-befd-5ee618b151c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.text_editor_simple
+  module:
+    - ckeditor5
+format: text_editor_simple
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - heading
+      - bold
+      - italic
+      - link
+      - bulletedList
+      - numberedList
+      - indent
+      - outdent
+      - '|'
+      - removeFormat
+      - undo
+      - redo
+  plugins:
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      reversed: false
+      startIndex: false
+image_upload: {  }

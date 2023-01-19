@@ -2,8 +2,10 @@ _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   admin_denied: 0
+  allowed_formats: 0
   block: 0
   breakpoint: 0
+  ckeditor5: 0
   components: 0
   config: 0
   config_split: 0
@@ -13,6 +15,8 @@ module:
   datetime: 0
   datetime_range: 0
   dynamic_page_cache: 0
+  editor: 0
+  entity_reference_revisions: 0
   field: 0
   field_ui: 0
   file: 0
@@ -23,10 +27,15 @@ module:
   imageapi_optimize: 0
   imageapi_optimize_binaries: 0
   imagemagick: 0
+  inline_form_errors: 0
   language: 0
+  layout_discovery: 0
+  layout_paragraphs: 0
   link: 0
   locale: 0
   maintenance200: 0
+  media: 0
+  media_library: 0
   memcache: 0
   memcache_admin: 0
   menu_link_content: 0
@@ -38,12 +47,14 @@ module:
   path: 0
   path_alias: 0
   redirect: 0
+  responsive_image: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0
   sophron: 0
   syslog: 0
   system: 0
+  taxonomy: 0
   text: 0
   token: 0
   toolbar: 0
@@ -51,9 +62,12 @@ module:
   user: 0
   user_display_name: 0
   user_expire: 0
+  xmlsitemap_engines: 0
   pathauto: 1
+  xmlsitemap: 1
   content_translation: 10
   views: 10
+  paragraphs: 11
   minimal: 1000
 theme:
   stark: 0

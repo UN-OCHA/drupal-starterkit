@@ -86,11 +86,15 @@ Many UN-OCHA websites use the `paragraphs` module and related ones to structure 
 - https://www.drupal.org/project/paragraphs
 - https://www.drupal.org/project/layout_paragraphs
 
+*This is enabled by default as of 2023-01-19.*
+
 ### XML Sitemap
 
 To help search engines index your website, the `xmlsitemap` can help generate and submit a site map of your content.
 
 - https://www.drupal.org/project/xmlsitemap
+
+*This is enabled by default as of 2023-01-19 but no sitemap is configured.*
 
 **Note:** you may want to edit the [assets/robots.txt.append](assets/robots.txt.append) file to indicate the URL of your sitemap:
 

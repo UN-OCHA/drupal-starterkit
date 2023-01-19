@@ -66,7 +66,6 @@ permissions:
   - 'administer user fields'
   - 'administer user form display'
   - 'administer users'
-  - 'administer views'
   - 'bypass node access'
   - 'cancel account'
   - 'change own username'

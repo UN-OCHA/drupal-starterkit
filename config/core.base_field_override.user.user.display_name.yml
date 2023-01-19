@@ -1,0 +1,18 @@
+uuid: 3e1ba163-9e97-4b4f-b46a-5d4d19abcb3e
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.user.display_name
+field_name: display_name
+entity_type: user
+bundle: user
+label: 'Display Name'
+description: 'Preferred display name.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
