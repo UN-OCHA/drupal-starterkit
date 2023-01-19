@@ -10,6 +10,9 @@
       "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
       "Reset expiration when user is reactivated": "https://git.drupalcode.org/project/user_expire/-/merge_requests/6.diff"
     },
+    "drupal/xmlsitemap": {
+      "https://www.drupal.org/project/xmlsitemap/issues/3323148": "https://git.drupalcode.org/project/xmlsitemap/-/merge_requests/23.diff"
+    },
     "unocha/common_design": {
       "Drupal 10 compatibility": "patches/common_design-drupal-10-compatibility.patch"
     }
