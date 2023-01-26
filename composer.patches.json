@@ -7,8 +7,8 @@
       "Drupal 10 compatibility": "patches/maintenance200-drupal-10-compatibility.patch"
     },
     "drupal/user_expire": {
-      "Allow the notification email to be customised": "https://git.drupalcode.org/project/user_expire/-/merge_requests/5.diff",
-      "Reset expiration when user is reactivated": "https://git.drupalcode.org/project/user_expire/-/merge_requests/6.diff"
+      "Allow the notification email to be customised": "patches/user_expire-customize-notification-email.patch",
+      "Reset expiration when user is reactivated": "patches/user_expire-reset-expiration-on-reactivation.patch"
     },
     "drupal/xmlsitemap": {
       "https://www.drupal.org/project/xmlsitemap/issues/3323148": "https://git.drupalcode.org/project/xmlsitemap/-/merge_requests/23.diff"

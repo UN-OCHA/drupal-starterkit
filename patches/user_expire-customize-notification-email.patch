@@ -1,0 +1,187 @@
+diff --git a/config/install/user_expire.settings.yml b/config/install/user_expire.settings.yml
+index 62f9e8c7d5a064d87448b0faf5811a08709370c7..ea9fb144d2add8031bcafc516fb46cca209eb6c9 100644
+--- a/config/install/user_expire.settings.yml
++++ b/config/install/user_expire.settings.yml
+@@ -1,3 +1,7 @@
+ frequency: 172800
+ offset: 604800
+ user_expire_roles: {}
++send_mail: true
++mail:
++  subject: "[site:name]: Account expiration warning"
++  body: "Hello [user:display-name]\r\n\r\nBecause you have not logged in recently, your account at [site:name] will be blocked in the near future. If you still use this site, please log in [site:login-url] to prevent your account being blocked.\r\n\r\n-- [site:name] team"
+diff --git a/config/schema/user_expire.schema.yml b/config/schema/user_expire.schema.yml
+index a46bc68eeea8b41fa1e7bde72008daf77d54032d..f8e9e2e101f58d8f5a5cbfb87483bc9821a6a7a6 100644
+--- a/config/schema/user_expire.schema.yml
++++ b/config/schema/user_expire.schema.yml
+@@ -7,9 +7,21 @@ user_expire.settings:
+     frequency:
+       type: integer
+       label: 'Frequency time in seconds'
++    mail:
++      type: mapping
++      mapping:
++        subject:
++          type: string
++          label: 'Subject line for the notification email'
++        body:
++          type: string
++          label: 'Body for the notification email'
+     offset:
+       type: integer
+       label: 'Warning offset time in seconds'
++    send_mail:
++      type: integer
++      label: 'Flag that enables or disables expiry emails'
+     user_expire_roles:
+       type: sequence
+       label: 'Roles and expire value'
+diff --git a/src/Form/UserExpireSettingsForm.php b/src/Form/UserExpireSettingsForm.php
+index 8d7e2d0d0f01265abce72f018b8b32facf76087a..d8d9cb6671b29364c0ba198e893e823261079412 100644
+--- a/src/Form/UserExpireSettingsForm.php
++++ b/src/Form/UserExpireSettingsForm.php
+@@ -111,6 +111,50 @@ class UserExpireSettingsForm extends ConfigFormBase {
+       ];
+     }
+ 
++    // Enable or disable email notifications.
++    $form['send_mail'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Send notifiation emails'),
++      '#default_value' => $config->get('send_mail') ?: true,
++      '#description' => $this->t('Send a notification email to the user, starting at the defined offset time before account expiry.'),
++    ];
++
++    // Notification email template.
++    $form['mail'] = [
++      '#type' => 'fieldset',
++      '#title' => $this->t('Notification email'),
++    ];
++
++    $form['mail']['settings'] = [
++      '#type' => 'container',
++      '#states' => [
++        // Hide the additional settings when this email is disabled.
++        'invisible' => [
++          'input[name="send_mail"]' => ['checked' => FALSE],
++        ],
++      ],
++    ];
++
++    $form['mail']['settings']['notification_subject'] = [
++      '#type' => 'textfield',
++      '#title' => $this->t('Subject'),
++      '#default_value' => $config->get('mail.subject') ?: '',
++      '#description' => $this->t('Subject line for the notification email.'),
++      '#maxlength' => 180,
++    ];
++
++    $form['mail']['settings']['notification_body'] = [
++      '#type' => 'textarea',
++      '#title' => $this->t('Body'),
++      '#default_value' => $config->get('mail.body') ?: '',
++      '#description' => $this->t('Body for the notifiction email.'),
++      '#rows' => 15,
++    ];
++
++    $form['mail']['settings']['help'] = [
++      '#markup' => $this->t('Available token variables for use in the email are: [site:name], [site:url], [site:mail], [user:display-name], [user:account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-url], [user:one-time-login-url], [user:cancel-url]'),
++    ];
++
+     return parent::buildForm($form, $form_state);
+   }
+ 
+@@ -162,6 +206,13 @@ class UserExpireSettingsForm extends ConfigFormBase {
+     }
+ 
+     $config->set('user_expire_roles', $rules);
++
++    // The notification email.
++    $config->set('send_mail', $form_state->getValue('send_mail'));
++
++    $config->set('mail.subject', $form_state->getValue('notification_subject'));
++    $config->set('mail.body', $form_state->getValue('notification_body'));
++
+     $config->save();
+   }
+ 
+diff --git a/user_expire.module b/user_expire.module
+index 26beacd1c168d92962fae31090470698f753ff47..34f61dc939b476aa6a93323f6aff2801fab64891 100644
+--- a/user_expire.module
++++ b/user_expire.module
+@@ -12,6 +12,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
+ use Drupal\user\RoleInterface;
+ use Drupal\Core\Url;
+ use Drupal\Core\Routing\RouteMatchInterface;
++use Drupal\Component\Render\PlainTextOutput;
+ 
+ /**
+  * Implements hook_help().
+@@ -332,18 +333,21 @@ function user_expire_expire_by_role_warning() {
+     if ($uids_to_warn) {
+       foreach ($uids_to_warn as $uid) {
+         $account = \Drupal::entityTypeManager()->getStorage('user')->load($uid->uid);
+-        if ($account) {
++        if (!$account) {
+           $logger->debug('Skipping warning @uid as it failed to load a valid user', [
+             '@uid' => $uid->uid,
+           ]);
+         }
+         else {
+-          $logger->info('Warning about expiring account @name by role', ['@name' => $account->getAccountName()]);
+-          \Drupal::service('plugin.manager.mail')->mail('user_expire', 'expiration_warning', $account->getEmail(), $account->getPreferredLangcode(),
+-            [
+-              'account' => $account,
+-            ]
+-          );
++          // Send a notification email if configured to do so.
++          if ($config->get('send_mail')) {
++            $logger->info('Sending warning about expiring account @name by role', ['@name' => $account->getAccountName()]);
++            \Drupal::service('plugin.manager.mail')->mail('user_expire', 'expiration_warning', $account->getEmail(), $account->getPreferredLangcode(),
++              [
++                'account' => $account,
++              ]
++            );
++          }
+         }
+       }
+     }
+@@ -445,20 +449,23 @@ function user_expire_get_role_rules() {
+  */
+ function user_expire_mail($key, &$message, $params) {
+   if ($key == 'expiration_warning') {
+-    $site_name = \Drupal::config('system.site')->get('name');
+-    // The subject.
+-    $message['subject'] = t('@site_name: Account expiration warning', ['@site_name' => $site_name]);
+-    // The body.
+-    $message['body'][] = t('Hello @user', ['@user' => $params['account']->getAccountName()]);
+-    // An empty string gives a newline.
+-    $message['body'][] = '';
+-    $message['body'][] = t('Because you have not logged in recently, your account at @site_name will be blocked in the near future. If you still use this site, please log in @login_url to avoid having your account blocked.',
+-      [
+-        '@site_name' => $site_name,
+-        '@login_url' => Url::fromRoute('entity.user.canonical', ['user' => \Drupal::currentUser()->id()], ['absolute' => TRUE]),
+-      ]
+-    );
+-    $message['body'][] = '';
+-    $message['body'][] = t('Thanks, @site_name', ['@site_name' => $site_name]);
++
++    $token_service = \Drupal::token();
++    $language_manager = \Drupal::languageManager();
++    $langcode = $message['langcode'];
++    $variables = ['user' => $params['account']];
++
++    $language = $language_manager->getLanguage($params['account']->getPreferredLangcode());
++    $original_language = $language_manager->getConfigOverrideLanguage();
++    $language_manager->setConfigOverrideLanguage($language);
++
++    $config_factory = \Drupal::configFactory();
++    $config = $config_factory->get('user_expire.settings');
++
++    $token_options = ['langcode' => $langcode, 'callback' => 'user_mail_tokens', 'clear' => TRUE];
++    $message['subject'] .= PlainTextOutput::renderFromHtml($token_service->replace($config->get('mail.subject'), $variables, $token_options));
++    $message['body'][] = $token_service->replace($config->get('mail.body'), $variables, $token_options);
++
++    $language_manager->setConfigOverrideLanguage($original_language);
+   }
+ }
