@@ -1,0 +1,51 @@
+diff --git a/tests/src/Functional/UserExpireTest.php b/tests/src/Functional/UserExpireTest.php
+index fb5180d8bc697603e46a4cf8debba8f07ef7552c..6bc1bb618ebfad3726fb0e0d5163f21aabbae3d1 100644
+--- a/tests/src/Functional/UserExpireTest.php
++++ b/tests/src/Functional/UserExpireTest.php
+@@ -161,6 +161,18 @@ class UserExpireTest extends BrowserTestBase {
+     // Ensure they are disabled.
+     $this->drupalGet("user/" . $new_basic_account->id() . "/edit");
+     $this->assertSession()->responseContains('type="radio" id="edit-status-0" name="status" value="0" checked="checked" class="form-radio"', $this->t('User account is currently disabled.'));
++
++    // Manually unblock the user.
++    $edit = [];
++    $edit['status'] = 1;
++    $this->drupalPostForm("user/" . $new_basic_account->id() . "/edit", $edit, $this->t('Save'));
++
++    // Process it.
++    user_expire_expire_by_role();
++
++    // Ensure they are still active.
++    $this->drupalGet("user/" . $new_basic_account->id() . "/edit");
++    $this->assertSession()->responseContains('type="radio" id="edit-status-1" name="status" value="1" checked="checked" class="form-radio"', $this->t('User account is currently active.'));
+   }
+ 
+ }
+diff --git a/user_expire.module b/user_expire.module
+index cb2958708e8063270d4765ec999009ea51f81ee9..9d7e157fbd908763521551237a7e2cc8d9a4abad 100644
+--- a/user_expire.module
++++ b/user_expire.module
+@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Database\Query\Condition;
+ use Drupal\Core\Datetime\DrupalDateTime;
++use Drupal\user\Entity\User;
+ use Drupal\user\RoleInterface;
+ use Drupal\Core\Url;
+ use Drupal\Core\Routing\RouteMatchInterface;
+@@ -462,3 +463,15 @@ function user_expire_mail($key, &$message, $params) {
+     $message['body'][] = t('Thanks, @site_name', ['@site_name' => $site_name]);
+   }
+ }
++
++/**
++ * Implements hook_ENTITY_TYPE_presave() for user entities.
++ *
++ * If the account was blocked but is now active, update the expiry so it is
++ * not re-blocked by the next cron run.
++ */
++function user_expire_user_presave(User $account) {
++  if (!empty($account->original) && $account->original->isBlocked() && $account->isActive()) {
++    $account->setLastAccessTime(\Drupal::time()->getRequestTime());
++  }
++}
