@@ -11,7 +11,7 @@
       "Reset expiration when user is reactivated": "patches/user_expire-reset-expiration-on-reactivation.patch"
     },
     "drupal/xmlsitemap": {
-      "https://www.drupal.org/project/xmlsitemap/issues/3323148": "https://git.drupalcode.org/project/xmlsitemap/-/merge_requests/23.diff"
+      "https://www.drupal.org/project/xmlsitemap/issues/3323148": "https://www.drupal.org/files/issues/2023-01-16/3323148.patch"
     },
     "unocha/common_design": {
       "Drupal 10 compatibility": "patches/common_design-drupal-10-compatibility.patch"
