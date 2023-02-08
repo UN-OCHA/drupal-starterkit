@@ -104,7 +104,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
         env:
           fail-fast: true
 
@@ -118,11 +118,20 @@ jobs:
             docker-compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/build/logs
             docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/build/logs
             docker-compose -f tests/docker-compose.yml exec -T -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
-            docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml .
+            docker-compose -f tests/docker-compose.yml exec -w /srv/www -T drupal test -s /srv/www/html/build/logs/clover.xml && echo "skip_coveralls=$?" >> $GITHUB_OUTPUT
         env:
           fail-fast: true
 
+      - name: Copy Coveralls
+        if: success() && steps.tests.outputs.skip_coveralls == '0'
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml .
+
       - name: Monitor coverage
+        id: coveralls
+        if: success() && steps.tests.outputs.skip_coveralls == '0'
         uses: slavcodev/coverage-monitor-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -131,6 +140,11 @@ jobs:
           threshold_warning: 50
           threshold_metric: "lines"
           comment_footer: false
+
+      - name: DB Logs
+        id: dblog
+        if: failure()
+        uses: cafuego/command-output@main
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -162,6 +176,11 @@ jobs:
 
             </details>
 
+            <details><summary>Drupal Logs</summary>
+
+            \`\`\`${{ steps.dblog.outputs.stdout }}\`\`\`
+
+            </details>
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
           edit-mode: replace
 
