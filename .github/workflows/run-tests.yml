@@ -120,12 +120,11 @@ jobs:
             docker-compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output
             docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files/browser_output
             docker-compose -f tests/docker-compose.yml exec -T -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
-            docker-compose -f tests/docker-compose.yml exec -T -w /srv/www drupal test -s /srv/www/html/build/logs/clover.xml && echo "skip_coveralls=$?" >> $GITHUB_OUTPUT
         env:
           fail-fast: true
 
       - name: Copy Coveralls
-        if: success() && steps.tests.outputs.skip_coveralls == '0'
+        if: success()
         uses: cafuego/command-output@main
         with:
           run: |
@@ -133,7 +132,7 @@ jobs:
 
       - name: Monitor coverage
         id: coveralls
-        if: success() && steps.tests.outputs.skip_coveralls == '0'
+        if: success()
         uses: slavcodev/coverage-monitor-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
