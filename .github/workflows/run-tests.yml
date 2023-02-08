@@ -1,7 +1,6 @@
 name: Run tests
 
-on: 
-  - pull_request
+on: [pull_request]
 
 jobs:
   tests:
@@ -16,7 +15,7 @@ jobs:
         env:
           fail-fast: true
 
-      - name: Software Versions
+      - name: Software versions
         id: versions
         uses: cafuego/command-output@main
         with:
@@ -36,7 +35,7 @@ jobs:
         env:
           fail-fast: true
 
-      - name: PHP Lint
+      - name: Code Lint
         id: lint
         uses: cafuego/command-output@main
         with:
@@ -72,17 +71,15 @@ jobs:
         env:
           fail-fast: true
 
-      - name: Start Docker
+      - name: Setup Environment
         id: docker
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml up -d
+            docker-compose -f tests/docker-compose.yml up -d
             sleep 10
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer install
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private /srv/www/html/sites/default/files/browser_output /srv/www/html/build/logs
             docker ps -a
+            docker-compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
         env:
           fail-fast: true
 
@@ -91,84 +88,73 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
+            docker-compose -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
 
-      - name: Code Sniffer
+      - name: PHPCS
         id: phpcs
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal ./vendor/bin/phpcs -p --report=full ./html/modules/custom ./html/themes/custom
+            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom
         env:
           fail-fast: true
 
-      - name: Unit Tests
-        id: phpunit
-        uses: cafuego/command-output@main
-        with:
-          run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -u root -w /srv/www -T drupal ./vendor/bin/phpunit --testsuite Unit --debug
-        env:
-          fail-fast: true
-
-      - name: Install Site
+      - name: Install Environment
         id: install
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush -y en dblog
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config
         env:
           fail-fast: true
 
-      - name: Run Tests
+      - name: Run tests
         id: tests
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -w /srv/www -T drupal test -s /srv/www/html/build/logs/clover.xml && echo "skip_coveralls=$?" >> $GITHUB_OUTPUT
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y en dblog
+            docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
+            docker-compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/build/logs
+            docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/build/logs
+            docker-compose -f tests/docker-compose.yml exec -T -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
+            docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml .
         env:
           fail-fast: true
 
-      - name: Coveralls
-        id: coveralls
-        if: success() && steps.tests.outputs.skip_coveralls == '0'
-        uses: cafuego/command-output@main
+      - name: Monitor coverage
+        uses: slavcodev/coverage-monitor-action@v1
         with:
-          run: |
-            mkdir -p ./build/logs
-            chmod -R 777 ./build/logs
-            docker cp starterkit-test-site:/srv/www/html/build/logs/clover.xml ./build/logs/
-            sed -i 's#/srv/www#.#g' build/logs/clover.xml
-            wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
-            chmod +x php-coveralls.phar
-            ./php-coveralls.phar -vv
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          coverage_path: "clover.xml"
+          threshold_alert: 10
+          threshold_warning: 50
+          threshold_metric: "lines"
+          comment_footer: false
 
-      - name: DB Logs
-        id: dblog
-        if: failure()
-        uses: cafuego/command-output@main
-        with:
-          run: |
-            docker-compose -p starterkit-test -f tests/docker-compose.yml exec -T drupal drush watchdog:show
-
-      - name: Post Success Comment
-        if: success()
-        uses: actions/github-script@v6
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Composer Validate \`${{ steps.validate.outcome }}\`
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Build output
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Build output
+            #### Composer Validate \`${{ steps.validate.outcome }}\`
             #### PHP Lint \`${{ steps.lint.outcome }}\`
             #### Docker Build \`${{ steps.build.outcome }}\`
             #### Environment Setup \`${{ steps.docker.outcome }}\`
-            #### Install Subtheme \`${{ steps.subtheme.outcome }}\`
-            #### Code Sniffer \`${{ steps.phpcs.outcome }}\`
-            #### Unit Tests \`${{ steps.phpunit.outcome }}\`
-            #### Install Site \`${{ steps.install.outcome }}\`
-            #### All Tests \`${{ steps.tests.outcome }}\`
-            #### Coveralls \`${{ steps.coveralls.outcome }}\`
+            #### Site Install \`${{ steps.install.outcome }}\`
+            #### PHP Code Sniffer \`${{ steps.phpcs.outcome }}\`
 
             <details><summary>Software Versions</summary>
 
@@ -176,58 +162,8 @@ jobs:
 
             </details>
 
-            <details><summary>Coverage Report</summary>
-
-            \`\`\`${{ steps.coveralls.outputs.stdout }}\`\`\`
-
-            </details>
-
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-
-      - name: Post Failure Comment
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Composer Validate \`${{ steps.validate.outcome }}\`
-            #### PHP Lint \`${{ steps.lint.outcome }}\`
-            #### Docker Build \`${{ steps.build.outcome }}\`
-            #### Environment Setup \`${{ steps.docker.outcome }}\`
-            #### Install Subtheme \`${{ steps.subtheme.outcome }}\`
-            #### Code Sniffer \`${{ steps.phpcs.outcome }}\`
-            #### Unit Tests \`${{ steps.phpunit.outcome }}\`
-            #### Install Site \`${{ steps.install.outcome }}\`
-            #### All Tests \`${{ steps.tests.outcome }}\`
-            #### Coveralls \`${{ steps.coveralls.outcome }}\`
-
-            <details><summary>Software Versions</summary>
-
-            \`\`\`${{ steps.versions.outputs.stdout }}\`\`\`
-
-            </details>
-
-            <details><summary>Drupal Logs</summary>
-
-            \`\`\`${{ steps.dblog.outputs.stdout }}\`\`\`
-
-            </details>
-
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+          edit-mode: replace
 
       - name: Slack Success Notification
         id: slack_success
@@ -237,14 +173,19 @@ jobs:
           channel-id: '${{ secrets.SLACK_CHANNEL }}'
           payload: |
             {
-              "text": "Tests pass for a pull request on ${{ github.repository }}",
-              "blocks": [
+              "text": "Tests passed for a pull request on ${{ github.repository }}",
+              "attachments": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Pull request by @${{ github.triggering_actor }} to merge _${{ github.head_ref }}_ into _${{ github.base_ref }}_ on _${{ github.repository }}_ passed tests (<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Review>)"
-                  }
+                  "color": "#00FF00",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "Pull request by @${{ github.triggering_actor }} to merge _${{ github.head_ref }}_ into _${{ github.base_ref }}_ on <${{ github.repositoryUrl }}|${{ github.repository }}> passed tests (<${{ github.event.pull_request.html_url }}|Review>)"
+                      }
+                    }
+                  ]
                 }
               ]
             }
@@ -260,13 +201,18 @@ jobs:
           payload: |
             {
               "text": "Tests failed for a pull request on ${{ github.repository }}",
-              "blocks": [
+              "attachments": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Pull request by @${{ github.triggering_actor }} to merge _${{ github.head_ref }}_ into _${{ github.base_ref }}_ on _${{ github.repository }}_ has failed tests, sorry (<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Review>)"
-                  }
+                  "color": "#FF0000",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "Pull request by @${{ github.triggering_actor }} to merge _${{ github.head_ref }}_ into _${{ github.base_ref }}_ on <${{ github.repositoryUrl }}|${{ github.repository }}> failed tests (<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Review>)"
+                      }
+                    }
+                  ]
                 }
               ]
             }
