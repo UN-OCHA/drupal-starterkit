@@ -19,7 +19,7 @@ RUN cp -a docker/settings.php docker/services.yml docker/memcache.services.yml h
 ################################################################################
 
 # Generate the image.
-FROM public.ecr.aws/unocha/php-k8s:8.1-NR-stable
+FROM public.ecr.aws/unocha/php-k8s:8.1-stable
 
 ARG VCS_REF
 ARG VCS_URL
