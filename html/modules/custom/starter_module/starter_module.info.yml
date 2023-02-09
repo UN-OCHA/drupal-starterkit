@@ -1,0 +1,4 @@
+name: 'Starter module'
+description: 'Starter module with tests'
+type: module
+core_version_requirement: ^10
