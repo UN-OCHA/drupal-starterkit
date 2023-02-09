@@ -11,7 +11,7 @@ COPY . /srv/www
 WORKDIR /srv/www
 
 # Clean up previous composer installation and run new one.
-RUN rm -rf ./vendor && composer install --no-interaction
+RUN rm -rf ./vendor && composer install --no-interaction --no-dev
 
 # Copy settings to default site location.
 RUN cp -a docker/settings.php docker/services.yml docker/memcache.services.yml html/sites/default
@@ -19,7 +19,7 @@ RUN cp -a docker/settings.php docker/services.yml docker/memcache.services.yml h
 ################################################################################
 
 # Generate the image.
-FROM public.ecr.aws/unocha/php-k8s:8.0-NR-stable
+FROM public.ecr.aws/unocha/php-k8s:8.0-stable
 
 ARG VCS_REF
 ARG VCS_URL
