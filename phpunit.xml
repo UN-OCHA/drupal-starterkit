@@ -5,7 +5,7 @@
  or your current system user. See core/tests/README.md and
  https://www.drupal.org/node/2116263 for details.
 -->
-<phpunit bootstrap="./html/core/tests/bootstrap.php" colors="true"
+<phpunit bootstrap="./vendor/weitzman/drupal-test-traits/src/bootstrap.php" colors="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutChangesToGlobalState="true"
@@ -18,10 +18,10 @@
     <!-- Do not limit the amount of memory tests take to run. -->
     <ini name="memory_limit" value="-1"/>
     <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-    <env name="DTT_BASE_URL" value="http://starterkit.test"/>
+    <env name="DTT_BASE_URL" value="http://starterkit.test/"/>
     <env name="DTT_API_URL" value="http://localhost:9222"/>
     <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
-    <env name="SIMPLETEST_BASE_URL" value="http://starterkit.test"/>
+    <env name="SIMPLETEST_BASE_URL" value="http://starterkit.test/"/>
     <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
     <env name="SIMPLETEST_DB" value="mysql://user:user@db/test"/>
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
@@ -55,6 +55,7 @@
             disableCodeCoverageIgnore="true">
     <include>
       <directory suffix=".php">./html/modules/custom</directory>
+      <directory suffix=".module">./html/modules/custom</directory>
     </include>
     <exclude>
       <directory suffix="Interface.php">./html/modules/custom</directory>
