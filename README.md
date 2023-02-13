@@ -26,6 +26,8 @@ For example, for Common Design site:
 ./scripts/setup.sh "web.brand.unocha.org" "Common Design" "common-design-site"
 ```
 
+The setup script will also copy a github action to build docker images on `develop`, `feature` and `main` branches.
+
 ### README
 
 Well, obviously, this [README](README.md) file needs to be updated with information relevant to your project.
