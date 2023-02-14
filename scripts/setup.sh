@@ -26,3 +26,5 @@ project_name="$3"
 grep -r -l "$site_url_pattern" * .[^.]* | grep -v -E "$exclude_pattern" | xargs sed -i "s/$site_url_pattern/$site_url/g"
 grep -r -l "$site_name_pattern" * .[^.]* | grep -v -E "$exclude_pattern" | xargs sed -i "s/$site_name_pattern/$site_name/g"
 grep -r -l "$project_name_pattern" * .[^.]* | grep -v -E "$exclude_pattern" | xargs sed -i "s/$project_name_pattern/$project_name/g"
+
+cp ./assets/docker-build-image.yml .github/workflows/docker-build-image.yml
