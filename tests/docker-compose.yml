@@ -11,7 +11,7 @@ volumes:
 services:
   memcache:
     restart: always
-    image: memcached:alpine
+    image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-test-memcache
     container_name: starterkit-test-memcache
     entrypoint: ["memcached", "-m", "64"]
@@ -21,14 +21,13 @@ services:
       - default
 
   mysql:
-    image: mariadb:latest
+    image: public.ecr.aws/unocha/mysql:10.6
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=starterkit
+      - MYSQL_DB=starterkit
       - MYSQL_USER=starterkit
-      - MYSQL_PASSWORD=starterkit
+      - MYSQL_PASS=starterkit
     volumes:
       - "starterkit-test-site-database:/var/lib/mysql:rw"
     networks:
