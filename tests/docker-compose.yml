@@ -10,8 +10,7 @@ volumes:
 
 services:
   memcache:
-    restart: always
-    image: memcached:alpine
+    image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-test-memcache
     container_name: starterkit-test-memcache
     environment:
@@ -22,14 +21,13 @@ services:
       - default
 
   mysql:
-    image: mariadb:latest
+    image: public.ecr.aws/unocha/mysql:10.6
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=starterkit
+      - MYSQL_DB=starterkit
       - MYSQL_USER=starterkit
-      - MYSQL_PASSWORD=starterkit
+      - MYSQL_PASS=starterkit
     volumes:
       - "starterkit-test-site-database:/var/lib/mysql:rw"
     networks:
@@ -66,5 +64,8 @@ services:
       - DRUPAL_DB_DRIVER=mysql
       - PHP_ENVIRONMENT=dev
       - PHP_XDEBUG=true
+      - XDEBUG_MODE=coverage
+      - BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output
+      - DTT_BASE_URL=http://127.0.0.1
     networks:
       - default
