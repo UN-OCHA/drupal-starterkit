@@ -10,10 +10,11 @@ volumes:
 
 services:
   memcache:
-    restart: always
     image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-test-memcache
     container_name: starterkit-test-memcache
+    environment:
+      MEMCACHE_MAX_MEMORY: 64
     ports:
       - "11211"
     networks:
