@@ -14,7 +14,8 @@ services:
     image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-test-memcache
     container_name: starterkit-test-memcache
-    entrypoint: ["memcached", "-m", "64"]
+    environment:
+      MEMCACHE_MAX_MEMORY: 64
     ports:
       - "11211"
     networks:

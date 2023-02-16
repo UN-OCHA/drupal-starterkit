@@ -13,24 +13,24 @@ volumes:
 
 services:
   memcache:
-    image: memcached:alpine
+    image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-local-memcache
     container_name: starterkit-local-memcache
-    entrypoint: ["memcached", "-m", "64"]
+    environment:
+      MEMCACHE_MAX_MEMORY: 64
     ports:
       - "11211"
     networks:
       - default
 
   mysql:
-    image: mariadb:latest
+    image: public.ecr.aws/unocha/mysql:10.6
     hostname: starterkit-local-mysql
     container_name: starterkit-local-mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=starterkit
+      - MYSQL_DB=starterkit
       - MYSQL_USER=starterkit
-      - MYSQL_PASSWORD=starterkit
+      - MYSQL_PASS=starterkit
     volumes:
       - "starterkit-local-site-database:/var/lib/mysql:rw"
     networks:
