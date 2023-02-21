@@ -167,13 +167,15 @@ jobs:
             #### Environment Setup `${{ steps.docker.outcome }}`
             #### Site Install `${{ steps.install.outcome }}`
             #### PHP Code Sniffer `${{ steps.phpcs.outcome }}`
+
             <details><summary>Software Versions</summary>
-            ```${{ steps.versions.outputs.stdout }}```
+            <code>${{ steps.versions.outputs.stdout }}</code>
             </details>
             <details><summary>Drupal Logs</summary>
-            ```${{ steps.dblog.outputs.stdout }}```
+            <code>${{ steps.dblog.outputs.stdout }}</code>
             </details>
-            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Workflow: `${{ github.workflow }}`*;
+
+            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Workflow: `${{ github.workflow }}`*
           edit-mode: replace
 
       - name: Slack Success Notification
