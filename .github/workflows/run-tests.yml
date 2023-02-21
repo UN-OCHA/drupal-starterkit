@@ -40,6 +40,7 @@ jobs:
         with:
           run: |
             test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+            test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|theme\)$' -print0 | xargs -0 -n 1 -P 4 php -l
         env:
           fail-fast: true
 
@@ -93,7 +94,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom
+            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom ./html/themes/custom
         env:
           fail-fast: true
 
