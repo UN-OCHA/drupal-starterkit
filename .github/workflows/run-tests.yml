@@ -162,19 +162,19 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ### Build output
-            #### Composer Validate \`${{ steps.validate.outcome }}\`
-            #### PHP Lint \`${{ steps.lint.outcome }}\`
-            #### Docker Build \`${{ steps.build.outcome }}\`
-            #### Environment Setup \`${{ steps.docker.outcome }}\`
-            #### Site Install \`${{ steps.install.outcome }}\`
-            #### PHP Code Sniffer \`${{ steps.phpcs.outcome }}\`
+            #### Composer Validate `${{ steps.validate.outcome }}`
+            #### PHP Lint `${{ steps.lint.outcome }}`
+            #### Docker Build `${{ steps.build.outcome }}`
+            #### Environment Setup `${{ steps.docker.outcome }}`
+            #### Site Install `${{ steps.install.outcome }}`
+            #### PHP Code Sniffer `${{ steps.phpcs.outcome }}`
             <details><summary>Software Versions</summary>
-            \`\`\`${{ steps.versions.outputs.stdout }}\`\`\`
+            ```${{ steps.versions.outputs.stdout }}```
             </details>
             <details><summary>Drupal Logs</summary>
-            \`\`\`${{ steps.dblog.outputs.stdout }}\`\`\`
+            ```${{ steps.dblog.outputs.stdout }}```
             </details>
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Workflow: `${{ github.workflow }}`*;
           edit-mode: replace
 
       - name: Slack Success Notification
