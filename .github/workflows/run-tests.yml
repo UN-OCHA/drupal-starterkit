@@ -40,6 +40,7 @@ jobs:
         with:
           run: |
             test ! -d ./html/modules/custom || find -L ./html/modules/custom -iregex '.*\.\(php\|module\|inc\|install\)$' -print0 | xargs -0 -n 1 -P 4 php -l
+            test ! -d ./html/themes/custom || find -L ./html/themes/custom -iregex '.*\.\(php\|theme\)$' -print0 | xargs -0 -n 1 -P 4 php -l
         env:
           fail-fast: true
 
@@ -93,7 +94,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom
+            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom ./html/themes/custom
         env:
           fail-fast: true
 
@@ -122,14 +123,13 @@ jobs:
           fail-fast: true
 
       - name: Copy Coveralls
+        id: copy_coveralls
         if: success()
-        uses: cafuego/command-output@main
-        with:
-          run: |
-            docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml .
+        run: docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml . || echo "skip=true" >> "$GITHUB_OUTPUT"
+
       - name: Monitor coverage
         id: coveralls
-        if: success()
+        if: ${{ steps.copy_coveralls.outputs.skip != 'true' }}
         uses: slavcodev/coverage-monitor-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -161,19 +161,21 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ### Build output
-            #### Composer Validate \`${{ steps.validate.outcome }}\`
-            #### PHP Lint \`${{ steps.lint.outcome }}\`
-            #### Docker Build \`${{ steps.build.outcome }}\`
-            #### Environment Setup \`${{ steps.docker.outcome }}\`
-            #### Site Install \`${{ steps.install.outcome }}\`
-            #### PHP Code Sniffer \`${{ steps.phpcs.outcome }}\`
+            #### Composer Validate `${{ steps.validate.outcome }}`
+            #### PHP Lint `${{ steps.lint.outcome }}`
+            #### Docker Build `${{ steps.build.outcome }}`
+            #### Environment Setup `${{ steps.docker.outcome }}`
+            #### Site Install `${{ steps.install.outcome }}`
+            #### PHP Code Sniffer `${{ steps.phpcs.outcome }}`
+
             <details><summary>Software Versions</summary>
-            \`\`\`${{ steps.versions.outputs.stdout }}\`\`\`
+            <code>${{ steps.versions.outputs.stdout }}</code>
             </details>
             <details><summary>Drupal Logs</summary>
-            \`\`\`${{ steps.dblog.outputs.stdout }}\`\`\`
+            <code>${{ steps.dblog.outputs.stdout }}</code>
             </details>
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            *Pusher: @${{ github.actor }}, Action: `${{ github.event_name }}`, Workflow: `${{ github.workflow }}`*
           edit-mode: replace
 
       - name: Slack Success Notification
