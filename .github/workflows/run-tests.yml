@@ -144,9 +144,9 @@ jobs:
         id: dblog
         if: failure()
         uses: cafuego/command-output@main
-          with:
-            run: |
-              docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
+        with:
+          run: |
+            docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
