@@ -7,13 +7,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        id: checkout
+        uses: actions/checkout@v3
+
+      - name: Extract PHP Version
+        id: php
+        uses: docker://ghcr.io/un-ocha/actions:extract-php-version-main
+        with:
+          docker_file: 'docker/Dockerfile'
+          docker_image: 'public.ecr.aws/unocha/php-k8s'
+
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
+        if: ${{ !env.ACT }}
         with:
-          php-version: 8.1
+          php-version: ${{ steps.php.outputs.php_version }}
           tools: composer
         env:
           fail-fast: true
+
+      - name: Setup PHP with PECL extension locally
+        uses: shivammathur/setup-php@v2
+        if: ${{ env.ACT }}
+        with:
+          php-version: ${{ steps.php.outputs.php_version }}
+          tools: composer
+        env:
+          fail-fast: true
+          runner: self-hosted
 
       - name: Software versions
         id: versions
@@ -21,10 +43,6 @@ jobs:
         with:
           run: |
             php --version && composer --version
-
-      - name: Checkout Code
-        id: checkout
-        uses: actions/checkout@v3
 
       - name: Composer Validate
         id: validate
@@ -47,7 +65,8 @@ jobs:
 
       - name: Configure AWS Credentials
         id: aws
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        if: ${{ !env.ACT }}
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
@@ -55,6 +74,7 @@ jobs:
 
       - name: Login to Public ECR
         id: aws-login
+        if: ${{ !env.ACT }}
         uses: docker/login-action@v2.1.0
         with:
           registry: public.ecr.aws
@@ -144,12 +164,13 @@ jobs:
         id: dblog
         if: failure()
         uses: cafuego/command-output@main
-        with:
-          run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
+          with:
+            run: |
+              docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
+        if: ${{ !env.ACT }}
         id: fc
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -159,6 +180,7 @@ jobs:
 
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
+        if: ${{ !env.ACT }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -184,7 +206,7 @@ jobs:
 
       - name: Slack Success Notification
         id: slack_success
-        if: success()
+        if: ${{ !env.ACT && success() }}
         uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: '${{ secrets.SLACK_CHANNEL }}'
@@ -211,7 +233,7 @@ jobs:
 
       - name: Slack Failure Notification
         id: slack_failure
-        if: failure()
+        if: ${{ !env.ACT && failure() }}
         uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: '${{ secrets.SLACK_CHANNEL }}'
@@ -235,3 +257,13 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Clean up
+        id: docker-clean-up
+        if: ${{ env.ACT }}
+        uses: cafuego/command-output@main
+        with:
+          run: |
+            docker compose -f tests/docker-compose.yml down
+        env:
+          fail-fast: true
