@@ -15,6 +15,9 @@
     },
     "unocha/common_design": {
       "Drupal 10 compatibility": "patches/common_design-drupal-10-compatibility.patch"
+    },
+    "drupal/username_enumeration_prevention": {
+      "Avoid leaking the path via Drupal.settings json": "https://git.drupalcode.org/project/username_enumeration_prevention/-/merge_requests/5.patch"
     }
   }
 }
