@@ -1,10 +1,11 @@
 version: "2.2"
+name: starterkit-local
 
 networks:
   default:
   proxy:
-    external:
-      name: ${PROXY:-proxy}
+    name: ${PROXY:-proxy}
+    external: TRUE
 
 volumes:
   starterkit-local-site-database:
@@ -45,6 +46,11 @@ services:
       - mysql
     volumes:
       - "./shared/settings:/srv/www/shared/settings:ro"
+      # Mount the composer files and patches.
+      - "../composer.json:/srv/www/composer.json:rw"
+      - "../composer.patches.json:/srv/www/composer.patches.json:rw"
+      - "../composer.lock:/srv/www/composer.lock:rw"
+      - "../PATCHES:/srv/www/PATCHES:rw"
       # Mount volumes for the private and public files.
       - "starterkit-local-site-public:/srv/www/html/sites/default/files:rw"
       - "starterkit-local-site-private:/srv/www/html/sites/default/private:rw"
