@@ -1,0 +1,20 @@
+diff --git a/username_enumeration_prevention.module b/username_enumeration_prevention.module
+index 1038f75b1d823887965f79df9d3b76fc396031a1..075abaa22c8392f810093e066990934328fdd01c 100644
+--- a/username_enumeration_prevention.module
++++ b/username_enumeration_prevention.module
+@@ -86,3 +86,15 @@ function username_enumeration_prevention_pass_submit($form, FormStateInterface $
+   \Drupal::messenger()->addMessage(t('If the username or email address exists and is active, further instructions have been sent to your email address.'));
+   $form_state->setRedirect('user.page');
+ }
++
++/**
++ * Implements hook_js_settings_alter().
++ *
++ * Remove drupalSettings.path.currentPath on 404 responses.
++ */
++function username_enumeration_prevention_js_settings_alter(&$settings) {
++  if (\Drupal::routeMatch()->getRouteName() === "system.404" ) {
++    $settings['path']['currentPath'] = '';
++  }
++}
++
