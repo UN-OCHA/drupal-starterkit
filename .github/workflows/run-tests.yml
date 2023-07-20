@@ -209,7 +209,7 @@ jobs:
         if: ${{ !env.ACT && success() }}
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          channel-id: '${{ vars.SLACK_CHANNEL }}'
           payload: |
             {
               "text": "Tests passed for a pull request on ${{ github.repository }}",
@@ -236,7 +236,7 @@ jobs:
         if: ${{ !env.ACT && failure() }}
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          channel-id: '${{ secrets.SLACK_CHANNEL }}'
+          channel-id: '${{ vars.SLACK_CHANNEL }}'
           payload: |
             {
               "text": "Tests failed for a pull request on ${{ github.repository }}",
