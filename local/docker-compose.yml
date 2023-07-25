@@ -1,10 +1,11 @@
 version: "2.2"
+name: starterkit-local
 
 networks:
   default:
   proxy:
-    external:
-      name: ${PROXY:-proxy}
+    name: ${PROXY:-proxy}
+    external: TRUE
 
 volumes:
   starterkit-local-site-database:
