@@ -1,0 +1,11 @@
+uuid: adc46858-d138-4b68-ab46-693a12eb5aa2
+langcode: en
+status: false
+dependencies: {  }
+machine: prod
+description: null
+name: Prod
+weight: '10'
+url: ''
+fg_color: '#ffffff'
+bg_color: '#6937ac'

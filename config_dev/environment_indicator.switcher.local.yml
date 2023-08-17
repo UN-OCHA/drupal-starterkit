@@ -1,0 +1,11 @@
+uuid: 5001f732-adfc-4f57-badb-d74c23813e7f
+langcode: en
+status: true
+dependencies: {  }
+machine: local
+description: null
+name: Local
+weight: ''
+url: 'https://starterkit-local.test'
+fg_color: '#ffffff'
+bg_color: '#000000'
