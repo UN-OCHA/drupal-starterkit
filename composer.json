@@ -90,8 +90,7 @@
             "oomphinc/composer-installers-extender": true,
             "orakili/composer-drupal-info-file-patch-helper": true,
             "phpstan/extension-installer": true,
-            "symfony/flex": true,
-            "drupal-composer/preserve-paths": false
+            "symfony/flex": true
         }
     },
     "extra": {
