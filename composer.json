@@ -31,6 +31,7 @@
         "drupal/core-dev": "^10",
         "drupal/core-recommended": "^10",
         "drupal/csp": "^1.17",
+        "drupal/environment_indicator": "^4.0",
         "drupal/google_tag": "^1.6",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
         "drupal/imagemagick": "^3.4",
@@ -89,7 +90,8 @@
             "oomphinc/composer-installers-extender": true,
             "orakili/composer-drupal-info-file-patch-helper": true,
             "phpstan/extension-installer": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "drupal-composer/preserve-paths": false
         }
     },
     "extra": {
