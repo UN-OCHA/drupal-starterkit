@@ -13,9 +13,6 @@
     "drupal/username_enumeration_prevention": {
       "Avoid leaking the path via Drupal.settings json": "PATCHES/username_enumeration_prevention-user-login-block-form-3312288.patch"
     },
-    "drupal/xmlsitemap": {
-      "https://www.drupal.org/project/xmlsitemap/issues/3323148": "https://www.drupal.org/files/issues/2023-01-16/3323148.patch"
-    },
     "unocha/common_design": {
       "Drupal 10 compatibility": "PATCHES/common_design-drupal-10-compatibility.patch"
     }
