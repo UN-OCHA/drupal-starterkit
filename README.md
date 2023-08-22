@@ -2,7 +2,9 @@
 
 ## TL;DR
 
-When starting, make sure you bootstrap your site with the "minimal" install profile and the default config that ships with this repository: `drush si minimal --existing-config`.
+When starting, make sure you bootstrap your site with the "minimal" install profile and the default config that ships with this repository:
+
+```drush si minimal --existing-config```
 
 ## Ok, but tell me more.
 
