@@ -1,5 +1,13 @@
 # Drupal Starter Kit
 
+## TL;DR
+
+When starting, make sure you bootstrap your site with the "minimal" install profile and the default config that ships with this repository:
+
+```drush si minimal --existing-config```
+
+## Ok, but tell me more.
+
 **Drupal 10 version**
 
 This is a sample Drupal site repository. It contains all the basics to get you started with a brand new Drupal 10 site that uses the [UN-OCHA Common Design theme](https://github.com/UN-OCHA/common_design).

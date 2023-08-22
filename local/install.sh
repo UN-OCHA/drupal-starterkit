@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
+#
+# Wrapper to help spin up a local Drupal site.
+#
+# The preferred way to get started is to install Drupal from the "minimal" install profile
+# with an empty database and load all configuration from the repository:
+#
+#   ./local/install.sh -i -c
+#
+# Which is equivalent to:
+#
+#   drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
 
 set -e -u
 
