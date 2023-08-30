@@ -13,6 +13,7 @@ module:
   config_filter: 0
   dblog: 0
   devel: 0
+  environment_indicator_ui: 0
   views_ui: 0
 theme: {  }
 complete_list: {  }
