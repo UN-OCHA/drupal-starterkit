@@ -10,6 +10,8 @@ usage() {
   echo "-i                    : Install site" >&2
   echo "-c                    : Use existing config to install site" >&2
   echo "-d                    : Install dev dependencies" >&2
+  echo "-u                    : Pull latest service and base images and recreate containers" >&2
+  echo "-s                    : Stop the site containers" >&2
   echo "-x                    : Shutdown and remove the site containers" >&2
   echo "-v                    : Also remove the volumes when shutting down the containers" >&2
   exit 1
@@ -19,11 +21,13 @@ create_image="no"
 install_site="no"
 use_existing_config="no"
 install_dev_dependencies="no"
+update="no"
+stop="no"
 shutdown="no"
 shutdown_options=""
 
 # Parse options.
-while getopts "hmicdxv" opt; do
+while getopts "hmicdusxv" opt; do
   case $opt in
     h)
       usage
@@ -39,6 +43,12 @@ while getopts "hmicdxv" opt; do
       ;;
     d)
       install_dev_dependencies="yes"
+      ;;
+    u)
+      update="yes"
+      ;;
+    s)
+      stop="yes"
       ;;
     x)
       shutdown="yes"
@@ -60,6 +70,13 @@ function docker_compose {
 # They are only available in this script as we don't export them.
 source local/.env
 
+# Stop the containers.
+if [ "$stop" = "yes" ]; then
+  echo "Stop the containers."
+  docker_compose stop || true
+  exit 0
+fi
+
 # Stop and remove the containers.
 if [ "$shutdown" = "yes" ]; then
   echo "Stop and remove the containers."
@@ -67,6 +84,14 @@ if [ "$shutdown" = "yes" ]; then
   exit 0
 fi
 
+# Update the image.
+if [ "$update" = "yes" ]; then
+  echo "Pull service images."
+  docker_compose pull --ignore-pull-failures
+  echo "Pull base site image."
+  docker pull "$(grep -E -o "FROM ([^ ]+)$" docker/Dockerfile | awk '{print $2}')"
+  create_image="yes"
+fi;
 
 # Build local image.
 if [ "$create_image" = "yes" ]; then
@@ -74,13 +99,13 @@ if [ "$create_image" = "yes" ]; then
   make IMAGE_NAME=$IMAGE_NAME IMAGE_TAG=$IMAGE_TAG
 fi;
 
-# Create the site and mysql containers.
-echo "Create the site and mysql containers."
+# Create the site, memcache and mysql containers.
+echo "Create the site, memcache and mysql containers."
 docker_compose up -d --remove-orphans
 
-# Wait a bit for  mysql to be ready.
-echo "Wait a bit for mysql to be ready."
-sleep 10
+# Wait a bit for memcache and mysql to be ready.
+echo "Wait a bit for memcache and mysql to be ready."
+sleep 5
 
 # Dump some information about the created containers.
 echo "Dump some information about the created containers."
@@ -124,17 +149,8 @@ if [ "$install_dev_dependencies" = "yes" ]; then
   echo "Install the dev dependencies."
   docker_compose exec -w /srv/www site composer install
 
-  # Import the configuration.
-  docker_compose exec -u appuser site drush -y cr
-
-  # Import the configuration.
-  docker_compose exec  -u appuser site drush -y updatedb --no-post-updates
-
-  # Import the configuration.
-  docker_compose exec  -u appuser site drush -y cim
-
-  # Import the configuration.
-  docker_compose exec  -u appuser site drush -y updatedb
+  # CLear the cache, import the configuration etc.
+  docker_compose exec -u appuser site drush -y deploy
 
   # Enable the devel module.
   docker_compose exec  -u appuser site drush -y en devel

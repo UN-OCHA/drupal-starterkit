@@ -19,7 +19,7 @@ if (file_exists('sites/default/memcache.services.yml')) {
   // Configure memcache.
   $settings['memcache']['servers']    = ['memcache:11211' => 'default'];
   $settings['memcache']['bins']       = ['default' => 'default'];
-  $settings['memcache']['key_prefix'] = 'starterkit-local';
+  $settings['memcache']['key_prefix'] = 'local';
   $settings['cache']['default']       = 'cache.backend.memcache';
 
   // Performance tweaks.
