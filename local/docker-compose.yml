@@ -1,5 +1,5 @@
 version: "2.2"
-name: starterkit-local
+name: $PROJECT_NAME
 
 networks:
   default:
@@ -8,15 +8,15 @@ networks:
     external: TRUE
 
 volumes:
-  starterkit-local-site-database:
-  starterkit-local-site-public:
-  starterkit-local-site-private:
+  site-database:
+  site-public:
+  site-private:
 
 services:
   memcache:
     image: public.ecr.aws/unocha/memcache:1.6
-    hostname: starterkit-local-memcache
-    container_name: starterkit-local-memcache
+    hostname: $PROJECT_NAME-memcache
+    container_name: $PROJECT_NAME-memcache
     environment:
       MEMCACHE_MAX_MEMORY: 64
     ports:
@@ -26,21 +26,21 @@ services:
 
   mysql:
     image: public.ecr.aws/unocha/mysql:10.6
-    hostname: starterkit-local-mysql
-    container_name: starterkit-local-mysql
+    hostname: $PROJECT_NAME-mysql
+    container_name: $PROJECT_NAME-mysql
     environment:
-      - MYSQL_DB=starterkit
-      - MYSQL_USER=starterkit
-      - MYSQL_PASS=starterkit
+      - MYSQL_DB=MYSQL_DB
+      - MYSQL_USER=MYSQL_USER
+      - MYSQL_PASS=MYSQL_PASS
     volumes:
-      - "starterkit-local-site-database:/var/lib/mysql:rw"
+      - "site-database:/var/lib/mysql:rw"
     networks:
       - default
 
   drupal:
-    image: public.ecr.aws/unocha/starterkit-site:local
-    hostname: starterkit-local-site
-    container_name: starterkit-local-site
+    image: public.ecr.aws/unocha/$IMAGE_NAME:$IMAGE_TAG
+    hostname: $PROJECT_NAME-site
+    container_name: $PROJECT_NAME-site
     depends_on:
       - memcache
       - mysql
@@ -52,8 +52,8 @@ services:
       - "../composer.lock:/srv/www/composer.lock:rw"
       - "../PATCHES:/srv/www/PATCHES:rw"
       # Mount volumes for the private and public files.
-      - "starterkit-local-site-public:/srv/www/html/sites/default/files:rw"
-      - "starterkit-local-site-private:/srv/www/html/sites/default/private:rw"
+      - "site-public:/srv/www/html/sites/default/files:rw"
+      - "site-private:/srv/www/html/sites/default/private:rw"
       # Mount the folders needed for the tests.
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
@@ -63,15 +63,18 @@ services:
       # Mount configuration and allow overriding it.
       - "../config:/srv/www/config:rw"
       - "../config_dev:/srv/www/config_dev:rw"
+      # Mount contrib modules and themes.
+      # - "../html/modules/custom:/srv/www/html/modules/custom:rw"
+      # - "../html/themes/custom:/srv/www/html/themes/custom:rw"
     environment:
       - TERM=xterm
       - ENVIRONMENT=dev
-      - NGINX_SERVERNAME=starterkit-local.test
-      - NGINX_OVERRIDE_PROTOCOL=HTTP,starterkit-local.test
-      - DRUSH_OPTIONS_URI=https://starterkit-local.test
-      - DRUPAL_DB_DATABASE=starterkit
-      - DRUPAL_DB_USERNAME=starterkit
-      - DRUPAL_DB_PASSWORD=starterkit
+      - NGINX_SERVERNAME=$SITE_DOMAIN
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,$SITE_DOMAIN
+      - DRUSH_OPTIONS_URI=https://$SITE_DOMAIN
+      - DRUPAL_DB_DATABASE=MYSQL_DB
+      - DRUPAL_DB_USERNAME=MYSQL_USER
+      - DRUPAL_DB_PASSWORD=MYSQL_PASS
       - DRUPAL_DB_HOST=mysql
       - DRUPAL_DB_DRIVER=mysql
       - PHP_ENVIRONMENT=dev
@@ -80,12 +83,12 @@ services:
       - NGINX_LIMIT_HUMANS=1024r/s
       - NGINX_BURST_HUMANS=1024
       # Local proxy.
-      - VIRTUAL_HOST=starterkit-local.test
+      - VIRTUAL_HOST=$SITE_DOMAIN
       - VIRTUAL_PORT=80
       - VIRTUAL_NETWORK=${PROXY:-proxy}
       - HTTPS_METHOD=noredirect
     labels:
-      caddy: starterkit-local.test
+      caddy: $SITE_DOMAIN
       caddy.reverse_proxy: "{{upstreams}}"
     networks:
       - default

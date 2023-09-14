@@ -22,6 +22,7 @@
 
 # Ignore .env files as they are personal
 /.env
+/local/.env
 
 # Ignore Drupal's file directory
 /html/sites/*/files/
