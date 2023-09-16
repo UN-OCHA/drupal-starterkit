@@ -33,6 +33,10 @@ docker compose -f tests/docker-compose.yml ps -a
 echo "Wait a bit for memcache and mysql to be ready."
 sleep 10
 
+# Install the common design subtheme.
+ echo "Make sure the common design subtheme is installed"
+docker compose -f tests/docker-compose.yml exec -w /srv/www drupal composer run sub-theme
+
 # Install the dev dependencies.
 echo "docker compose -f tests/docker-compose.yml exec -w /srv/www drupal composer install"
 docker compose -f tests/docker-compose.yml exec -w /srv/www drupal composer install
