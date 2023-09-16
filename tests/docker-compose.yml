@@ -1,12 +1,12 @@
 version: "2.2"
+name: starterkit-test
 
 networks:
   default:
 
 volumes:
-  starterkit-test-site-database:
-  starterkit-test-site-public:
-  starterkit-test-site-private:
+  site-public:
+  site-private:
 
 services:
   memcache:
@@ -14,28 +14,28 @@ services:
     image: public.ecr.aws/unocha/memcache:1.6
     hostname: starterkit-test-memcache
     container_name: starterkit-test-memcache
-    environment:
-      MEMCACHE_MAX_MEMORY: 64
     ports:
       - "11211"
     networks:
       - default
+    environment:
+      MEMCACHE_MAX_MEMORY: 64
 
   mysql:
     image: public.ecr.aws/unocha/mysql:10.6
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
-      - MYSQL_DB=starterkit
-      - MYSQL_USER=starterkit
-      - MYSQL_PASS=starterkit
-    volumes:
-      - "starterkit-test-site-database:/var/lib/mysql:rw"
+      - MYSQL_DB=reliefweb
+      - MYSQL_USER=reliefweb
+      - MYSQL_PASS=reliefweb
     networks:
       - default
 
   drupal:
-    image: public.ecr.aws/unocha/starterkit-site:local
+    # Default to `starterkit-site` for compatibility with the github tests.
+    # @see Makefile.
+    image: public.ecr.aws/unocha/${IMAGE_NAME:-starterkit-site}:${IMAGE_TAG:-local}
     hostname: starterkit-test-site
     container_name: starterkit-test-site
     depends_on:
@@ -44,29 +44,27 @@ services:
     volumes:
       - "./settings:/srv/www/shared/settings:ro"
       # Mount volumes for the private and public files.
-      - "starterkit-test-site-public:/srv/www/html/sites/default/files:rw"
-      - "starterkit-test-site-private:/srv/www/html/sites/default/private:rw"
+      - "site-public:/srv/www/html/sites/default/files:rw"
+      - "site-private:/srv/www/html/sites/default/private:rw"
       # Mount the folders needed for the tests.
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      - "../.coveralls.yml:/srv/www/.coveralls.yml:ro"
       # Mount local custom code.
-      #- "../html/modules/custom:/srv/www/html/modules/custom:ro"
-      #- "../html/themes/custom:/srv/www/html/themes/custom:ro"
+      - "../html/modules/custom:/srv/www/html/modules/custom:ro"
+      - "../html/themes/custom:/srv/www/html/themes/custom:ro"
     environment:
       - TERM=xterm
       - ENVIRONMENT=dev
       - NGINX_SERVERNAME=starterkit-test-site,localhost,127.0.0.1
       - NGINX_OVERRIDE_PROTOCOL=HTTP,starterkit-test-site,localhost,127.0.0.1
       - DRUSH_OPTIONS_URI=http://starterkit-test-site
-      - DRUPAL_DB_DATABASE=starterkit
-      - DRUPAL_DB_USERNAME=starterkit
-      - DRUPAL_DB_PASSWORD=starterkit
+      - DRUPAL_DB_DATABASE=reliefweb
+      - DRUPAL_DB_USERNAME=reliefweb
+      - DRUPAL_DB_PASSWORD=reliefweb
       - DRUPAL_DB_HOST=mysql
       - DRUPAL_DB_DRIVER=mysql
       - PHP_ENVIRONMENT=dev
       - PHP_XDEBUG=true
-      - XDEBUG_MODE=coverage
-      - BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output
-      - DTT_BASE_URL=http://127.0.0.1
     networks:
       - default
