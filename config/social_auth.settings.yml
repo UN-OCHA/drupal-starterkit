@@ -8,4 +8,6 @@ post_login: /
 user_allowed: register
 redirect_user_form: false
 disable_admin_login: true
-disabled_roles: {  }
+disabled_roles:
+  administrator: '0'
+  editor: '0'

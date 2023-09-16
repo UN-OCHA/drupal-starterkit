@@ -1,0 +1,26 @@
+uuid: f73a800f-44db-46f4-b6e8-e2eff11e1e11
+langcode: en
+status: true
+dependencies:
+  module:
+    - imageapi_optimize_binaries
+    - imageapi_optimize_webp
+name: webp
+label: Webp
+processors:
+  17c18933-5d67-4a5b-8a1f-4666eb7acabf:
+    id: imageapi_optimize_webp
+    data:
+      quality: '75'
+    weight: 1
+    uuid: 17c18933-5d67-4a5b-8a1f-4666eb7acabf
+  e9fab1af-a730-4393-846b-5d254a40fde8:
+    id: pngquant
+    data:
+      manual_executable_path: ''
+      speed: 3
+      quality:
+        min: 90
+        max: 99
+    weight: 2
+    uuid: e9fab1af-a730-4393-846b-5d254a40fde8
