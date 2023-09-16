@@ -104,13 +104,6 @@ jobs:
         env:
           fail-fast: true
 
-      - name: Install Subtheme
-        id: subtheme
-        uses: cafuego/command-output@main
-        with:
-          run: |
-            docker compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/themes/custom/
-            docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
       - name: PHPCS
         id: phpcs
         uses: cafuego/command-output@main
