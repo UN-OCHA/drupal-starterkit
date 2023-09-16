@@ -1,0 +1,26 @@
+diff --git a/src/EventSubscriber/StageFileProxySubscriber.php b/src/EventSubscriber/StageFileProxySubscriber.php
+index 63061b7..daedfbc 100644
+--- a/src/EventSubscriber/StageFileProxySubscriber.php
++++ b/src/EventSubscriber/StageFileProxySubscriber.php
+@@ -144,10 +144,9 @@ class StageFileProxySubscriber implements EventSubscriberInterface {
+     $paths = [$relative_path];
+ 
+     // Webp support.
+-    $is_webp = FALSE;
+-    if (strpos($relative_path, '.webp')) {
++    if (str_ends_with($relative_path, '.webp')) {
+       $paths[] = str_replace('.webp', '', $relative_path);
+-      $is_webp = TRUE;
++      $paths = array_reverse($paths);
+     }
+ 
+     foreach ($paths as $relative_path) {
+@@ -163,7 +162,7 @@ class StageFileProxySubscriber implements EventSubscriberInterface {
+       // Is this imagecache? Request the root file and let imagecache resize.
+       // We check this first so locally added files have precedence.
+       $original_path = $this->manager->styleOriginalPath($relative_path, TRUE);
+-      if ($original_path && !$is_webp) {
++      if ($original_path) {
+         if (file_exists($original_path)) {
+           // Imagecache can generate it without our help.
+           return;
