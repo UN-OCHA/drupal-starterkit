@@ -26,9 +26,9 @@ services:
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
-      - MYSQL_DB=reliefweb
-      - MYSQL_USER=reliefweb
-      - MYSQL_PASS=reliefweb
+      - MYSQL_DB=starterkit
+      - MYSQL_USER=starterkit
+      - MYSQL_PASS=starterkit
     networks:
       - default
 
@@ -59,9 +59,9 @@ services:
       - NGINX_SERVERNAME=starterkit-test-site,localhost,127.0.0.1
       - NGINX_OVERRIDE_PROTOCOL=HTTP,starterkit-test-site,localhost,127.0.0.1
       - DRUSH_OPTIONS_URI=http://starterkit-test-site
-      - DRUPAL_DB_DATABASE=reliefweb
-      - DRUPAL_DB_USERNAME=reliefweb
-      - DRUPAL_DB_PASSWORD=reliefweb
+      - DRUPAL_DB_DATABASE=starterkit
+      - DRUPAL_DB_USERNAME=starterkit
+      - DRUPAL_DB_PASSWORD=starterkit
       - DRUPAL_DB_HOST=mysql
       - DRUPAL_DB_DRIVER=mysql
       - PHP_ENVIRONMENT=dev
