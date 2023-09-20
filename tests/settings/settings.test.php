@@ -142,7 +142,7 @@ $settings['file_private_path'] = '/srv/www/html/sites/default/private';
 $settings['config_sync_directory'] = '/srv/www/config';
 
 // Hash salt.
-$settings['hash_salt'] = 'starterkit-test-site-salt';
+$settings['hash_salt'] = 'test-site-salt';
 
 // Memcache.
 if (file_exists('sites/default/memcache.services.yml')) {
@@ -158,7 +158,7 @@ if (file_exists('sites/default/memcache.services.yml')) {
   // Configure memcache.
   $settings['memcache']['servers']    = ['memcache:11211' => 'default'];
   $settings['memcache']['bins']       = ['default' => 'default'];
-  $settings['memcache']['key_prefix'] = 'starterkit-test';
+  $settings['memcache']['key_prefix'] = 'test';
   $settings['cache']['default']       = 'cache.backend.memcache';
 
   // Performance tweaks.

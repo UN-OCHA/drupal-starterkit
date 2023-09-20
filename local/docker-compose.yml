@@ -9,17 +9,40 @@ networks:
 
 volumes:
   site-database:
+  site-database-log:
   site-public:
   site-private:
 
 services:
+  mailpit:
+    image: axllent/mailpit:latest
+    hostname: $PROJECT_NAME-mailpit
+    container_name: $PROJECT_NAME-mailpit
+    environment:
+      VIRTUAL_HOST: mail.$SITE_DOMAIN
+      VIRTUAL_PORT: 80
+      VIRTUAL_NETWORK: ${PROXY:-proxy}
+      HTTPS_METHOD: noredirect
+      MP_SMTP_BIND_ADDR: 0.0.0.0:25
+      MP_UI_BIND_ADDR: 0.0.0.0:80
+    labels:
+      caddy: mail.$SITE_DOMAIN
+      caddy.reverse_proxy: "{{upstreams}}"
+    expose:
+       - "25"
+    networks:
+      default:
+        aliases:
+          - smtp
+      proxy:
+
   memcache:
     image: public.ecr.aws/unocha/memcache:1.6
     hostname: $PROJECT_NAME-memcache
     container_name: $PROJECT_NAME-memcache
     environment:
       MEMCACHE_MAX_MEMORY: 64
-    ports:
+    expose:
       - "11211"
     networks:
       - default
@@ -29,15 +52,16 @@ services:
     hostname: $PROJECT_NAME-mysql
     container_name: $PROJECT_NAME-mysql
     environment:
-      - MYSQL_DB=$MYSQL_DB
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASS=$MYSQL_PASS
+      MYSQL_DB:
+      MYSQL_USER:
+      MYSQL_PASS:
     volumes:
       - "site-database:/var/lib/mysql:rw"
+      - "site-database-log:/var/log/mysql:rw"
     networks:
       - default
 
-  drupal:
+  site:
     image: public.ecr.aws/unocha/$IMAGE_NAME:$IMAGE_TAG
     hostname: $PROJECT_NAME-site
     container_name: $PROJECT_NAME-site
@@ -46,11 +70,6 @@ services:
       - mysql
     volumes:
       - "./shared/settings:/srv/www/shared/settings:ro"
-      # Mount the composer files and patches.
-      - "../composer.json:/srv/www/composer.json:rw"
-      - "../composer.patches.json:/srv/www/composer.patches.json:rw"
-      - "../composer.lock:/srv/www/composer.lock:rw"
-      - "../PATCHES:/srv/www/PATCHES:rw"
       # Mount volumes for the private and public files.
       - "site-public:/srv/www/html/sites/default/files:rw"
       - "site-private:/srv/www/html/sites/default/private:rw"
@@ -63,30 +82,36 @@ services:
       # Mount configuration and allow overriding it.
       - "../config:/srv/www/config:rw"
       - "../config_dev:/srv/www/config_dev:rw"
-      # Mount contrib modules and themes.
-      # - "../html/modules/custom:/srv/www/html/modules/custom:rw"
-      # - "../html/themes/custom:/srv/www/html/themes/custom:rw"
+      # Mount the composer files and patches.
+      - "../composer.json:/srv/www/composer.json:rw"
+      - "../composer.patches.json:/srv/www/composer.patches.json:rw"
+      - "../composer.lock:/srv/www/composer.lock:rw"
+      - "../PATCHES:/srv/www/PATCHES:rw"
+      # # Mount contrib modules and themes.
+      # - "../html/modules/contrib:/srv/www/html/modules/contrib:rw"
+      # - "../html/themes/contrib:/srv/www/html/themes/contrib:rw"
+      # Mount nginx custom configuration.
+      # - "../docker/etc/nginx/custom:/etc/nginx/custom"
     environment:
-      - TERM=xterm
-      - ENVIRONMENT=dev
-      - NGINX_SERVERNAME=$SITE_DOMAIN
-      - NGINX_OVERRIDE_PROTOCOL=HTTP,$SITE_DOMAIN
-      - DRUSH_OPTIONS_URI=https://$SITE_DOMAIN
-      - DRUPAL_DB_DATABASE=$MYSQL_DB
-      - DRUPAL_DB_USERNAME=$MYSQL_USER
-      - DRUPAL_DB_PASSWORD=$MYSQL_PASS
-      - DRUPAL_DB_HOST=mysql
-      - DRUPAL_DB_DRIVER=mysql
-      - PHP_ENVIRONMENT=dev
-      - PHP_XDEBUG=true
+      TERM: xterm
+      ENVIRONMENT: local
+      NGINX_SERVERNAME: $SITE_DOMAIN
+      NGINX_OVERRIDE_PROTOCOL: HTTP,$SITE_DOMAIN
+      DRUSH_OPTIONS_URI: https://$SITE_DOMAIN
+      DRUPAL_DB_DATABASE: $MYSQL_DB
+      DRUPAL_DB_USERNAME: $MYSQL_USER
+      DRUPAL_DB_PASSWORD: $MYSQL_PASS
+      DRUPAL_DB_HOST: mysql
+      DRUPAL_DB_DRIVER: mysql
+      PHP_ENVIRONMENT:
       # Rate limiting.
-      - NGINX_LIMIT_HUMANS=1024r/s
-      - NGINX_BURST_HUMANS=1024
+      NGINX_LIMIT_HUMANS: 1024r/s
+      NGINX_BURST_HUMANS: 1024
       # Local proxy.
-      - VIRTUAL_HOST=$SITE_DOMAIN
-      - VIRTUAL_PORT=80
-      - VIRTUAL_NETWORK=${PROXY:-proxy}
-      - HTTPS_METHOD=noredirect
+      VIRTUAL_HOST: $SITE_DOMAIN
+      VIRTUAL_PORT: 80
+      VIRTUAL_NETWORK: ${PROXY:-proxy}
+      HTTPS_METHOD: noredirect
     labels:
       caddy: $SITE_DOMAIN
       caddy.reverse_proxy: "{{upstreams}}"

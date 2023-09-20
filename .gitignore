@@ -22,7 +22,6 @@
 
 # Ignore .env files as they are personal
 /.env
-/local/.env
 
 # Ignore Drupal's file directory
 /html/sites/*/files/
@@ -44,6 +43,10 @@ buildlog.txt
 /notes/
 /.idea/
 /.composer/
+
+# Ignore local development files.
+/local/.env
+/local/shared/settings/settings.site.php
 
 # Coverage
 /phpcov.phar
