@@ -1,0 +1,33 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @file
+ * Settings/configuration particular to this site.
+ *
+ * For example, HID credentials etc.
+ */
+
+// Allow insecure images.
+$config['image.settings']['allow_insecure_derivatives'] = TRUE;
+
+// Reduce the expiration time of deleted files so they can be deleted when
+// running cron.
+$config['system.file']['temporary_maximum_age'] = 1;
+
+// Local HID.
+$config['social_auth_hid.settings']['client_id'] = 'REPLACE_WITH_LOCAL_HID_CLIENT_ID';
+$config['social_auth_hid.settings']['client_secret'] = 'REPLACE_WITH_LOCAL_HID_CLIENT_SECRET';
+$config['social_auth_hid.settings']['base_url'] = 'REPLACE_WITH_LOCAL_HID_URL';
+
+// Stage file proxy.
+$config['stage_file_proxy.settings']['hotlink'] = FALSE;
+$config['stage_file_proxy.settings']['origin'] = 'REPLACE_WITH_PROD_SITE_URL';
+$config['stage_file_proxy.settings']['origin_dir'] = 'sites/default/files';
+$config['stage_file_proxy.settings']['use_imagecache_root'] = TRUE;
+$config['stage_file_proxy.settings']['verify'] = FALSE;
+$config['stage_file_proxy.settings']['excluded_extensions'] = '';
+
+// Set the debug var dumper.
+$config['devel.settings']['devel_dumper'] = 'var_dumper';

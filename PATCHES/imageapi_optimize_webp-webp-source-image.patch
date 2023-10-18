@@ -1,0 +1,23 @@
+diff --git a/src/Controller/ImageStyleDownloadController.php b/src/Controller/ImageStyleDownloadController.php
+index c8c9d67..3bb45af 100644
+--- a/src/Controller/ImageStyleDownloadController.php
++++ b/src/Controller/ImageStyleDownloadController.php
+@@ -25,9 +25,17 @@ class ImageStyleDownloadController extends CoreImageStyleDownloadController {
+    */
+   public function lookupSourceImage($image_uri) {
+     $source_image = substr($image_uri, 0, strrpos($image_uri, "."));
+-    if($source_image . '.webp' === $image_uri) {
++    // Handle image URI in the form `name.webp` in which case it is already
++    // the source image.
++    if (pathinfo($source_image, \PATHINFO_EXTENSION) === '') {
++      return $image_uri;
++    }
++    // Handle image URI in the form `name.ext.webp` in which case  `name.ext` is
++    // the source image.
++    elseif ($source_image . '.webp' === $image_uri) {
+       return $source_image;
+     }
++    return NULL;
+   }
+ 
+   /**

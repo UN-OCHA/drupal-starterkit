@@ -44,6 +44,10 @@ buildlog.txt
 /.idea/
 /.composer/
 
+# Ignore local development files.
+/local/.env
+/local/shared/settings/settings.site.php
+
 # Coverage
 /phpcov.phar
 /code-coverage-report-clover/

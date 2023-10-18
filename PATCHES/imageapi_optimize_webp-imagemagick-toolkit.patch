@@ -1,0 +1,60 @@
+diff --git a/src/Plugin/ImageAPIOptimizeProcessor/WebP.php b/src/Plugin/ImageAPIOptimizeProcessor/WebP.php
+index 070c6fe..20d8bd5 100644
+--- a/src/Plugin/ImageAPIOptimizeProcessor/WebP.php
++++ b/src/Plugin/ImageAPIOptimizeProcessor/WebP.php
+@@ -6,6 +6,8 @@ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\imageapi_optimize\ConfigurableImageAPIOptimizeProcessorBase;
+ 
+ /**
++ * WebP conversion processor.
++ *
+  * @ImageAPIOptimizeProcessor(
+  *   id = "imageapi_optimize_webp",
+  *   label = @Translation("WebP Deriver"),
+@@ -18,14 +20,31 @@ class WebP extends ConfigurableImageAPIOptimizeProcessorBase {
+    * {@inheritdoc}
+    */
+   public function applyToImage($image_uri) {
+-    $source_image = $this->imageFactory->get($image_uri, 'gd');
++    if (!in_array('webp', $this->imageFactory->getSupportedExtensions())) {
++      return FALSE;
++    }
++    $toolkit_id = $this->imageFactory->getToolkitId();
++    $source_image = $this->imageFactory->get($image_uri, $toolkit_id);
+     if ($source_image) {
+       $destination = $image_uri . '.webp';
+-      // @todo: Add try/catch.
+-      imagewebp($source_image->getToolkit()->getResource(), $destination, $this->configuration['quality']);
+-      // Fix issue where sometimes image fails to generate.
+-      if (filesize($destination) % 2 == 1) {
+-        file_put_contents($destination, "\0", FILE_APPEND);
++      try {
++        if ($toolkit_id == 'imagemagick') {
++          $source_image->convert('webp');
++          $source_image->save($destination);
++        }
++        elseif ($toolkit_id == 'gd') {
++          imagewebp($source_image->getToolkit()->getResource(), $destination, $this->configuration['quality']);
++        }
++        else {
++          return FALSE;
++        }
++        // Fix issue where sometimes image fails to generate.
++        if (filesize($destination) % 2 == 1) {
++          file_put_contents($destination, "\0", FILE_APPEND);
++        }
++      }
++      catch (\Exception $exception) {
++        return FALSE;
+       }
+       return TRUE;
+     }
+@@ -45,7 +64,7 @@ class WebP extends ConfigurableImageAPIOptimizeProcessorBase {
+    * {@inheritdoc}
+    */
+   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+-    // @todo: Add ability to pick which image types allow derivatives.
++    // @todo Add ability to pick which image types allow derivatives.
+     $form['quality'] = [
+       '#type' => 'number',
+       '#title' => $this->t('Image quality'),

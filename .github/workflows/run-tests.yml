@@ -66,7 +66,7 @@ jobs:
       - name: Configure AWS Credentials
         id: aws
         if: ${{ !env.ACT }}
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
@@ -97,10 +97,10 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml up -d
+            docker compose -f tests/docker-compose.yml up -d
             sleep 10
             docker ps -a
-            docker-compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
+            docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
         env:
           fail-fast: true
 
@@ -109,13 +109,13 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
+            docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal /usr/bin/composer run sub-theme
       - name: PHPCS
         id: phpcs
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom ./html/themes/custom
+            docker compose -f tests/docker-compose.yml exec -u appuser -w /srv/www -T drupal phpcs -p --report=full --standard=phpcs.xml ./html/modules/custom ./html/themes/custom
         env:
           fail-fast: true
 
@@ -124,7 +124,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
+            docker compose -f tests/docker-compose.yml exec -T drupal drush -y si --existing-config minimal install_configure_form.enable_update_status_emails=NULL
         env:
           fail-fast: true
 
@@ -133,20 +133,20 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush -y en dblog
-            docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
-            docker-compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/build/logs
-            docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/build/logs
-            docker-compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output
-            docker-compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files/browser_output
-            docker-compose -f tests/docker-compose.yml exec -T -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
+            docker compose -f tests/docker-compose.yml exec -T drupal drush -y en dblog
+            docker compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files /srv/www/html/sites/default/private
+            docker compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/build/logs
+            docker compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/build/logs
+            docker compose -f tests/docker-compose.yml exec -T drupal mkdir -p /srv/www/html/sites/default/files/browser_output
+            docker compose -f tests/docker-compose.yml exec -T drupal chmod -R 777 /srv/www/html/sites/default/files/browser_output
+            docker compose -f tests/docker-compose.yml exec -T -w /srv/www -e XDEBUG_MODE=coverage -e BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output -e DTT_BASE_URL=http://127.0.0.1 drupal ./vendor/bin/phpunit --coverage-clover /srv/www/html/build/logs/clover.xml --debug
         env:
           fail-fast: true
 
       - name: Copy Coveralls
         id: copy_coveralls
         if: success()
-        run: docker cp "$(docker-compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml . || echo "skip=true" >> "$GITHUB_OUTPUT"
+        run: docker cp "$(docker compose -f tests/docker-compose.yml ps -q drupal)":/srv/www/html/build/logs/clover.xml . || echo "skip=true" >> "$GITHUB_OUTPUT"
 
       - name: Monitor coverage
         id: coveralls
@@ -166,7 +166,7 @@ jobs:
         uses: cafuego/command-output@main
         with:
           run: |
-            docker-compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
+            docker compose -f tests/docker-compose.yml exec -T drupal drush watchdog:show
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2

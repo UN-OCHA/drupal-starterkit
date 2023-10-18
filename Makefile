@@ -1,6 +1,8 @@
 # Variables. Yes.
 DOCKER=docker
 DOCKER_BUILDKIT=0
+IMAGE_NAME=starterkit-site
+IMAGE_TAG=local
 
 # The main build recipe.
 build:  clean
@@ -12,7 +14,7 @@ build:  clean
 				--build-arg GITHUB_ACTOR=`whoami` \
 				--build-arg GITHUB_REPOSITORY=`git config --get remote.origin.url` \
 				--build-arg GITHUB_SHA=`git rev-parse --short HEAD` \
-		. --file docker/Dockerfile --tag public.ecr.aws/unocha/starterkit-site:local \
+		. --file docker/Dockerfile --tag public.ecr.aws/unocha/$(IMAGE_NAME):$(IMAGE_TAG) \
 		2>&1 | tee buildlog.txt
 
 clean:

@@ -35,7 +35,7 @@ $databases['default']['default'] = array_filter([
 // @TODO: Use some sort of key/value store.
 if (file_exists('/srv/www/shared/settings')) {
   foreach (glob('/srv/www/shared/settings/settings.*.php') as $filename) {
-    include_once $filename;
+    include $filename;
   }
 }
 
