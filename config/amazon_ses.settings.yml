@@ -1,0 +1,3 @@
+from_address: starterkit@test.test
+throttle: true
+queue: false

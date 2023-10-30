@@ -3,6 +3,8 @@ _core:
 module:
   admin_denied: 0
   allowed_formats: 0
+  amazon_ses: 0
+  aws: 0
   block: 0
   breakpoint: 0
   ckeditor5: 0
@@ -37,6 +39,7 @@ module:
   layout_paragraphs: 0
   link: 0
   locale: 0
+  mailsystem: 0
   maintenance200: 0
   media: 0
   media_library: 0
