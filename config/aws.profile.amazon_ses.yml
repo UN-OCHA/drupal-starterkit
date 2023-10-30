@@ -1,0 +1,12 @@
+uuid: 5e4ba0be-7f26-41ac-aa7d-b55feb6afce9
+langcode: en
+status: true
+dependencies: {  }
+id: amazon_ses
+name: 'Amazon SES'
+default: 1
+aws_role_arn: ''
+aws_access_key_id: ''
+aws_secret_access_key: ''
+region: 'us-east-1'
+encryption_profile: _none
