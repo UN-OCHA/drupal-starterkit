@@ -1,9 +1,5 @@
 {
   "patches": {
-    "drupal/core": {
-      "https://www.drupal.org/project/drupal/issues/3376927": "PATCHES/core-css-js-aggregation-3376927.patch",
-      "https://www.drupal.org/project/drupal/issues/3351600": "PATCHES/core-ckeditor5-dialog-fix-3351600.patch"
-    },
     "drupal/csp": {
       "Simplify log format": "PATCHES/csp-log-format.patch"
     },
