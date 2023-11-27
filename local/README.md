@@ -17,6 +17,8 @@ The script `./local/exec.sh` is a shortcut for `docker compose -f local/docker-c
 
 To run additional docker compose commands, use `docker compose -f local/docker-compose.yml` + `command`.
 
+Alternatively, enter the container with `docker exec -it PROJECT_NAME-site sh` and run composer or drush commands from there.
+
 ## Create instance
 
 1. Run `./local/install.sh -m -c -i` to create an instance of the site (empty database) from the existing config.
