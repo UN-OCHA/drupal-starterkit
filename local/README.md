@@ -45,7 +45,7 @@ After modifications to the composer files (for example, after the automatic comp
 
 When a new image used by a service has been created by the OPS team (ex: new mysql or php image):
 
-- Run `./local/insall.sh -u -d` to pull the service and base site images, recreate the local site image and the containers and install the dev dependencies.
+- Run `./local/install.sh -u -d` to pull the service and base site images, recreate the local site image and the containers and install the dev dependencies.
 
 When an image **with a new tag** has been created, then update the `local/docker-compose.yml` or the `docker/Dockerfile` accordingly before running the update command above.
 
