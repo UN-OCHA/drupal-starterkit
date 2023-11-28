@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "180067b6e5343c1dab0ada59cfc04944",
+    "content-hash": "251b33e2d9611d62cdfaf0fb96c62046",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3722,6 +3722,73 @@
                 "source": "https://git.drupalcode.org/project/metatag",
                 "issues": "https://www.drupal.org/project/issues/metatag",
                 "docs": "https://www.drupal.org/docs/8/modules/metatag"
+            }
+        },
+        {
+            "name": "drupal/monitoring",
+            "version": "1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/monitoring.git",
+                "reference": "8.x-1.13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/monitoring-8.x-1.13.zip",
+                "reference": "8.x-1.13",
+                "shasum": "c110ccd613a28b24d429b52d117fb6a0db5678c9"
+            },
+            "require": {
+                "drupal/core": "^9.4 || ^10"
+            },
+            "conflict": {
+                "drupal/redirect": "<1.5"
+            },
+            "require-dev": {
+                "drupal/captcha": "~1.0",
+                "drupal/commerce": "~2.0",
+                "drupal/past": "~1.0",
+                "drupal/redirect": "~1.0",
+                "drupal/search_api": "~1.0",
+                "drupal/search_api_db": "*",
+                "drupal/search_api_solr": "~4.0",
+                "drupal/simplenews": "~2.0",
+                "drupal/ultimate_cron": "~2.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.13",
+                    "datestamp": "1672905748",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^9 || ^10"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "miro_dietiker",
+                    "homepage": "https://www.drupal.org/user/227761"
+                }
+            ],
+            "description": "Monitoring base.",
+            "homepage": "https://www.drupal.org/project/monitoring",
+            "support": {
+                "source": "https://git.drupalcode.org/project/monitoring"
             }
         },
         {
@@ -12850,6 +12917,36 @@
                 "source": "https://github.com/UN-OCHA/common_design/tree/v9.1.0"
             },
             "time": "2023-09-13T11:46:43+00:00"
+        },
+        {
+            "name": "unocha/ocha_monitoring",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UN-OCHA/ocha_monitoring.git",
+                "reference": "62c4b8acc1f5bdf974b095c6e7dc927f9660d3cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UN-OCHA/ocha_monitoring/zipball/62c4b8acc1f5bdf974b095c6e7dc927f9660d3cf",
+                "reference": "62c4b8acc1f5bdf974b095c6e7dc927f9660d3cf",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/core": "^10",
+                "drupal/monitoring": "^1"
+            },
+            "type": "drupal-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "UNOCHA Monitoring",
+            "support": {
+                "issues": "https://github.com/UN-OCHA/ocha_monitoring/issues",
+                "source": "https://github.com/UN-OCHA/ocha_monitoring/tree/1.0.0"
+            },
+            "time": "2023-11-21T10:32:25+00:00"
         },
         {
             "name": "webflo/drupal-finder",

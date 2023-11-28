@@ -1,0 +1,21 @@
+uuid: 27079075-ddb0-4ae1-9d54-88e9782b8498
+langcode: en
+status: true
+dependencies:
+  module:
+    - update
+_core:
+  default_config_hash: FSvo5_4kGyvNZu9RVgfFKnGfbGkIS8EgI46ckVkT6CM
+id: update_core
+label: Core
+description: 'Available updates for Drupal core'
+category: Update
+plugin_id: update_status
+result_class: null
+value_label: 'Outdated modules'
+value_type: number
+caching_time: 3600
+settings:
+  type: core
+thresholds:
+  type: none
