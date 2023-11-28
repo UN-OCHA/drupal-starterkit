@@ -1,0 +1,29 @@
+uuid: b379ac7f-bd75-4108-8970-b7e72813c656
+langcode: en
+status: false
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: 3jxUL0sAC7XVALySBTxJIuby63wwL1rq3lNVd3hhIAg
+id: user_new
+label: 'New users'
+description: ''
+category: 'User activity'
+plugin_id: entity_aggregator
+result_class: null
+value_label: Users
+value_type: number
+caching_time: 3600
+settings:
+  time_interval_field: created
+  time_interval_value: 86400
+  verbose_fields:
+    - id
+    - label
+    - created
+  entity_type: user
+thresholds:
+  type: exceeds
+  warning: 10
+  critical: null
