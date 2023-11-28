@@ -17,6 +17,8 @@ The script `./local/exec.sh` is a shortcut for `docker compose -f local/docker-c
 
 To run additional docker compose commands, use `docker compose -f local/docker-compose.yml` + `command`.
 
+Alternatively, enter the container with `docker exec -it PROJECT_NAME-site sh` and run composer or drush commands from there.
+
 ## Create instance
 
 1. Run `./local/install.sh -m -c -i` to create an instance of the site (empty database) from the existing config.
@@ -45,7 +47,7 @@ After modifications to the composer files (for example, after the automatic comp
 
 When a new image used by a service has been created by the OPS team (ex: new mysql or php image):
 
-- Run `./local/insall.sh -u -d` to pull the service and base site images, recreate the local site image and the containers and install the dev dependencies.
+- Run `./local/install.sh -u -d` to pull the service and base site images, recreate the local site image and the containers and install the dev dependencies.
 
 When an image **with a new tag** has been created, then update the `local/docker-compose.yml` or the `docker/Dockerfile` accordingly before running the update command above.
 
