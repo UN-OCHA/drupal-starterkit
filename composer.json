@@ -38,7 +38,7 @@
         "drupal/imageapi_optimize_webp": "^2.0",
         "drupal/imagemagick": "^3.4",
         "drupal/layout_paragraphs": "^2.0",
-        "drupal/maintenance200": "^1.1",
+        "drupal/maintenance200": "^2",
         "drupal/memcache": "^2.5",
         "drupal/metatag": "^2.0",
         "drupal/paragraphs": "^1.16",
