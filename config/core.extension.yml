@@ -24,7 +24,7 @@ module:
   file: 0
   file_mdm: 0
   filter: 0
-  google_tag: 0
+  gtm_barebones: 0
   image: 0
   imageapi_optimize: 0
   imageapi_optimize_binaries: 0
