@@ -14,7 +14,7 @@ jobs:
       uses: UN-OCHA/actions/composer-update@main
       with:
         github_access_token: ${{ secrets.PAT }}
-        patch_branch: 'develop'
+        patch_branch: ${{ github.head_ref || github.ref_name }}
         patch_packages: 'drupal/*'
         patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
         slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
