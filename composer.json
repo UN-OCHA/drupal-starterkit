@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "composer/installers": "^1.12",
+        "composer/installers": "^2",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_denied": "^2.0",
         "drupal/allowed_formats": "^3.0",
@@ -67,7 +67,7 @@
         "kint-php/kint": "^5",
         "marcocesarato/php-conventional-changelog": "^1.16",
         "mglaman/drupal-check": "^1.4",
-        "palantirnet/drupal-rector": "^0.18",
+        "palantirnet/drupal-rector": "^0.19",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.9",
         "phpspec/prophecy-phpunit": "^2",
