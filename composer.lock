@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b24cd9273f6f7f0b21a421d932fabef4",
+    "content-hash": "c3217ecced02b87575cad984da2ff48e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -819,39 +819,37 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.12.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19"
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/d20a64ed3c94748397ff5973488761b22f6d3f19",
-                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19",
+                "url": "https://api.github.com/repos/composer/installers/zipball/c29dc4b93137acb82734f672c37e029dfbd95b35",
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "replace": {
-                "roundcube/plugin-installer": "*",
-                "shama/baton": "*"
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
                 "composer/composer": "1.6.* || ^2.0",
                 "composer/semver": "^1 || ^3",
                 "phpstan/phpstan": "^0.12.55",
                 "phpstan/phpstan-phpunit": "^0.12.16",
-                "symfony/phpunit-bridge": "^4.2 || ^5",
-                "symfony/process": "^2.3"
+                "symfony/phpunit-bridge": "^5.3",
+                "symfony/process": "^5"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "Composer\\Installers\\Plugin",
                 "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
+                    "dev-main": "2.x-dev"
+                },
+                "plugin-modifies-install-path": true
             },
             "autoload": {
                 "psr-4": {
@@ -872,7 +870,6 @@
             "description": "A multi-framework Composer library installer",
             "homepage": "https://composer.github.io/installers/",
             "keywords": [
-                "Craft",
                 "Dolibarr",
                 "Eliasis",
                 "Hurad",
@@ -893,7 +890,6 @@
                 "Whmcs",
                 "WolfCMS",
                 "agl",
-                "aimeos",
                 "annotatecms",
                 "attogram",
                 "bitrix",
@@ -912,7 +908,6 @@
                 "grav",
                 "installer",
                 "itop",
-                "joomla",
                 "known",
                 "kohana",
                 "laravel",
@@ -921,6 +916,7 @@
                 "magento",
                 "majima",
                 "mako",
+                "matomo",
                 "mediawiki",
                 "miaoxing",
                 "modulework",
@@ -940,9 +936,7 @@
                 "silverstripe",
                 "sydes",
                 "sylius",
-                "symfony",
                 "tastyigniter",
-                "typo3",
                 "wordpress",
                 "yawik",
                 "zend",
@@ -950,7 +944,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/installers/issues",
-                "source": "https://github.com/composer/installers/tree/v1.12.0"
+                "source": "https://github.com/composer/installers/tree/v2.2.0"
             },
             "funding": [
                 {
@@ -966,7 +960,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-13T08:19:44+00:00"
+            "time": "2022-08-20T06:45:11+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -3939,7 +3933,7 @@
                 "shasum": "fc8ea60619b6b4682bade340e13fb4565d3a7e0c"
             },
             "require": {
-                "drupal/core": "^9.1 || ^10"
+                "drupal/core": "^10"
             },
             "type": "drupal-module",
             "extra": {
@@ -14205,20 +14199,20 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v9.2.2",
+            "version": "v9.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "f582963b5848d92b42de871b628f52c5a9f34930"
+                "reference": "8a59010887b7d07960eb8dc61bcaabfcbfd02597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/f582963b5848d92b42de871b628f52c5a9f34930",
-                "reference": "f582963b5848d92b42de871b628f52c5a9f34930",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/8a59010887b7d07960eb8dc61bcaabfcbfd02597",
+                "reference": "8a59010887b7d07960eb8dc61bcaabfcbfd02597",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "^1.2",
+                "composer/installers": "^1.2 || ^2",
                 "drupal/stable": "^2.0"
             },
             "type": "drupal-theme",
@@ -14229,9 +14223,9 @@
             "description": "OCHA Common Design base theme for Drupal 9+",
             "support": {
                 "issues": "https://github.com/UN-OCHA/common_design/issues",
-                "source": "https://github.com/UN-OCHA/common_design/tree/v9.2.2"
+                "source": "https://github.com/UN-OCHA/common_design/tree/v9.3.2"
             },
-            "time": "2023-10-26T10:03:06+00:00"
+            "time": "2024-02-12T09:04:26+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -15150,20 +15144,20 @@
         },
         {
             "name": "palantirnet/drupal-rector",
-            "version": "0.18.3",
+            "version": "0.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/palantirnet/drupal-rector.git",
-                "reference": "eab4674e4c7590c53c39bee008e00c69a279b099"
+                "reference": "4a2e739189b9b5605268a842485b8b6ff933c39c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/palantirnet/drupal-rector/zipball/eab4674e4c7590c53c39bee008e00c69a279b099",
-                "reference": "eab4674e4c7590c53c39bee008e00c69a279b099",
+                "url": "https://api.github.com/repos/palantirnet/drupal-rector/zipball/4a2e739189b9b5605268a842485b8b6ff933c39c",
+                "reference": "4a2e739189b9b5605268a842485b8b6ff933c39c",
                 "shasum": ""
             },
             "require": {
-                "rector/rector": "~0.18.0",
+                "rector/rector": "~0.19.0",
                 "webflo/drupal-finder": "^1.2"
             },
             "replace": {
@@ -15222,9 +15216,9 @@
                 "rector"
             ],
             "support": {
-                "source": "https://github.com/palantirnet/drupal-rector/tree/0.18.3"
+                "source": "https://github.com/palantirnet/drupal-rector/tree/0.19.2"
             },
-            "time": "2023-12-05T04:49:32+00:00"
+            "time": "2024-01-17T13:56:53+00:00"
         },
         {
             "name": "pdepend/pdepend",
@@ -15436,21 +15430,21 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.18.12",
+            "version": "0.19.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "ed8d5352a3faa69e4a5e315896abffd4bc29c828"
+                "reference": "de3b3bb159abd704b144aa86fb244f7f1f4ac947"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ed8d5352a3faa69e4a5e315896abffd4bc29c828",
-                "reference": "ed8d5352a3faa69e4a5e315896abffd4bc29c828",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/de3b3bb159abd704b144aa86fb244f7f1f4ac947",
+                "reference": "de3b3bb159abd704b144aa86fb244f7f1f4ac947",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "phpstan/phpstan": "^1.10.35"
+                "phpstan/phpstan": "^1.10.56"
             },
             "conflict": {
                 "rector/rector-doctrine": "*",
@@ -15480,7 +15474,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.18.12"
+                "source": "https://github.com/rectorphp/rector/tree/0.19.8"
             },
             "funding": [
                 {
@@ -15488,7 +15482,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-04T08:47:30+00:00"
+            "time": "2024-02-05T10:59:13+00:00"
         },
         {
             "name": "symfony/config",
