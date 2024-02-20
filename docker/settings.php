@@ -31,12 +31,21 @@ $databases['default']['default'] = array_filter([
   'collation' => getenv('DRUPAL_DB_COLLATION'),
 ]);
 
-// Load everything else from snippets under /srv/www/shared/settings.
-// @TODO: Use some sort of key/value store.
+// Inject some settings for local use and/or Drupal sanity checks.
+$settings['config_sync_directory'] = dirname($app_root) . '/config';
+$settings['hash_salt']             = 'cannabidol-chloride';
+
+/**
+  * Load generated settings.
+  * 
+  * Load everything else from snippets under /srv/www/shared/settings, where Ansible
+  * puts them. Do *not* add any (local) settings overrides below this block, as they
+  * will then override the Ansible-managed ones!
+  *
+  * @TODO: Use some sort of key/value store or vault.
+  */
 if (file_exists('/srv/www/shared/settings')) {
   foreach (glob('/srv/www/shared/settings/settings.*.php') as $filename) {
     include $filename;
   }
 }
-
-$settings['config_sync_directory'] = dirname($app_root) . '/config';

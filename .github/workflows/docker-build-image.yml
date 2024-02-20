@@ -1,0 +1,32 @@
+name: Build docker image
+
+on:
+# Set a correct docker_image variable and then remove the comments from this block to enable automagic builds.
+#  push:
+#    branches:
+#      - develop
+#      - 'feature/**'
+#      - main
+#  release:
+#    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Build
+      id: build-action
+      uses: UN-OCHA/actions/drupal-docker-build@main
+      with:
+        aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+        docker_registry_url: public.ecr.aws
+        docker_registry_path: /unocha/
+        docker_image: web-site
+        docker_username: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+        docker_password: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+        ecr_github_token: ${{ secrets.ECR_GITHUB_TOKEN }}
+        ecr_jenkins_token: ${{ secrets.JENKINS_ECR_TOKEN }}
+        slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack_channel_name: ${{ vars.SLACK_CHANNEL }}
