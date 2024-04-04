@@ -1,0 +1,22 @@
+uuid: 0c04eab3-4ea4-482c-aca0-6bbda6a5ee0b
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: TkqB__LZLwVMNOCb8ysfl8U4BV6sXdZMDafulGwybwA
+id: system_memory
+label: Memory
+description: 'Tracks free memory'
+category: System
+plugin_id: monitoring_system_memory
+result_class: null
+value_label: '% free memory'
+value_type: number
+caching_time: 300
+settings:
+  memory: free
+  value: percentage
+thresholds:
+  type: falls
+  warning: 20
+  critical: 5

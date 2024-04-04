@@ -1,0 +1,20 @@
+uuid: 3bacc0e0-cc2d-483c-a6db-627efa997994
+langcode: en
+status: false
+dependencies:
+  module:
+    - image
+id: core_requirements_image
+label: 'Module image'
+description: 'Requirements of the image module'
+category: Requirements
+plugin_id: core_requirements
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings:
+  module: image
+  exclude_keys: {  }
+thresholds:
+  type: none

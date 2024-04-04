@@ -1,0 +1,20 @@
+uuid: 5bd39507-36c8-4215-ae08-1e5e225ca116
+langcode: en
+status: false
+dependencies:
+  module:
+    - csp
+id: core_requirements_csp
+label: 'Module csp'
+description: 'Requirements of the csp module'
+category: Requirements
+plugin_id: core_requirements
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings:
+  module: csp
+  exclude_keys: {  }
+thresholds:
+  type: none

@@ -1,0 +1,18 @@
+uuid: 838f0a52-206f-4520-a6db-72d0abcf60bb
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: fZcg_y45GagsyBICfNbPSp_oR1IO1D2sqBiTfUcNfKg
+id: user_integrity
+label: 'Privileged user integrity'
+description: 'Monitors name and e-mail changes of users with access to restricted permissions. Checks if authenticated or anonymous users have privileged access'
+category: 'User activity'
+plugin_id: user_integrity
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings: {  }
+thresholds:
+  type: none

@@ -1,0 +1,20 @@
+uuid: 7c464634-717d-4ac7-8b3a-e4da601a0211
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: zogxfdFrxiieH69X2iP7PB00dkW62vHwpukdsyMCP5k
+id: core_maintenance_mode
+label: 'Maintenance mode'
+description: 'Site maintenance mode'
+category: Other
+plugin_id: state_value
+result_class: null
+value_label: null
+value_type: bool
+caching_time: null
+settings:
+  key: system.maintenance_mode
+  value: false
+thresholds:
+  type: none
