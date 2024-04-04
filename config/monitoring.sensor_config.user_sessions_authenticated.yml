@@ -1,0 +1,33 @@
+uuid: ecc4ef00-ac65-4f82-807c-3e6e6f6d0f51
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+_core:
+  default_config_hash: EpAogeIPxfKYPscZ5c_7tMyu8nazITOFQAZfPOLV09w
+id: user_sessions_authenticated
+label: 'Authenticated user sessions'
+description: 'Authenticated user sessions without logout'
+category: 'User activity'
+plugin_id: database_aggregator
+result_class: null
+value_label: 'Active sessions'
+value_type: number
+caching_time: null
+settings:
+  time_interval_field: timestamp
+  time_interval_value: 86400
+  conditions:
+    -
+      field: uid
+      value: '0'
+      operator: '!='
+  verbose_fields:
+    - uid
+    - hostname
+    - timestamp
+  table: sessions
+  history_status: true
+thresholds:
+  type: none

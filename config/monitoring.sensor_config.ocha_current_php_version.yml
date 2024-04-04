@@ -1,0 +1,20 @@
+uuid: 15ef1188-805b-409d-98e7-dd59bb0f561f
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: lGDhZ8Foil2aDR9bIlAHx0RePNCYR6TXMxvQ78hsvvY
+id: ocha_current_php_version
+label: 'Current PHP version'
+description: 'Current PHP version'
+category: OCHA
+plugin_id: ocha_current_php_version
+result_class: null
+value_label: null
+value_type: string
+caching_time: null
+settings: {  }
+thresholds:
+  type: none

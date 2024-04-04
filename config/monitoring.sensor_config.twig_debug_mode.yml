@@ -1,0 +1,18 @@
+uuid: 25054798-4d69-44d0-a89f-d444cd2c57af
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: 5whCLRBs1bqhiLZzvgQavTSlv9MFpyW7QyT954HA9Oo
+id: twig_debug_mode
+label: 'Twig debug mode'
+description: 'Verifies that twig debug settings are disabled.'
+category: Other
+plugin_id: twig_debug_mode
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: null
+settings: {  }
+thresholds:
+  type: none
