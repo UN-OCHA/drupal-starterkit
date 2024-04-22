@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_ocha_monitoring_active_monitors_alter.
+ * Implements hook_ocha_monitoring_active_monitors_alter().
  */
 function starter_module_ocha_monitoring_active_monitors_alter(&$active_monitors) {
   // Remove one monitor.
