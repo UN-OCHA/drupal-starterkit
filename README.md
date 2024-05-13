@@ -89,6 +89,49 @@ See the [Running the site](#running-the-site) section below.
 
 Here's a list of commonly used modules among the UN-OCHA websites.
 
+### Components
+
+Used with the Common Design theme.
+
+- https://www.drupal.org/project/components
+
+### Social auth humanitarian id
+
+For logging in through HID
+
+- https://www.drupal.org/project/social_auth_hid
+
+### Admin Denied
+
+Prevent login as user 1
+
+- https://www.drupal.org/project/admin_denied
+
+### Imagemagick
+
+Faster and more memory efficient image handling
+
+- https://www.drupal.org/project/imagemagick
+
+### Pathauto
+
+For better urls
+
+- https://www.drupal.org/project/pathauto 
+
+### GTM Barebones
+
+- https://github.com/UN-OCHA/gtm_barebones
+
+### User expire
+
+Automatically “block” inactive users
+- https://www.drupal.org/project/user_expire
+
+### Username Enumeration Prevention
+
+- https://www.drupal.org/project/username_enumeration_prevention
+
 ### Paragraphs
 
 Many UN-OCHA websites use the `paragraphs` module and related ones to structure the content of the site.
@@ -97,6 +140,15 @@ Many UN-OCHA websites use the `paragraphs` module and related ones to structure 
 - https://www.drupal.org/project/layout_paragraphs
 
 *This is enabled by default as of 2023-01-19.*
+
+Layout Paragraphs provide better editor UX for Paragraphs.
+
+Use these Form Display settings for each Paragraphs field you add to the site:
+
+- Preview view mode: Preview
+- Maximum nesting depth: 0
+- Require paragraphs to be added inside a layout: FALSE (unchecked)
+- Placeholder message when field is empty: [blank string]
 
 ### XML Sitemap
 
