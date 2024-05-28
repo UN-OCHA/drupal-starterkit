@@ -16,115 +16,12 @@ base_table: monitoring_sensor_result
 base_field: record_id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      rendering_language: '***LANGUAGE_entity_default***'
-      access:
-        type: perm
-        options:
-          perm: 'monitoring reports'
-      cache:
-        type: none
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: 'false'
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 50
-          offset: 0
-          id: 0
-          total_pages: null
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          tags:
-            previous: '‹ previous'
-            next: 'next ›'
-            first: '« first'
-            last: 'last »'
-          quantity: 9
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            sensor_name: sensor_name
-            sensor_status: sensor_status
-            sensor_message: sensor_message
-            execution_time: execution_time
-            timestamp: timestamp
-          info:
-            sensor_name:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            sensor_status:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            sensor_message:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            execution_time:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            timestamp:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: true
-      row:
-        type: fields
+      title: Log
       fields:
         sensor_name:
           id: sensor_name
@@ -133,6 +30,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: monitoring_sensor_name
           label: 'Sensor name'
           exclude: false
           alter:
@@ -174,8 +73,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: monitoring_sensor_name
         sensor_status:
           id: sensor_status
           table: monitoring_sensor_result
@@ -183,6 +80,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: Status
           exclude: false
           alter:
@@ -224,8 +123,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
         sensor_message:
           id: sensor_message
           table: monitoring_sensor_result
@@ -233,6 +130,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: 'Status message'
           exclude: false
           alter:
@@ -274,8 +173,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
         execution_time:
           id: execution_time
           table: monitoring_sensor_result
@@ -283,6 +180,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: 'Execution time'
           exclude: false
           alter:
@@ -324,8 +223,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
         timestamp:
           id: timestamp
           table: monitoring_sensor_result
@@ -333,6 +230,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: date
           label: Timestamp
           exclude: false
           alter:
@@ -377,40 +276,44 @@ display:
           date_format: short
           custom_date_format: ''
           timezone: ''
-          entity_type: monitoring_sensor_result
-          plugin_id: date
-      filters: {  }
-      sorts:
-        timestamp:
-          id: timestamp
-          table: monitoring_sensor_result
-          field: timestamp
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 50
+          total_pages: null
+          id: 0
+          tags:
+            next: 'next ›'
+            previous: '‹ previous'
+            first: '« first'
+            last: 'last »'
           expose:
-            label: ''
-          granularity: second
-          entity_type: monitoring_sensor_result
-          plugin_id: date
-        record_id:
-          id: record_id
-          table: monitoring_sensor_result
-          field: record_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
-      title: Log
-      header: {  }
-      footer: {  }
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'monitoring reports'
+      cache:
+        type: none
+        options: {  }
       empty:
         area_text_custom:
           id: area_text_custom
@@ -419,11 +322,38 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          empty: true
-          tokenize: false
-          content: 'No sensor results yet.'
           plugin_id: text_custom
-      relationships: {  }
+          empty: true
+          content: 'No sensor results yet.'
+          tokenize: false
+      sorts:
+        timestamp:
+          id: timestamp
+          table: monitoring_sensor_result
+          field: timestamp
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+          exposed: false
+          granularity: second
+        record_id:
+          id: record_id
+          table: monitoring_sensor_result
+          field: record_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+          exposed: false
       arguments:
         sensor_name:
           id: sensor_name
@@ -432,6 +362,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: string
           default_action: ignore
           exception:
             value: all
@@ -442,12 +374,11 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -463,8 +394,76 @@ display:
           path_case: none
           transform_dash: false
           break_phrase: false
-          entity_type: monitoring_sensor_result
-          plugin_id: string
+      filters: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            sensor_name: sensor_name
+            sensor_status: sensor_status
+            sensor_message: sensor_message
+            execution_time: execution_time
+            timestamp: timestamp
+          default: '-1'
+          info:
+            sensor_name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            sensor_status:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            sensor_message:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            execution_time:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            timestamp:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: true
+          caption: ''
+          description: ''
+      row:
+        type: fields
+      query:
+        type: views_query
+        options:
+          query_comment: 'false'
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
+      relationships: {  }
+      header: {  }
+      footer: {  }
+      rendering_language: '***LANGUAGE_entity_default***'
       display_extenders: {  }
     cache_metadata:
       contexts:
@@ -474,13 +473,11 @@ display:
         - user.permissions
       cacheable: false
   detail_page_log:
-    display_plugin: embed
     id: detail_page_log
     display_title: 'Detail Page Log'
+    display_plugin: embed
     position: 2
     display_options:
-      rendering_language: '***LANGUAGE_entity_default***'
-      display_extenders: {  }
       fields:
         timestamp:
           id: timestamp
@@ -489,6 +486,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: date
           label: Timestamp
           exclude: false
           alter:
@@ -533,8 +532,6 @@ display:
           date_format: short
           custom_date_format: ''
           timezone: ''
-          entity_type: monitoring_sensor_result
-          plugin_id: date
         sensor_status:
           id: sensor_status
           table: monitoring_sensor_result
@@ -542,6 +539,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: Status
           exclude: false
           alter:
@@ -583,8 +582,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
         sensor_message:
           id: sensor_message
           table: monitoring_sensor_result
@@ -592,6 +589,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: 'Status message'
           exclude: false
           alter:
@@ -633,8 +632,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
         execution_time:
           id: execution_time
           table: monitoring_sensor_result
@@ -642,6 +639,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: monitoring_sensor_result
+          plugin_id: standard
           label: 'Execution time'
           exclude: false
           alter:
@@ -683,11 +682,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: monitoring_sensor_result
-          plugin_id: standard
       defaults:
         fields: false
       display_description: ''
+      rendering_language: '***LANGUAGE_entity_default***'
+      display_extenders: {  }
     cache_metadata:
       contexts:
         - 'languages:language_interface'
@@ -696,9 +695,9 @@ display:
         - user.permissions
       cacheable: false
   page_1:
-    display_plugin: page
     id: page_1
     display_title: Page
+    display_plugin: page
     position: 1
     display_options:
       rendering_language: '***LANGUAGE_entity_default***'
@@ -708,10 +707,10 @@ display:
         type: tab
         title: Log
         description: ''
-        parent: monitoring.sensor_list
         weight: 0
-        context: '0'
         menu_name: admin
+        parent: monitoring.sensor_list
+        context: '0'
     cache_metadata:
       contexts:
         - 'languages:language_interface'

@@ -6,5 +6,6 @@ dependencies:
     - social_auth
 id: social_auth.token
 label: Token
+description: ''
 targetEntityType: social_auth
 cache: true
