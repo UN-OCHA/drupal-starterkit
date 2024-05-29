@@ -47,6 +47,7 @@
         "drupal/paragraphs": "^1.16",
         "drupal/pathauto": "^1.8",
         "drupal/redirect": "^1.8",
+        "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^4",
         "drupal/stable": "^2.0",
         "drupal/stage_file_proxy": "^2.1",
