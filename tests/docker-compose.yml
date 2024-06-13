@@ -22,7 +22,7 @@ services:
       MEMCACHE_MAX_MEMORY: 64
 
   mysql:
-    image: public.ecr.aws/unocha/mysql:10.6
+    image: public.ecr.aws/unocha/mysql:10.11
     hostname: starterkit-test-mysql
     container_name: starterkit-test-mysql
     environment:
@@ -50,6 +50,8 @@ services:
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
       - "../.coveralls.yml:/srv/www/.coveralls.yml:ro"
+      # Mount configuration and allow overriding it.
+      - "../config:/srv/www/config:rw"
       # Mount local custom code.
       - "../html/modules/custom:/srv/www/html/modules/custom:ro"
       - "../html/themes/custom:/srv/www/html/themes/custom:rw"
