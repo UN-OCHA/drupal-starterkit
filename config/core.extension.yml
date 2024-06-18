@@ -11,7 +11,6 @@ module:
   config_split: 0
   config_translation: 0
   content_moderation: 0
-  csp: 0
   ctools: 0
   datetime: 0
   datetime_range: 0
@@ -58,6 +57,7 @@ module:
   path_alias: 0
   redirect: 0
   responsive_image: 0
+  seckit: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0
