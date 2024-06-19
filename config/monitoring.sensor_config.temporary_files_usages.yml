@@ -1,0 +1,28 @@
+uuid: e92147b4-3547-4875-8201-27b14837180f
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: WIrlk4ez9n-ZQ7aCLgQYgYi1iG4_spN1dOqSbdgojoQ
+id: temporary_files_usages
+label: 'Used temporary files'
+description: 'Reports temporary files that are still being used.'
+category: Other
+plugin_id: temporary_files_usages
+result_class: null
+value_label: 'used temporary files'
+value_type: number
+caching_time: 3600
+settings:
+  conditions:
+    -
+      field: status
+      value: '0'
+      operator: '='
+  verbose_fields:
+    - fid
+  table: file_managed
+thresholds:
+  type: exceeds
+  warning: 0
+  critical: 0

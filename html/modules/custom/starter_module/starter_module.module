@@ -4,3 +4,14 @@
  * @file
  * Starter module.
  */
+
+/**
+ * Implements hook_ocha_monitoring_active_monitors_alter().
+ */
+function starter_module_ocha_monitoring_active_monitors_alter(&$active_monitors) {
+  // Remove one monitor.
+  $monitor = 'ocha_un_date';
+  if (in_array($monitor, $active_monitors)) {
+    unset($active_monitors[array_search($monitor, $active_monitors)]);
+  }
+}

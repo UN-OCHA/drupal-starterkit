@@ -1,0 +1,20 @@
+uuid: 3a839c11-cb1f-4056-a395-d969fdbf98f6
+langcode: en
+status: false
+dependencies:
+  module:
+    - media
+id: core_requirements_media
+label: 'Module media'
+description: 'Requirements of the media module'
+category: Requirements
+plugin_id: core_requirements
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings:
+  module: media
+  exclude_keys: {  }
+thresholds:
+  type: none

@@ -1,0 +1,20 @@
+uuid: 3b1f1460-9af3-4cda-af18-3156329ca662
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: 1TnqONbMYVK4LMhvXu6AebNMWLXDcth71zzakY05V_E
+id: ocha_deployment_identifier
+label: 'Deployment identifier'
+description: 'Deployment identifier'
+category: OCHA
+plugin_id: ocha_deployment_identifier
+result_class: null
+value_label: null
+value_type: string
+caching_time: null
+settings: {  }
+thresholds:
+  type: none

@@ -1,0 +1,20 @@
+uuid: 434db6dc-6041-40cb-bc43-b12e93a13002
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_monitoring
+_core:
+  default_config_hash: i1BT_gUUpQfo0ImZLLyiNjW_iyFD_MCMjxLkJgVR_MA
+id: ocha_current_release
+label: 'Current release'
+description: 'Current release'
+category: OCHA
+plugin_id: ocha_current_release
+result_class: null
+value_label: null
+value_type: string
+caching_time: null
+settings: {  }
+thresholds:
+  type: none

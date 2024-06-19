@@ -1,0 +1,23 @@
+uuid: 803b433e-a8e5-43a8-848c-a19f5236a999
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+_core:
+  default_config_hash: Af8OA_1xItAdMneO4-cPsMdKI5ukOyxw0HzH7I-p6JM
+id: core_theme_default
+label: 'Default theme'
+description: 'Site default theme'
+category: Other
+plugin_id: config_value
+result_class: null
+value_label: null
+value_type: string
+caching_time: null
+settings:
+  config: system.theme
+  key: default
+  value: bartik
+thresholds:
+  type: none

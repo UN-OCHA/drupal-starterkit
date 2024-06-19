@@ -1,0 +1,20 @@
+uuid: 9f417b08-ff7e-4f22-ac3c-69a0a1441e20
+langcode: en
+status: false
+dependencies:
+  module:
+    - xmlsitemap
+id: core_requirements_xmlsitemap
+label: 'Module xmlsitemap'
+description: 'Requirements of the xmlsitemap module'
+category: Requirements
+plugin_id: core_requirements
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings:
+  module: xmlsitemap
+  exclude_keys: {  }
+thresholds:
+  type: none

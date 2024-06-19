@@ -1,0 +1,20 @@
+uuid: 403900ae-eb8e-434d-8db9-96afaa45d039
+langcode: en
+status: true
+dependencies:
+  module:
+    - mysql
+id: core_requirements_mysql
+label: 'Module mysql'
+description: 'Requirements of the mysql module'
+category: Requirements
+plugin_id: core_requirements
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: 3600
+settings:
+  module: mysql
+  exclude_keys: {  }
+thresholds:
+  type: none

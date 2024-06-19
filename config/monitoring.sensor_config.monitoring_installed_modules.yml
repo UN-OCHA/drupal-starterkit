@@ -1,0 +1,20 @@
+uuid: e5f4ee25-3af9-45c8-aead-aa8b5fbc4ed9
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HaL0P0uZ-Ej7bGqTmmN6ZhrX1cK-IJEWfQv8xDom61A
+id: monitoring_installed_modules
+label: 'Installed modules'
+description: 'Installed only expected modules'
+category: System
+plugin_id: monitoring_installed_modules
+result_class: null
+value_label: 'Modules delta'
+value_type: number
+caching_time: 3600
+settings:
+  allow_additional: false
+  modules: {  }
+thresholds:
+  type: none
