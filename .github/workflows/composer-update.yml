@@ -11,8 +11,7 @@ jobs:
     steps:
     - name: Update The Thing
       id: update-action
-      # uses: UN-OCHA/actions/composer-update@main
-      uses: UN-OCHA/actions/composer-update@OPS-10254-config-too
+      uses: UN-OCHA/actions/composer-update@main
       with:
         aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
