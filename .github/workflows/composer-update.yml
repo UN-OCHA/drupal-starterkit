@@ -11,8 +11,7 @@ jobs:
     steps:
     - name: Update The Thing
       id: update-action
-      # uses: UN-OCHA/actions/composer-update@main
-      uses: UN-OCHA/actions/composer-update@OPS-10254-config-too
+      uses: UN-OCHA/actions/composer-update@main
       with:
         github_access_token: ${{ secrets.PAT }}
         patch_branch: ${{ github.head_ref || github.ref_name }}
