@@ -5,7 +5,7 @@ dependencies: {  }
 machine: prod
 description: null
 name: Prod
-weight: '10'
+weight: 10
 url: ''
 fg_color: '#ffffff'
 bg_color: '#6937ac'
