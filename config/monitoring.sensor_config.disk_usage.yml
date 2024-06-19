@@ -1,0 +1,21 @@
+uuid: 9b1d8587-ddef-482a-bca5-25f9c56c6658
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: 62QvxE5Ji_NWlslKP7aIrxJC426tkauJyh7znII70JI
+id: disk_usage
+label: 'Public files disk usage'
+description: 'Reports the used space on the disk that contains the public files directory.'
+category: System
+plugin_id: disk_usage
+result_class: null
+value_label: '%'
+value_type: number
+caching_time: 86400
+settings:
+  directory: 'public://'
+thresholds:
+  type: exceeds
+  warning: 80
+  critical: 95

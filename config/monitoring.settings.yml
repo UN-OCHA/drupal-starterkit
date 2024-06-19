@@ -1,0 +1,5 @@
+_core:
+  default_config_hash: sAiUB_L7HqkXvzfjQM5E067DQBLcaAYSrv1po8gzN1k
+sensor_call_logging: on_request
+cron_run_sensors: false
+disable_sensor_autocreate: false

@@ -1,0 +1,26 @@
+uuid: d599426d-9687-4268-bb6e-1b9c1af7d4a4
+langcode: en
+status: false
+dependencies: {  }
+_core:
+  default_config_hash: PRxsVRGwymYZR81B-jyoPFBwq_CoqbDokeTVjPJA6IM
+id: monitoring_git_dirty_tree
+label: 'Git dirty working tree'
+description: 'Repository local file changes'
+category: System
+plugin_id: monitoring_git_dirty_tree
+result_class: null
+value_label: null
+value_type: no_value
+caching_time: null
+settings:
+  repo_path: null
+  status_cmd: 'git status --porcelain'
+  check_branch: false
+  ahead_cmd: "git log --graph --pretty=format:'%h -%d %s (%ci)' @{u}.."
+  branches_cmd: 'git rev-parse --symbolic --branches'
+  actual_branch_cmd: 'git symbolic-ref HEAD --short'
+  expected_branch: null
+  submodules_cmd: 'git submodule status --recursive'
+thresholds:
+  type: none
