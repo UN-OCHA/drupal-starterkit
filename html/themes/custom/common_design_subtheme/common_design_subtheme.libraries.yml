@@ -1,0 +1,42 @@
+###
+# Default global styles for the sub-theme.
+#
+# If you want some styles to be included on every page load, either add them in
+# css/styles.css or add your own files to the list under "theme"
+#
+# If you want specific components to apply to your whole site, list them as
+# dependencies to this library. An example dependency appears here as a comment.
+global-styling:
+  css:
+    base:
+      css/brand.css: {}
+      css/styles.css: {}
+#   dependencies:
+#     - common_design_subtheme/custom-teaser
+
+###
+# Define Drupal libraries for your custom components.
+#
+# These libraries can be referenced in your theme info.yml file to extend or
+# override existing base-theme or core Drupal libraries. They can also be
+# completely independent and style the custom content of your website, such as
+# a custom Paragraph type.
+#
+cds-header:
+  css:
+    theme:
+      libraries/cd/cd-header/cd-logo.css: {}
+
+###
+# Define Drupal libraries for additional webfonts.
+#
+# They will appear in the sub-theme settings in the Drupal Admin UI. The `label`
+# field is a key part of identifying them in the Admin UI.
+#
+# Example: Arabic font using Dubai.
+#
+# fonts-arabic:
+#   label: Arabic
+#   css:
+#     theme:
+#       css/fonts-arabic.css: {}
