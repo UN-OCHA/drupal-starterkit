@@ -1,6 +1,8 @@
 name: Build docker image
 
 on:
+# Adding to prevent failing builds: `No event triggers defined in `on``
+  workflow_dispatch:
 # Set a correct docker_image variable and then remove the comments from this block to enable automagic builds.
 #  push:
 #    branches:
