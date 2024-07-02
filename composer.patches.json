@@ -5,7 +5,8 @@
     },
     "drupal/imageapi_optimize_webp": {
       "Fix derivatives for webp source images": "PATCHES/imageapi_optimize_webp-webp-source-image.patch",
-      "Support imagemagick toolkit": "PATCHES/imageapi_optimize_webp-imagemagick-toolkit.patch"
+      "Support imagemagick toolkit": "PATCHES/imageapi_optimize_webp-imagemagick-toolkit.patch",
+      "https://www.drupal.org/project/imageapi_optimize_webp/issues/3453941": "https://www.drupal.org/files/issues/2024-06-14/3453941-bc-break_0.patch"
     },
     "drupal/user_expire": {
       "Allow the notification email to be customised": "PATCHES/user_expire-customize-notification-email.patch",
