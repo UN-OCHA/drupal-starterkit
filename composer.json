@@ -38,7 +38,7 @@
         "drupal/gtm_barebones": "^1.0",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
         "drupal/imageapi_optimize_webp": "^2.0",
-        "drupal/imagemagick": "^3.4",
+        "drupal/imagemagick": "^4",
         "drupal/layout_paragraphs": "^2.0",
         "drupal/mailsystem": "^4.4",
         "drupal/maintenance200": "^2",
