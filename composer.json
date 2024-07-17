@@ -35,7 +35,6 @@
         "drupal/csp": "^1.17",
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/environment_indicator": "^4.0",
-        "drupal/gtm_barebones": "^1.0",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
         "drupal/imageapi_optimize_webp": "^2.0",
         "drupal/imagemagick": "^4",
@@ -59,6 +58,7 @@
         "oomphinc/composer-installers-extender": "^2.0",
         "orakili/composer-drupal-info-file-patch-helper": "^1",
         "unocha/common_design": "^9",
+        "unocha/gtm_barebones": "^1.1",
         "unocha/ocha_monitoring": "^1.0"
     },
     "require-dev": {
