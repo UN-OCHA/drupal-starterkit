@@ -11,7 +11,7 @@ index 62f9e8c7d5a064d87448b0faf5811a08709370c7..ea9fb144d2add8031bcafc516fb46cca
 +  subject: "[site:name]: Account expiration warning"
 +  body: "Hello [user:display-name]\r\n\r\nBecause you have not logged in recently, your account at [site:name] will be blocked in the near future. If you still use this site, please log in [site:login-url] to prevent your account being blocked.\r\n\r\n-- [site:name] team"
 diff --git a/config/schema/user_expire.schema.yml b/config/schema/user_expire.schema.yml
-index a46bc68eeea8b41fa1e7bde72008daf77d54032d..f8e9e2e101f58d8f5a5cbfb87483bc9821a6a7a6 100644
+index a46bc68eeea8b41fa1e7bde72008daf77d54032d..be0c3fca4e7604994e5c0070942ef79920eab454 100644
 --- a/config/schema/user_expire.schema.yml
 +++ b/config/schema/user_expire.schema.yml
 @@ -7,9 +7,21 @@ user_expire.settings:
@@ -31,24 +31,24 @@ index a46bc68eeea8b41fa1e7bde72008daf77d54032d..f8e9e2e101f58d8f5a5cbfb87483bc98
        type: integer
        label: 'Warning offset time in seconds'
 +    send_mail:
-+      type: integer
++      type: boolean
 +      label: 'Flag that enables or disables expiry emails'
      user_expire_roles:
        type: sequence
        label: 'Roles and expire value'
 diff --git a/src/Form/UserExpireSettingsForm.php b/src/Form/UserExpireSettingsForm.php
-index 8d7e2d0d0f01265abce72f018b8b32facf76087a..d8d9cb6671b29364c0ba198e893e823261079412 100644
+index f7824c09ad10612818c2cc3e2cc2a85e590377a7..cd2c4e515d0887df9a70fe0c7c72bc599de84033 100644
 --- a/src/Form/UserExpireSettingsForm.php
 +++ b/src/Form/UserExpireSettingsForm.php
-@@ -111,6 +111,50 @@ class UserExpireSettingsForm extends ConfigFormBase {
+@@ -109,6 +109,50 @@ class UserExpireSettingsForm extends ConfigFormBase {
        ];
      }
  
 +    // Enable or disable email notifications.
 +    $form['send_mail'] = [
 +      '#type' => 'checkbox',
-+      '#title' => $this->t('Send notifiation emails'),
-+      '#default_value' => $config->get('send_mail') ?: true,
++      '#title' => $this->t('Send notification emails'),
++      '#default_value' => $config->get('send_mail') ?: TRUE,
 +      '#description' => $this->t('Send a notification email to the user, starting at the defined offset time before account expiry.'),
 +    ];
 +
@@ -80,7 +80,7 @@ index 8d7e2d0d0f01265abce72f018b8b32facf76087a..d8d9cb6671b29364c0ba198e893e8232
 +      '#type' => 'textarea',
 +      '#title' => $this->t('Body'),
 +      '#default_value' => $config->get('mail.body') ?: '',
-+      '#description' => $this->t('Body for the notifiction email.'),
++      '#description' => $this->t('Body for the notification email.'),
 +      '#rows' => 15,
 +    ];
 +
@@ -91,7 +91,7 @@ index 8d7e2d0d0f01265abce72f018b8b32facf76087a..d8d9cb6671b29364c0ba198e893e8232
      return parent::buildForm($form, $form_state);
    }
  
-@@ -162,6 +206,13 @@ class UserExpireSettingsForm extends ConfigFormBase {
+@@ -160,6 +204,13 @@ class UserExpireSettingsForm extends ConfigFormBase {
      }
  
      $config->set('user_expire_roles', $rules);
@@ -106,25 +106,18 @@ index 8d7e2d0d0f01265abce72f018b8b32facf76087a..d8d9cb6671b29364c0ba198e893e8232
    }
  
 diff --git a/user_expire.module b/user_expire.module
-index 26beacd1c168d92962fae31090470698f753ff47..34f61dc939b476aa6a93323f6aff2801fab64891 100644
+index d4dcd8ba28b51ee8f54a7626d8b10443244520d9..9365c5db3b87e88dd03611a03656370e2b4f99cb 100644
 --- a/user_expire.module
 +++ b/user_expire.module
-@@ -12,6 +12,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
- use Drupal\user\RoleInterface;
- use Drupal\Core\Url;
- use Drupal\Core\Routing\RouteMatchInterface;
-+use Drupal\Component\Render\PlainTextOutput;
+@@ -5,6 +5,7 @@
+  * Main module file for User expire module.
+  */
  
- /**
-  * Implements hook_help().
-@@ -332,18 +333,21 @@ function user_expire_expire_by_role_warning() {
-     if ($uids_to_warn) {
-       foreach ($uids_to_warn as $uid) {
-         $account = \Drupal::entityTypeManager()->getStorage('user')->load($uid->uid);
--        if ($account) {
-+        if (!$account) {
-           $logger->debug('Skipping warning @uid as it failed to load a valid user', [
-             '@uid' => $uid->uid,
++use Drupal\Component\Render\PlainTextOutput;
+ use Drupal\Core\Database\Query\Condition;
+ use Drupal\Core\Database\StatementInterface;
+ use Drupal\Core\Datetime\DrupalDateTime;
+@@ -332,12 +333,15 @@ function user_expire_expire_by_role_warning(): void {
            ]);
          }
          else {
@@ -146,9 +139,9 @@ index 26beacd1c168d92962fae31090470698f753ff47..34f61dc939b476aa6a93323f6aff2801
          }
        }
      }
-@@ -445,20 +449,23 @@ function user_expire_get_role_rules() {
+@@ -439,20 +443,22 @@ function user_expire_get_role_rules(): mixed {
   */
- function user_expire_mail($key, &$message, $params) {
+ function user_expire_mail($key, &$message, $params): void {
    if ($key == 'expiration_warning') {
 -    $site_name = \Drupal::config('system.site')->get('name');
 -    // The subject.
@@ -160,12 +153,11 @@ index 26beacd1c168d92962fae31090470698f753ff47..34f61dc939b476aa6a93323f6aff2801
 -    $message['body'][] = t('Because you have not logged in recently, your account at @site_name will be blocked in the near future. If you still use this site, please log in @login_url to avoid having your account blocked.',
 -      [
 -        '@site_name' => $site_name,
--        '@login_url' => Url::fromRoute('entity.user.canonical', ['user' => \Drupal::currentUser()->id()], ['absolute' => TRUE]),
+-        '@login_url' => Url::fromRoute('entity.user.canonical', ['user' => \Drupal::currentUser()->id()], ['absolute' => TRUE])->toString(),
 -      ]
 -    );
 -    $message['body'][] = '';
 -    $message['body'][] = t('Thanks, @site_name', ['@site_name' => $site_name]);
-+
 +    $token_service = \Drupal::token();
 +    $language_manager = \Drupal::languageManager();
 +    $langcode = $message['langcode'];
