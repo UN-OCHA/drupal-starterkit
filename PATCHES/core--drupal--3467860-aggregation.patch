@@ -1,0 +1,221 @@
+diff --git a/core/lib/Drupal/Core/Asset/AssetResolver.php b/core/lib/Drupal/Core/Asset/AssetResolver.php
+index fcd294a649..8f29d18be5 100644
+--- a/core/lib/Drupal/Core/Asset/AssetResolver.php
++++ b/core/lib/Drupal/Core/Asset/AssetResolver.php
+@@ -235,6 +235,27 @@ public function getJsAssets(AttachedAssetsInterface $assets, $optimize, ?Languag
+     $theme_info = $this->themeManager->getActiveTheme();
+     $libraries_to_load = $this->getLibrariesToLoad($assets);
+ 
++    // Remove all libraries without JS as we can ignore.
++    foreach ($libraries_to_load as $key => $library) {
++      [$extension, $name] = explode('/', $library, 2);
++      $definition = $this->libraryDiscovery->getLibraryByName($extension, $name);
++      if (empty($definition['js'])) {
++        unset($libraries_to_load[$key]);
++      }
++    }
++
++    // Need to ensure that the order of the JavaScript we want to include is
++    // based on the minimal representative subset in a specific order. This is
++    // needed to ensure that groups produced here and groups produced from
++    // generating optimized scripts are the same. If we don't get the same
++    // groups in the same order, user will not fetch the correct scripts.
++    sort($libraries_to_load);
++    $minimum_libraries = $this->libraryDependencyResolver->getMinimalRepresentativeSubset($libraries_to_load);
++    $libraries_to_load = array_diff(
++      $this->libraryDependencyResolver->getLibrariesWithDependencies($minimum_libraries),
++      $this->libraryDependencyResolver->getLibrariesWithDependencies($assets->getAlreadyLoadedLibraries())
++    );
++
+     // Collect all libraries that contain JS assets and are in the header.
+     // Also remove any libraries with no JavaScript from the libraries to
+     // load.
+diff --git a/core/tests/Drupal/Tests/Core/Asset/AssetResolverTest.php b/core/tests/Drupal/Tests/Core/Asset/AssetResolverTest.php
+index d5e2190439..4630ad647d 100644
+--- a/core/tests/Drupal/Tests/Core/Asset/AssetResolverTest.php
++++ b/core/tests/Drupal/Tests/Core/Asset/AssetResolverTest.php
+@@ -8,6 +8,8 @@
+ use Drupal\Core\Asset\AssetResolver;
+ use Drupal\Core\Asset\AttachedAssets;
+ use Drupal\Core\Asset\AttachedAssetsInterface;
++use Drupal\Core\Asset\JsCollectionGrouper;
++use Drupal\Core\Asset\LibraryDependencyResolver;
+ use Drupal\Core\Cache\MemoryBackend;
+ use Drupal\Core\Language\LanguageInterface;
+ use Drupal\Tests\UnitTestCase;
+@@ -90,51 +92,74 @@ protected function setUp(): void {
+     $this->libraryDiscovery = $this->getMockBuilder('Drupal\Core\Asset\LibraryDiscovery')
+       ->disableOriginalConstructor()
+       ->getMock();
++    $this->libraryDiscovery->expects($this->any())
++      ->method('getLibraryByName')
++      ->willReturnCallback(function ($extension, $name) {
++        return $this->libraries[$extension . '/' . $name];
++      });
+     $this->libraries = [
+-      'drupal' => [
++      'core/drupal' => [
+         'version' => '1.0.0',
+         'css' => [],
+         'js' =>
+-        [
+-          'core/misc/drupal.js' => ['data' => 'core/misc/drupal.js', 'preprocess' => TRUE],
+-        ],
++          [
++            'core/misc/drupal.js' => ['data' => 'core/misc/drupal.js', 'preprocess' => TRUE],
++          ],
+         'license' => '',
+       ],
+-      'jquery' => [
++      'core/jquery' => [
+         'version' => '1.0.0',
+         'css' => [],
+         'js' =>
+-        [
+-          'core/misc/jquery.js' => ['data' => 'core/misc/jquery.js', 'minified' => TRUE],
+-        ],
++          [
++            'core/misc/jquery.js' => ['data' => 'core/misc/jquery.js', 'minified' => TRUE],
++          ],
+         'license' => '',
+       ],
+-      'llama' => [
++      'llama/css' => [
+         'version' => '1.0.0',
+         'css' =>
+-        [
+-          'core/misc/llama.css' => ['data' => 'core/misc/llama.css'],
+-        ],
++          [
++            'core/misc/llama.css' => ['data' => 'core/misc/llama.css'],
++          ],
+         'js' => [],
+         'license' => '',
+       ],
+-      'piggy' => [
++      'piggy/css' => [
+         'version' => '1.0.0',
+         'css' =>
+-        [
+-          'core/misc/piggy.css' => ['data' => 'core/misc/piggy.css'],
++          [
++            'core/misc/piggy.css' => ['data' => 'core/misc/piggy.css'],
++          ],
++        'js' => [],
++        'license' => '',
++      ],
++      'core/ckeditor5' => [
++        'remote' => 'https://github.com/ckeditor/ckeditor5',
++        'version' => '1.0.0',
++        'license' => '',
++        'js' => [
++          'assets/vendor/ckeditor5/ckeditor5-dll/ckeditor5-dll.js' => [
++            'data' => 'assets/vendor/ckeditor5/ckeditor5-dll/ckeditor5-dll.js',
++            'preprocess' => FALSE,
++            'minified' => TRUE,
++          ],
+         ],
++      ],
++      'piggy/ckeditor' => [
++        'version' => '1.0.0',
++        'css' =>
++          [
++            'core/misc/ckeditor.css' => ['data' => 'core/misc/ckeditor.css'],
++          ],
+         'js' => [],
+         'license' => '',
++        'dependencies' => [
++          'core/ckeditor5',
++        ],
+       ],
+     ];
+-    $this->libraryDependencyResolver = $this->createMock('\Drupal\Core\Asset\LibraryDependencyResolverInterface');
+-    $this->libraryDependencyResolver->expects($this->any())
+-      ->method('getLibrariesWithDependencies')
+-      ->willReturnArgument(0);
+-    $this->libraryDependencyResolver->expects($this->any())
+-      ->method('getMinimalRepresentativeSubset')
+-      ->willReturnArgument(0);
++    $this->libraryDependencyResolver = new LibraryDependencyResolver($this->libraryDiscovery);
+     $this->moduleHandler = $this->createMock('\Drupal\Core\Extension\ModuleHandlerInterface');
+     $this->themeManager = $this->createMock('\Drupal\Core\Theme\ThemeManagerInterface');
+     $active_theme = $this->getMockBuilder('\Drupal\Core\Theme\ActiveTheme')
+@@ -169,22 +194,12 @@ protected function setUp(): void {
+    * @dataProvider providerAttachedCssAssets
+    */
+   public function testGetCssAssets(AttachedAssetsInterface $assets_a, AttachedAssetsInterface $assets_b, $expected_css_cache_item_count): void {
+-    $this->libraryDiscovery->expects($this->any())
+-      ->method('getLibraryByName')
+-      ->willReturnOnConsecutiveCalls(
+-        $this->libraries['drupal'],
+-        $this->libraries['llama'],
+-        $this->libraries['llama'],
+-        $this->libraries['piggy'],
+-        $this->libraries['piggy'],
+-      );
+     $this->assetResolver->getCssAssets($assets_a, FALSE, $this->english);
+     $this->assetResolver->getCssAssets($assets_b, FALSE, $this->english);
+     $this->assertCount($expected_css_cache_item_count, $this->cache->getAllCids());
+   }
+ 
+   public static function providerAttachedCssAssets() {
+-    $time = time();
+     return [
+       'one js only library and one css only library' => [
+         (new AttachedAssets())->setAlreadyLoadedLibraries([])->setLibraries(['core/drupal']),
+@@ -204,16 +219,6 @@ public static function providerAttachedCssAssets() {
+    * @dataProvider providerAttachedJsAssets
+    */
+   public function testGetJsAssets(AttachedAssetsInterface $assets_a, AttachedAssetsInterface $assets_b, $expected_js_cache_item_count, $expected_multilingual_js_cache_item_count): void {
+-    $this->libraryDiscovery->expects($this->any())
+-      ->method('getLibraryByName')
+-      ->willReturnOnConsecutiveCalls(
+-        $this->libraries['drupal'],
+-        $this->libraries['drupal'],
+-        $this->libraries['jquery'],
+-        $this->libraries['drupal'],
+-        $this->libraries['drupal'],
+-        $this->libraries['jquery'],
+-      );
+     $this->assetResolver->getJsAssets($assets_a, FALSE, $this->english);
+     $this->assetResolver->getJsAssets($assets_b, FALSE, $this->english);
+     $this->assertCount($expected_js_cache_item_count, $this->cache->getAllCids());
+@@ -236,11 +241,37 @@ public static function providerAttachedJsAssets() {
+         (new AttachedAssets())->setAlreadyLoadedLibraries([])->setLibraries(['core/drupal'])->setSettings(['currentTime' => $time]),
+         (new AttachedAssets())->setAlreadyLoadedLibraries([])->setLibraries(['core/drupal', 'core/jquery'])->setSettings(['currentTime' => $time]),
+         2,
+-        3,
++        4,
+       ],
+     ];
+   }
+ 
++  /**
++   * Test that order of scripts are correct.
++   */
++  public function testJsAssetsOrder(): void {
++    $time = time();
++    $assets_a = (new AttachedAssets())
++      ->setAlreadyLoadedLibraries([])
++      ->setLibraries(['core/drupal', 'core/ckeditor5', 'core/jquery', 'piggy/ckeditor'])
++      ->setSettings(['currentTime' => $time]);
++    $assets_b = (new AttachedAssets())
++      ->setAlreadyLoadedLibraries([])
++      ->setLibraries(['piggy/ckeditor', 'core/drupal', 'core/ckeditor5', 'core/jquery'])
++      ->setSettings(['currentTime' => $time]);
++    $js_assets_a = $this->assetResolver->getJsAssets($assets_a, FALSE, $this->english);
++    $js_assets_b = $this->assetResolver->getJsAssets($assets_b, FALSE, $this->english);
++
++    $grouper = new JsCollectionGrouper();
++
++    $group_a = $grouper->group($js_assets_a[1]);
++    $group_b = $grouper->group($js_assets_b[1]);
++
++    foreach ($group_a as $key => $value) {
++      $this->assertSame($value['items'], $group_b[$key]['items']);
++    }
++  }
++
+ }
+ 
+ if (!defined('CSS_AGGREGATE_DEFAULT')) {
