@@ -1,7 +1,7 @@
 {
   "patches": {
-    "drupal/csp": {
-      "Simplify log format": "PATCHES/csp-log-format.patch"
+    "drupal/core": {
+      "https://www.drupal.org/project/drupal/issues/3467860": "PATCHES/core--drupal--3467860-aggregation.patch"
     },
     "drupal/imageapi_optimize_webp": {
       "Fix derivatives for webp source images": "PATCHES/imageapi_optimize_webp-webp-source-image.patch",
