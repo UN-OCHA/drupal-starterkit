@@ -35,7 +35,6 @@
         "drupal/csp": "^1.17",
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/environment_indicator": "^4.0",
-        "drupal/gtm_barebones": "^1.0",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
         "drupal/imageapi_optimize_webp": "^2.0",
         "drupal/imagemagick": "^4",
@@ -50,7 +49,7 @@
         "drupal/seckit": "^2.0",
         "drupal/social_auth_hid": "^4",
         "drupal/stable": "^2.0",
-        "drupal/stage_file_proxy": "^2.1",
+        "drupal/stage_file_proxy": "^3",
         "drupal/user_display_name": "^1.1",
         "drupal/user_expire": "^1.1",
         "drupal/username_enumeration_prevention": "^1.3",
@@ -59,15 +58,17 @@
         "oomphinc/composer-installers-extender": "^2.0",
         "orakili/composer-drupal-info-file-patch-helper": "^1",
         "unocha/common_design": "^9",
+        "unocha/gtm_barebones": "^1.1",
         "unocha/ocha_monitoring": "^1.0"
     },
     "require-dev": {
+        "davidrjonas/composer-lock-diff": "*",
         "drupal/coder": "^8.3",
         "drupal/config_inspector": "^2.1",
         "drupal/devel": "^5.0",
         "drupal/devel_php": "^1.3",
         "kint-php/kint": "^5",
-        "marcocesarato/php-conventional-changelog": "^1.16",
+        "marcocesarato/php-conventional-changelog": "*",
         "mglaman/drupal-check": "^1.4",
         "palantirnet/drupal-rector": "^0.20",
         "phpcompatibility/php-compatibility": "^9.3",
@@ -154,7 +155,7 @@
                 },
                 "[web-root]/robots.txt": {
                     "append": "assets/robots.txt.append"
-               }
+                }
             },
             "locations": {
                 "web-root": "html/"
@@ -175,7 +176,7 @@
             ],
             "post-create-project-cmd-message": [
                 "<bg=blue;fg=white>                                                         </>",
-                "<bg=blue;fg=white>  Congratulations, you\u2019ve installed the Drupal codebase  </>",
+                "<bg=blue;fg=white>  Congratulations, you’ve installed the Drupal codebase  </>",
                 "<bg=blue;fg=white>  from the drupal/recommended-project template!          </>",
                 "<bg=blue;fg=white>                                                         </>",
                 "",
@@ -226,5 +227,6 @@
         "pre-pool-create": [
             "scripts\\composer\\DrupalLenientRequirement::changeVersionConstraint"
         ]
-    }
+    },
+    "version": "0.0.1"
 }
