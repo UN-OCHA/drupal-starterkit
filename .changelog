@@ -1,0 +1,11 @@
+<?php
+
+return [
+  'ignoreTypes' => ['build', 'ci', 'docs', 'refactor', 'revert', 'style', 'test'],
+  'tagPrefix' => 'v',
+  'tagSuffix' => '',
+  'commitUrlFormat' => '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
+  'compareUrlFormat' => '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
+  'issueUrlFormat' => 'https://humanitarian.atlassian.net/browse/{{id}}',
+  'hiddenVersionSeparator' => true,
+];
