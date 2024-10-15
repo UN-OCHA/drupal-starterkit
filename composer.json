@@ -32,7 +32,6 @@
         "drupal/core-composer-scaffold": "^10",
         "drupal/core-dev": "^10",
         "drupal/core-recommended": "^10",
-        "drupal/csp": "^1.17",
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/environment_indicator": "^4.0",
         "drupal/imageapi_optimize_binaries": "^1.0@beta",
@@ -95,8 +94,15 @@
             "drupal/core-project-message": true,
             "oomphinc/composer-installers-extender": true,
             "orakili/composer-drupal-info-file-patch-helper": true,
+            "php-http/discovery": true,
             "phpstan/extension-installer": true,
-            "php-http/discovery": true
+            "tbachert/spi": true
+        },
+        "audit": {
+            "abandoned": "report",
+            "ignore": {
+                "GHSA-mg8j-w93w-xjgc": "OPS-10899 - we do not store the hash salt in a file"
+             }
         }
     },
     "extra": {
