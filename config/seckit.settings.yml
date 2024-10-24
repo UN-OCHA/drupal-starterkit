@@ -11,12 +11,12 @@ seckit_xss:
     script-src: "'self' 'unsafe-inline' fonts.googleapis.com www.gstatic.com https://*.google.com https://*.googletagmanager.com *.google-analytics.com https://tagmanager.google.com"
     object-src: "'none'"
     style-src: "'self' 'unsafe-inline' https://googletagmanager.com https://tagmanager.google.com fonts.googleapis.com"
-    img-src: "'self' data: https://*.google-analytics.com https://*.googletagmanager.com gstatic.com https://www.google.com https://google.com"
+    img-src: "'self' https://*.google-analytics.com https://*.googletagmanager.com gstatic.com https://www.google.com https://google.com"
     media-src: "'none'"
     frame-src: "'self' https://www.googletagmanager.com *.un.org https://cdnapisec.kaltura.com"
     frame-ancestors: "'self'"
     child-src: "'self'"
-    font-src: "'self' data: fonts.gstatic.com"
+    font-src: "'self' fonts.gstatic.com"
     connect-src: "'self' https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com"
     report-uri: /report-csp-violation
     upgrade-req: false
