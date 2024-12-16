@@ -102,7 +102,7 @@
             "abandoned": "report",
             "ignore": {
                 "GHSA-mg8j-w93w-xjgc": "OPS-10899 - we do not store the hash salt in a file"
-             }
+            }
         }
     },
     "extra": {
