@@ -118,16 +118,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.336.0",
+            "version": "3.336.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5a62003bf183e32da038056a4b9077c27224e034"
+                "reference": "b863c7953ebeeae191c3835bb5413f872cfbb753"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5a62003bf183e32da038056a4b9077c27224e034",
-                "reference": "5a62003bf183e32da038056a4b9077c27224e034",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b863c7953ebeeae191c3835bb5413f872cfbb753",
+                "reference": "b863c7953ebeeae191c3835bb5413f872cfbb753",
                 "shasum": ""
             },
             "require": {
@@ -210,9 +210,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.336.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.336.3"
             },
-            "time": "2024-12-18T19:04:32+00:00"
+            "time": "2024-12-23T19:13:29+00:00"
         },
         {
             "name": "behat/mink",
@@ -1052,13 +1052,13 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "3.x-dev"
-                },
                 "phpstan": {
                     "includes": [
                         "extension.neon"
                     ]
+                },
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
                 }
             },
             "autoload": {
@@ -4102,41 +4102,41 @@
         },
         {
             "name": "drupal/monitoring",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/monitoring.git",
-                "reference": "8.x-1.14"
+                "reference": "8.x-1.15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/monitoring-8.x-1.14.zip",
-                "reference": "8.x-1.14",
-                "shasum": "72e19442488e61a9bb555f98b4f10cf0eeaf7597"
+                "url": "https://ftp.drupal.org/files/projects/monitoring-8.x-1.15.zip",
+                "reference": "8.x-1.15",
+                "shasum": "b8d4cfa23825b5f17cd04b0fd2db6dc96586d1a5"
             },
             "require": {
-                "drupal/core": "^9.4 || ^10"
+                "drupal/core": "^10.2 || ^11"
             },
             "conflict": {
                 "drupal/redirect": "<1.5"
             },
             "require-dev": {
-                "drupal/captcha": "~1.0",
-                "drupal/commerce": "~2.0",
+                "drupal/captcha": "~2.0",
+                "drupal/commerce": "~2.0 || ^3",
                 "drupal/hal": "^2",
                 "drupal/past": "~1.0",
                 "drupal/redirect": "~1.0",
                 "drupal/search_api": "~1.0",
                 "drupal/search_api_db": "*",
                 "drupal/search_api_solr": "~4.0",
-                "drupal/simplenews": "~4.0",
-                "drupal/ultimate_cron": "~2.0"
+                "drupal/ultimate_cron": "~2.0",
+                "previousnext/php-prometheus": "^1.3"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.14",
-                    "datestamp": "1709913391",
+                    "version": "8.x-1.15",
+                    "datestamp": "1734705653",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
