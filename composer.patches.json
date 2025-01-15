@@ -1,8 +1,5 @@
 {
   "patches": {
-    "drupal/csp": {
-      "Simplify log format": "PATCHES/csp-log-format.patch"
-    },
     "drupal/imageapi_optimize_webp": {
       "Fix derivatives for webp source images": "PATCHES/imageapi_optimize_webp-webp-source-image.patch",
       "Support imagemagick toolkit": "PATCHES/imageapi_optimize_webp-imagemagick-toolkit.patch",
