@@ -1,85 +1,11 @@
-uuid: 7bb2decb-2a9c-4ad9-8926-4e7e4ddfae16
+uuid: 6d3c1a43-d82e-4276-b02d-05c27a87f468
 langcode: en
 status: true
-dependencies:
-  module:
-    - block
-    - config
-    - field_ui
-    - file
-    - filter
-    - image
-    - imageapi_optimize
-    - memcache_admin
-    - node
-    - path
-    - pathauto
-    - redirect
-    - social_api
-    - system
-    - toolbar
-    - update
-    - user_expire
+dependencies: {  }
+_core:
+  default_config_hash: OeKGIkmZA_c-t6QLH81WNQx8gDCc1MRmxaTuQgxBByU
 id: administrator
 label: Administrator
-weight: 2
+weight: 3
 is_admin: true
-permissions:
-  - 'access administration pages'
-  - 'access content overview'
-  - 'access files overview'
-  - 'access memcache statistics'
-  - 'access site in maintenance mode'
-  - 'access site reports'
-  - 'access slab cachedump'
-  - 'access toolbar'
-  - 'access user profiles'
-  - 'administer account settings'
-  - 'administer blocks'
-  - 'administer content types'
-  - 'administer display modes'
-  - 'administer filters'
-  - 'administer image styles'
-  - 'administer imageapi optimize pipelines'
-  - 'administer menu'
-  - 'administer modules'
-  - 'administer node display'
-  - 'administer node fields'
-  - 'administer node form display'
-  - 'administer nodes'
-  - 'administer pathauto'
-  - 'administer permissions'
-  - 'administer redirect settings'
-  - 'administer redirects'
-  - 'administer site configuration'
-  - 'administer social api authentication'
-  - 'administer social api autoposting'
-  - 'administer social api blocks'
-  - 'administer social api widgets'
-  - 'administer software updates'
-  - 'administer themes'
-  - 'administer url aliases'
-  - 'administer user display'
-  - 'administer user expire settings'
-  - 'administer user fields'
-  - 'administer user form display'
-  - 'administer users'
-  - 'bypass node access'
-  - 'cancel account'
-  - 'change own username'
-  - 'create url aliases'
-  - 'delete all revisions'
-  - 'export configuration'
-  - 'import configuration'
-  - 'link to any page'
-  - 'notify of path changes'
-  - 'revert all revisions'
-  - 'select account cancellation method'
-  - 'set user expiration'
-  - 'synchronize configuration'
-  - 'view all revisions'
-  - 'view expiring users report'
-  - 'view own unpublished content'
-  - 'view the administration theme'
-  - 'view update notifications'
-  - 'view user email addresses'
+permissions: {  }
