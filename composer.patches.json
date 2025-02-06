@@ -4,6 +4,12 @@
       "Fix derivatives for webp source images": "PATCHES/imageapi_optimize_webp-webp-source-image.patch",
       "Support imagemagick toolkit": "PATCHES/imageapi_optimize_webp-imagemagick-toolkit.patch"
     },
+    "drupal/maintenance200": {
+      "D11 compatibility - #3431791": "PATCHES/maintenance200-D11-compatibility-3431791.patch"
+    },
+    "drupal/social_auth_hid": {
+      "D11 compatibility - #3439200": "https://www.drupal.org/files/issues/2024-04-06/social_auth_hid.4.0.rector.patch"
+    },
     "drupal/user_expire": {
       "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
     },
