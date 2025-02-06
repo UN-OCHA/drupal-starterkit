@@ -24,7 +24,6 @@
         "composer/installers": "^2",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_denied": "^2.0",
-        "drupal/allowed_formats": "^3.0",
         "drupal/amazon_ses": "^3.0",
         "drupal/components": "^3.0@beta",
         "drupal/config_filter": "^2.4",
