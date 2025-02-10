@@ -2,7 +2,10 @@ uuid: a0dde013-3f0e-4c0a-9dbc-7689935d777e
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.basic_html
   module:
+    - filter
     - media
     - system
 _core:
@@ -13,4 +16,5 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'use text format basic_html'
   - 'view media'

@@ -1,6 +1,6 @@
 uuid: 33056ac1-ae07-47f4-befd-5ee618b151c7
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - filter.format.text_editor_simple

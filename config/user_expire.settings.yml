@@ -5,7 +5,7 @@ offset: 604800
 user_expire_roles: {  }
 send_expiration_warnings: true
 expiration_warning_mail:
-  subject: "[site:name]: Account expiration warning"
+  subject: '[site:name]: Account expiration warning'
   body: |-
     Hello [user:display-name]
 
