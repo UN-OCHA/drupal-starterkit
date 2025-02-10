@@ -180,7 +180,7 @@ if (file_exists('sites/default/memcache.services.yml')) {
         'factory' => 'Drupal\Core\Site\Settings::getInstance',
       ],
       'request_stack' => [
-        'class' => 'Drupal\Core\Http\RequestStack',
+        'class' => 'Symfony\Component\HttpFoundation\RequestStack',
         'tags' => ['name' => 'persist'],
       ],
       'datetime.time' => [
