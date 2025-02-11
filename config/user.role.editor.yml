@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.text_editor_simple
+    - filter.format.basic_html
   module:
     - content_translation
     - file
@@ -39,7 +39,7 @@ permissions:
   - 'update any media'
   - 'update content translations'
   - 'update media'
-  - 'use text format text_editor_simple'
+  - 'use text format basic_html'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view own unpublished content'

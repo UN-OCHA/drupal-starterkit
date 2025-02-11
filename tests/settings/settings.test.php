@@ -33,7 +33,7 @@
  * @see https://wiki.php.net/rfc/expectations
  */
 assert_options(ASSERT_ACTIVE, TRUE);
-\Drupal\Component\Assertion\Handle::register();
+assert_options(ASSERT_EXCEPTION, TRUE);
 
 /**
  * Enable local development services.
@@ -180,7 +180,7 @@ if (file_exists('sites/default/memcache.services.yml')) {
         'factory' => 'Drupal\Core\Site\Settings::getInstance',
       ],
       'request_stack' => [
-        'class' => 'Drupal\Core\Http\RequestStack',
+        'class' => 'Symfony\Component\HttpFoundation\RequestStack',
         'tags' => ['name' => 'persist'],
       ],
       'datetime.time' => [
