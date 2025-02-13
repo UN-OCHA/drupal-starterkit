@@ -7,6 +7,9 @@
     "drupal/maintenance200": {
       "D11 compatibility - #3431791": "PATCHES/maintenance200-D11-compatibility-3431791.patch"
     },
+    "drupal/social_auth": {
+      "Type Error - #3496656": "PATCHES/social_auth-type-error-3496656.patch"
+    },
     "drupal/social_auth_hid": {
       "D11 compatibility - #3439200": "https://www.drupal.org/files/issues/2024-04-06/social_auth_hid.4.0.rector.patch"
     },
