@@ -10,9 +10,6 @@
     "drupal/social_auth": {
       "Type Error - #3496656": "PATCHES/social_auth-type-error-3496656.patch"
     },
-    "drupal/social_auth_hid": {
-      "D11 compatibility - #3439200": "https://www.drupal.org/files/issues/2024-04-06/social_auth_hid.4.0.rector.patch"
-    },
     "drupal/user_expire": {
       "Reset expiration when user is reactivated": "PATCHES/user_expire-reset-expiration-on-reactivation.patch"
     },
