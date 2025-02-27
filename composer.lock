@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "defe0d78cfca532821395db6fbf24f5a",
+    "content-hash": "aa93067bd0bb301f7ba3d2b96e41680e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1490,6 +1490,55 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/aws",
                 "issues": "https://drupal.org/project/issues/aws"
+            }
+        },
+        {
+            "name": "drupal/backward_compatibility",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/backward_compatibility.git",
+                "reference": "1.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/backward_compatibility-1.0.2.zip",
+                "reference": "1.0.2",
+                "shasum": "625f54f5b9b455d4440a7120924e7699852b09b1"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.2",
+                    "datestamp": "1701967695",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DamienMcKenna",
+                    "homepage": "https://www.drupal.org/user/108450"
+                },
+                {
+                    "name": "Greg Boggs",
+                    "homepage": "https://www.drupal.org/user/153069"
+                }
+            ],
+            "description": "Backward Compatibility for Drupal 9 and 10 with previous versions of Drupal.",
+            "homepage": "https://www.drupal.org/project/backward_compatibility",
+            "support": {
+                "source": "http://cgit.drupalcode.org/backward_compatibility",
+                "issues": "https://www.drupal.org/project/issues/backward_compatibility"
             }
         },
         {
@@ -16419,6 +16468,6 @@
         "php": ">=8.3",
         "ext-gd": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
