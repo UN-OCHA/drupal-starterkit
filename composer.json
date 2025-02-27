@@ -200,7 +200,10 @@
         },
         "drupal-lenient": {
             "constraint": "^10 || ^11",
-            "allowed-list": ["drupal/maintenance200", "drupal/social_auth_hid"]
+            "allowed-list": [
+                "drupal/maintenance200",
+                "drupal/social_auth_hid"
+            ]
         }
     },
     "autoload": {
