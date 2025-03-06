@@ -1,4 +1,4 @@
-name: Run Composer Update with Config
+name: Run Composer Update with Scripts
 
 on:
   workflow_dispatch:
@@ -7,12 +7,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: Update The Thing with config
-      id: update-action-with-config
-      uses: UN-OCHA/actions/composer-update@OPS-10254-config-too
+    - name: Update The Thing with scripts
+      id: update-action-with-scripts
+      uses: UN-OCHA/actions/composer-update@OPS-113381-scripts-flag
       with:
         aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+        composer_scripts: "true"
         github_access_token: ${{ secrets.PAT }}
         patch_branch: ${{ github.head_ref || github.ref_name }}
         patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
