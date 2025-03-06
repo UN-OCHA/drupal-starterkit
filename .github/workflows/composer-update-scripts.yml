@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: Update The Thing with scripts
       id: update-action-with-scripts
-      uses: UN-OCHA/actions/composer-update@OPS-113381-scripts-flag
+      uses: UN-OCHA/actions/composer-update@OPS-11381-scripts-flag
       with:
         aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
