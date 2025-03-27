@@ -1,6 +1,8 @@
 name: Run Composer Update with Scripts
 
 on:
+  schedule:
+    - cron: '30 6 * * 4'
   workflow_dispatch:
 
 jobs:
