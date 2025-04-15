@@ -1,0 +1,11 @@
+diff --git a/maintenance200.info.yml b/maintenance200.info.yml
+index 9e81116..a060ce0 100755
+--- a/maintenance200.info.yml
++++ b/maintenance200.info.yml
+@@ -1,5 +1,5 @@
+ name: 'Maintenance 200'
+ type: module
+ description: 'Allows the maintenance page to return a configurable HTTP status code rather than the standard 503 code.'
+-core_version_requirement: ^9.1 || ^10
++core_version_requirement: ^9.1 || ^10 || ^11
+ configure: maintenance200_settings
