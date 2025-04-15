@@ -3,6 +3,7 @@ _core:
 quality: 75
 binaries: imagemagick
 path_to_binaries: ''
+imagemagick_version: v7
 prepend: ''
 log_warnings: true
 debug: false

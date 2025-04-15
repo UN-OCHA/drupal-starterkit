@@ -1,0 +1,90 @@
+From 36bae7f308b87c7a2e280e0d42aaafc220d21dda Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Valentino=20Me=C4=91imorec?= <valentino@medimorec.com>
+Date: Thu, 16 Jan 2025 14:17:58 +0100
+Subject: [PATCH 1/3] Return either string or null
+
+---
+ src/AuthManager/OAuth2Manager.php          | 2 +-
+ src/AuthManager/OAuth2ManagerInterface.php | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/AuthManager/OAuth2Manager.php b/src/AuthManager/OAuth2Manager.php
+index 69a0a43..9162e0c 100755
+--- a/src/AuthManager/OAuth2Manager.php
++++ b/src/AuthManager/OAuth2Manager.php
+@@ -59,7 +59,7 @@ public function getExtraDetails(string $method = 'GET', ?string $domain = NULL):
+   /**
+    * {@inheritdoc}
+    */
+-  public function getScopes(): string {
++  public function getScopes(): ?string {
+     if ($this->scopes === NULL) {
+       $this->scopes = $this->settings->get('scopes');
+     }
+diff --git a/src/AuthManager/OAuth2ManagerInterface.php b/src/AuthManager/OAuth2ManagerInterface.php
+index 6207f86..40c199e 100755
+--- a/src/AuthManager/OAuth2ManagerInterface.php
++++ b/src/AuthManager/OAuth2ManagerInterface.php
+@@ -47,7 +47,7 @@ public function requestEndPoint(string $method, string $path, ?string $domain =
+    * @return string
+    *   Data points separated by comma.
+    */
+-  public function getScopes(): string;
++  public function getScopes(): ?string;
+ 
+   /**
+    * Gets the API endpoints to be requested.
+-- 
+GitLab
+
+
+From 9d649a926abcacbad17d2308422430ab8bedd143 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Valentino=20Me=C4=91imorec?= <valentino@medimorec.com>
+Date: Mon, 10 Feb 2025 10:43:25 +0100
+Subject: [PATCH 2/3] Endpoints are nullable?
+
+---
+ src/AuthManager/OAuth2Manager.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/AuthManager/OAuth2Manager.php b/src/AuthManager/OAuth2Manager.php
+index 9162e0c..5fe5db5 100755
+--- a/src/AuthManager/OAuth2Manager.php
++++ b/src/AuthManager/OAuth2Manager.php
+@@ -70,7 +70,7 @@ public function getScopes(): ?string {
+   /**
+    * {@inheritdoc}
+    */
+-  public function getEndPoints(): string {
++  public function getEndPoints(): ?string {
+     if ($this->endPoints === NULL) {
+       $this->endPoints = $this->settings->get('endpoints');
+     }
+-- 
+GitLab
+
+
+From 95a6fda1f1c356fd53aab683b0bc7d57674ecef5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Valentino=20Me=C4=91imorec?= <valentino@medimorec.com>
+Date: Mon, 10 Feb 2025 10:56:03 +0100
+Subject: [PATCH 3/3] Update interface
+
+---
+ src/AuthManager/OAuth2ManagerInterface.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/AuthManager/OAuth2ManagerInterface.php b/src/AuthManager/OAuth2ManagerInterface.php
+index 40c199e..3c54851 100755
+--- a/src/AuthManager/OAuth2ManagerInterface.php
++++ b/src/AuthManager/OAuth2ManagerInterface.php
+@@ -55,6 +55,6 @@ public function getScopes(): ?string;
+    * @return string
+    *   API endpoints separated in different lines.
+    */
+-  public function getEndPoints(): string;
++  public function getEndPoints(): ?string;
+ 
+ }
+-- 
+GitLab
+
