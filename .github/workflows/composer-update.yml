@@ -1,6 +1,8 @@
 name: Run Composer Update
 
 on:
+  schedule:
+    - cron: '30 6 * * 4'
   workflow_dispatch:
 
 jobs:
@@ -13,6 +15,7 @@ jobs:
       with:
         aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+        composer_scripts: "true"
         github_access_token: ${{ secrets.PAT }}
         patch_branch: ${{ github.head_ref || github.ref_name }}
         patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
