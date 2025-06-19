@@ -18,6 +18,6 @@ jobs:
         composer_scripts: "true"
         github_access_token: ${{ secrets.PAT }}
         patch_branch: ${{ github.head_ref || github.ref_name }}
-        patch_maintainers: ${{ secrets.DRUPAL_MAINTAINERS }}
+        patch_maintainers: ${{ vars.DRUPAL_MAINTAINERS }}
         slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
         slack_channel_name: ${{ vars.SLACK_CHANNEL }}
