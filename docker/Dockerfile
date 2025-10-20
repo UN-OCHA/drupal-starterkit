@@ -1,5 +1,5 @@
 # Build the code.
-FROM public.ecr.aws/unocha/php-k8s:8.3-stable as builder
+FROM public.ecr.aws/unocha/php-k8s:8.3-stable AS builder
 
 ARG  BRANCH_ENVIRONMENT
 
