@@ -1,0 +1,63 @@
+{
+    "_hash": "4e1602c271ede893ed8a458ac92c5f3f8ce02b94ceb98e8f7e2117da9de84dd2",
+    "patches": {
+        "drupal/imageapi_optimize_webp": [
+            {
+                "package": "drupal/imageapi_optimize_webp",
+                "description": "Fix derivatives for webp source images",
+                "url": "PATCHES/imageapi_optimize_webp-webp-source-image.patch",
+                "sha256": "d569843481f6af47f189e18fc552efd2a2ede1d0ba234676be48e273a52f6653",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:composer.patches.json"
+                }
+            },
+            {
+                "package": "drupal/imageapi_optimize_webp",
+                "description": "Support imagemagick toolkit",
+                "url": "PATCHES/imageapi_optimize_webp-imagemagick-toolkit.patch",
+                "sha256": "187f35fa7b541e310845e404eb8cb057f8586ea56e01867d9651577d3f8638d6",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:composer.patches.json"
+                }
+            }
+        ],
+        "drupal/maintenance200": [
+            {
+                "package": "drupal/maintenance200",
+                "description": "D11 compatibility - #3431791",
+                "url": "PATCHES/maintenance200-D11-compatibility-3431791.patch",
+                "sha256": "a18c917b199168ded802407a11e2d9eb75b1933c75aea4e60701c3ba0f6ea623",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:composer.patches.json"
+                }
+            }
+        ],
+        "drupal/social_auth": [
+            {
+                "package": "drupal/social_auth",
+                "description": "Type Error - #3496656",
+                "url": "PATCHES/social_auth-type-error-3496656.patch",
+                "sha256": "3640ab58ebe8cc368dd9945ad38ee42ce09cfa5873167778e28fc19c4d16572d",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:composer.patches.json"
+                }
+            }
+        ],
+        "drupal/username_enumeration_prevention": [
+            {
+                "package": "drupal/username_enumeration_prevention",
+                "description": "Avoid leaking the path via Drupal.settings json",
+                "url": "PATCHES/username_enumeration_prevention-user-login-block-form-3312288.patch",
+                "sha256": "d69c3af6d81a028ee001324682c5ddce14124632b4a83e240cd2f838905ede87",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:composer.patches.json"
+                }
+            }
+        ]
+    }
+}

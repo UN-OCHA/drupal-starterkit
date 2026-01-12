@@ -23,7 +23,7 @@
         "php": ">=8.3",
         "ext-gd": "*",
         "composer/installers": "^2",
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "drupal/admin_denied": "^2.0",
         "drupal/amazon_ses": "^3.0",
         "drupal/components": "^3.0@beta",
@@ -55,7 +55,7 @@
         "drupal/xmlsitemap": "^2.0.0-beta1",
         "drush/drush": "^13",
         "oomphinc/composer-installers-extender": "^2.0",
-        "orakili/composer-drupal-info-file-patch-helper": "^1",
+        "orakili/composer-drupal-info-file-patch-helper": "^2",
         "unocha/common_design": "^9",
         "unocha/gtm_barebones": "^1.1",
         "unocha/ocha_monitoring": "^1.0"
@@ -108,11 +108,12 @@
         }
     },
     "extra": {
-        "enable-patching": true,
-        "composer-exit-on-patch-failure": true,
-        "patches-file": "composer.patches.json",
-        "patchLevel": {
-            "drupal/core": "-p2"
+        "composer-patches": {
+            "patches-file": "composer.patches.json",
+            "exit-on-patch-failure": true,
+            "package-depths": {
+                "drupal/core": 2
+            }
         },
         "installer-types": [
             "bower-asset",
