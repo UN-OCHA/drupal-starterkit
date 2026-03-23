@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.4",
         "ext-gd": "*",
         "composer/installers": "^2",
         "cweagans/composer-patches": "^2.0",
