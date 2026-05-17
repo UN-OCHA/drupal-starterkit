@@ -1,5 +1,5 @@
 # Build the code.
-FROM public.ecr.aws/unocha/php-k8s:8.3-stable AS builder
+FROM public.ecr.aws/unocha/php-k8s:8.4-stable AS builder
 
 ARG  BRANCH_ENVIRONMENT
 
@@ -19,7 +19,7 @@ RUN cp -a docker/settings.php docker/services.yml docker/memcache.services.yml h
 ################################################################################
 
 # Generate the image.
-FROM public.ecr.aws/unocha/php-k8s:8.3-stable
+FROM public.ecr.aws/unocha/php-k8s:8.4-stable
 
 ARG VCS_REF
 ARG VCS_URL
@@ -51,6 +51,7 @@ COPY --from=builder /srv/www/composer.json /srv/www/composer.json
 COPY --from=builder /srv/www/composer.patches.json /srv/www/composer.patches.json
 COPY --from=builder /srv/www/composer.lock /srv/www/composer.lock
 COPY --from=builder /srv/www/PATCHES /srv/www/PATCHES
+COPY --from=builder /srv/www/patches.lock.json /srv/www/patches.lock.json
 COPY --from=builder /srv/www/scripts /srv/www/scripts
 # Uncomment if you have custom nginx configuration.
 # Place the custom conf files in repo-folder/docker/etc/nginx/custom.

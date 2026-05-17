@@ -34,7 +34,7 @@ index 070c6fe..20d8bd5 100644
 +          $source_image->save($destination);
 +        }
 +        elseif ($toolkit_id == 'gd') {
-+          imagewebp($source_image->getToolkit()->getResource(), $destination, $this->configuration['quality']);
++          imagewebp($source_image->getToolkit()->getImage(), $destination, $this->configuration['quality']);
 +        }
 +        else {
 +          return FALSE;
