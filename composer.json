@@ -98,7 +98,8 @@
             "orakili/composer-drupal-info-file-patch-helper": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true,
-            "tbachert/spi": true
+            "tbachert/spi": true,
+            "symfony/runtime": true
         },
         "policy": {
             "advisories": {
