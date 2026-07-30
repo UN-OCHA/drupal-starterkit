@@ -5,6 +5,10 @@ on:
     - cron: '50 21 * * 3'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -13,8 +17,9 @@ jobs:
       id: update-action
       uses: UN-OCHA/actions/composer-update@main
       with:
-        aws_access_key_id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+        aws_role: ${{ vars.AWS_ROLE }}
+        aws_region: ${{ vars.AWS_REGION }}
+        aws_account: ${{ vars.AWS_ACCOUNT }}
         composer_scripts: "true"
         github_access_token: ${{ secrets.PAT }}
         patch_branch: ${{ github.head_ref || github.ref_name }}
