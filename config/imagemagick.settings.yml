@@ -2,12 +2,11 @@ _core:
   default_config_hash: do7QLcSY6lDV82NBI3jy5FNsUwWFjjJzXmHPTGsSvIQ
 quality: 75
 binaries: imagemagick
-path_to_binaries: ''
 imagemagick_version: v7
+path_to_binaries: ''
 prepend: ''
 log_warnings: true
 debug: false
-locale: en_US.UTF-8
 image_formats:
   PNG:
     mime_type: image/png
@@ -60,3 +59,4 @@ advanced:
   colorspace: '0'
   profile: ''
   coalesce: false
+locale: en_US.UTF-8
